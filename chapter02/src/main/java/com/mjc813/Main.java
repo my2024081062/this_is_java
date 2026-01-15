@@ -1,5 +1,5 @@
 package com.mjc813;
-
+import ch02.sec02.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -13,5 +13,24 @@ public class Main {
             // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
             System.out.println("i = " + i);
         }
+        System.out.println(" ");
+        IntergerType it = new IntergerType();
+        it.useInteger();
+
+        System.out.println(" ");
+        CharType ct = new CharType();
+        ct.useChar();
+
+        System.out.println(" ");
+        FDType fdt = new FDType();
+        fdt.useFloatDouble();
+
+        System.out.println(" ");
+        BooleanType bt = new BooleanType();
+        bt.useBoolean();
+
+        System.out.println(" ");
+        StringType st = new StringType();
+        st.useString();
     }
 }
