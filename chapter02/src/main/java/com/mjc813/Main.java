@@ -14,23 +14,31 @@ public class Main {
             System.out.println("i = " + i);
         }
         System.out.println(" ");
+
         IntergerType it = new IntergerType();
         it.useInteger();
-
         System.out.println(" ");
+
         CharType ct = new CharType();
         ct.useChar();
-
         System.out.println(" ");
+
         FDType fdt = new FDType();
         fdt.useFloatDouble();
-
         System.out.println(" ");
+
         BooleanType bt = new BooleanType();
         bt.useBoolean();
-
         System.out.println(" ");
+
         StringType st = new StringType();
         st.useString();
+        System.out.println(" ");
+
+        TypeCasting tct = new TypeCasting();
+        tct.lowToHigh();
+        tct.highToLow();
+        tct.useLongInteger();
+        System.out.println(" ");
     }
 }
