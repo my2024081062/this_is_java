@@ -1,6 +1,9 @@
+/**
+ * api document 생성 하는 주석 실험1
+ */
 public class Main {
     /**
-     * api document 생성 하는 주석 실험1
+     * api document 생성 하는 주석 실험2
      */
     public static String staticName = "정적 이름";
     public static void main(String[] args){
@@ -9,26 +12,26 @@ public class Main {
             System.out.println(arg); //Program arguments에 저장된 문자들이 배열로 저장
         }
         /**
-         * api document 생성 하는 주석 실험2
+         * api document 생성 하는 주석 실험3
          */
         String nonStaticName = "멤버 이름";
 
         System.out.println(staticName);
         System.out.println(nonStaticName);
     }
+
     public void useFunction(){
         staticWelcomes();
         nonStaticWelcomes();
     }
-
     /**
-     * api document 생성 하는 주석 실험3
+     * api document 생성 하는 주석 실험4
      */
     public static void staticWelcomes(){
         System.out.println("hello world!");
     }
     /**
-     * api document 생성 하는 주석 실험4
+     * api document 생성 하는 주석 실험5
      */
     public void nonStaticWelcomes(){
         System.out.println("hello world!");
