@@ -1,5 +1,6 @@
 package com.mjc813;
 import ch02.sec02.*;
+import ch02.sec03.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -39,6 +40,10 @@ public class Main {
         tct.lowToHigh();
         tct.highToLow();
         tct.useLongInteger();
+        System.out.println(" ");
+
+        TranslateType tt = new TranslateType();
+        tt.useTranslate();
         System.out.println(" ");
     }
 }
