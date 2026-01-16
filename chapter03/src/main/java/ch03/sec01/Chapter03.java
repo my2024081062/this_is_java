@@ -45,12 +45,11 @@ public class Chapter03 {
     public void third02(){
         byte v1 = 10;
         byte v2 = 4;
-        int v3 = 5;
-        long v4 = 10L;
+        long v3 = 10L;
 
         int result1 = v1 + v2;
         System.out.println("result1: " + result1);
-        long result2 = v1 + v2 - v4;
+        long result2 = v1 + v2 - v3;
         System.out.println("result2: " + result2);
         double result3 = (double) v1 / v2;
         System.out.println("result3: " + result3);
@@ -80,7 +79,7 @@ public class Chapter03 {
         double pieceUnit = 0.1;
         int number = 7;
         double result1 = apple - number*pieceUnit;
-        System.out.println("사과 1개에서 남은 양" + result1);
+        System.out.println("사과 1개에서 남은 양: " + result1);
 
         int totalPieces = apple * 10;
         int result2 = totalPieces - number;
