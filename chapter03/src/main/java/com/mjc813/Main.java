@@ -1,5 +1,7 @@
 package com.mjc813;
+
 import ch03.sec01.*;
+import ch03.sec02.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -14,11 +16,25 @@ public class Main {
             System.out.println("i = " + i);
         }
 
-        Chapter03 ch03 = new Chapter03();
+        Chapter03_1 ch03_1 = new Chapter03_1();
+        ch03_1.third01();
+        ch03_1.third02();
+        ch03_1.third03();
+        ch03_1.third04();
 
-        ch03.third01();
-        ch03.third02();
-        ch03.third03();
-        ch03.third04();
+        Equation eq = new Equation();
+        System.out.printf("2x + 4 = 0 의 해 x의 값 : %3.1f\n" , eq.equationFirst(2,4));
+        System.out.println("-8x + 40 = 0 의 해 x의 값 : " +eq.equationFirst(-8,40));
+        System.out.println("-5x + 32 = 0 의 해 x의 값 : " +eq.equationFirst(-5,32));
+        System.out.println("=============================");
+
+        Chapter03_2 ch03_2 = new Chapter03_2();
+        ch03_2.third06();
+        ch03_2.third07();
+        ch03_2.third08();
+        ch03_2.third09();
+        ch03_2.third10();
+        ch03_2.third11();
+        ch03_2.third12();
     }
 }

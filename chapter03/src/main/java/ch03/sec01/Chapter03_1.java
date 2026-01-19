@@ -1,6 +1,6 @@
 package ch03.sec01;
 
-public class Chapter03 {
+public class Chapter03_1 {
     public void third01(){
         int x = -100;
         x = -x;
@@ -85,5 +85,6 @@ public class Chapter03 {
         int result2 = totalPieces - number;
         System.out.println("10조각에서 남은 조각: " + result2);
         System.out.println("사과 1개에서 남은 양: " + result2/10.0);
+        System.out.println("=============================");
     }
 }
