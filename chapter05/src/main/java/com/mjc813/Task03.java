@@ -70,7 +70,7 @@ public class Task03 {
             }
             System.out.println();
         }
-        char[][] chDiamond = new char[7][7];
+        char[][] chDiamond = new char[5][5];
         for(int i = 0; i < chDiamond.length; i++){
             for(int j = 0; j < Math.abs(i-chDiamond.length/2); j++){
                 System.out.print(" ");
