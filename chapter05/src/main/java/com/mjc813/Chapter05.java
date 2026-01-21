@@ -120,4 +120,82 @@ public class Chapter05 {
 		return nResult;
 	}
 
+	public void task01(){
+		boolean[] boolArray = new boolean[10];
+		for (int i = 0; i<boolArray.length; i++){
+			boolArray[i] = i % 2 == 0 ? true : false;
+			System.out.print( i != boolArray.length-1 ? boolArray[i] + ", " : boolArray[i]);
+		}
+		System.out.println();
+	}
+	public void task01_1234(){
+		int [] intArray = new int[30];
+		for(int i = 0; i< intArray.length; i++){
+			intArray[i] = i;
+		}
+
+		char [] charArray = new char[20];
+
+		boolean[][] boolArray = new boolean[3][4];
+		for(int i = 0; i < boolArray.length; i++){
+			for(int j = 0; j < boolArray[i].length; j++){
+				boolArray[i][j] = true;
+			}
+		}
+
+		String[] stringArray = new String[50];
+		for(int i = 0; i< stringArray.length; i++){
+			stringArray[i] = "empty";
+		}
+	}
+	public void task02(){
+		int[][][] intDemention2 = {
+				{
+						{0, 0, 1, 1, 0, 0}
+						, {1, 0, 0, 1, 0, 0}
+						, {0, 1, 0, 1, 0, 0}
+						, {0, 0, 1, 1, 0, 1}
+						, {1, 0, 0, 0, 1, 0}
+				}
+				,{
+						{1, 0, 1, 0, 0, 1}
+						, {1, 0, 1, 1, 0, 1}
+						, {0, 1, 0, 1, 0, 0}
+						, {1, 0, 0, 1, 0, 1}
+						, {1, 0, 1, 0, 0, 1}
+				}
+		};
+
+		int countZeroOne[][] = {{0,0},{0,0}};
+		for(int k = 0; k < intDemention2.length; k++){
+			for(int i = 0; i < intDemention2[k].length; i++){
+				for(int j = 0; j < intDemention2[k][i].length; j++){
+					if(intDemention2[k][i][j] == 0) countZeroOne[k][0]++;
+					else countZeroOne[k][1]++;
+				}
+			}
+			System.out.println("0의 갯수는 " + countZeroOne[k][0] + "개, 1의 갯수는 " + countZeroOne[k][1] + "개.");
+		}
+
+	}
+	public void task03(){
+		char[][] chInput =
+				{
+						{'*', ' ', '*', '*', ' '}
+						, {'*', '*', ' ', ' ', ' '}
+						, {'*', ' ', '*', ' ', '*'}
+						, {' ', '*', '*', ' ', '*'}
+						, {'*', ' ', '*', ' ', '*'}
+						, {' ', ' ', '*', '*', '*'}
+				};
+		char[][] chOutput = new char[chInput[0].length][chInput.length];
+		for(int i = 0; i < chOutput.length; i++){
+			for(int j = 0; j < chOutput[i].length; j++){
+				chOutput[i][j] = chInput[j][i];
+				System.out.print(chOutput[i][j]);
+			}
+			System.out.println();
+		}
+		
+	}
 }

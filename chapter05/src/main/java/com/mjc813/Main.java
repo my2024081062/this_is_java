@@ -14,10 +14,14 @@ public class Main {
 //			System.out.println("i = " + i);
 //		}
 		Chapter05 ch05 = new Chapter05();
-		String s1 = null;
-		System.out.println("ch05 = " + ch05.runFifth04(s1));
-
-		ch05.runTest();
-		ch05.acmicpcNet_problem_10818();
+//		String s1 = null;
+//		System.out.println("ch05 = " + ch05.runFifth04(s1));
+//
+//		ch05.runTest();
+//		ch05.acmicpcNet_problem_10818();
+		ch05.task01();
+		ch05.task02();
+		ch05.task03();
 	}
+
 }
