@@ -19,9 +19,12 @@ public class Main {
 //
 //		ch05.runTest();
 //		ch05.acmicpcNet_problem_10818();
-		ch05.task01();
-		ch05.task02();
-		ch05.task03();
+//		ch05.task01();
+//		ch05.task02();
+//		ch05.task03();
+		Task03 ta03 = new Task03();
+		ta03.one();
+		ta03.two();
 	}
 
 }
