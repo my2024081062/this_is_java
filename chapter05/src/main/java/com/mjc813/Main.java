@@ -13,7 +13,7 @@ public class Main {
 //			// for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
 //			System.out.println("i = " + i);
 //		}
-//		Chapter05 ch05 = new Chapter05();
+		Chapter05 ch05 = new Chapter05();
 //		String s1 = null;
 //		System.out.println("ch05 = " + ch05.runFifth04(s1));
 //
@@ -21,7 +21,7 @@ public class Main {
 //		ch05.acmicpcNet_problem_10818();
 //		ch05.task01();
 //		ch05.task02();
-//		ch05.task03();
+		ch05.task03();
 		Task03 ta03 = new Task03();
 		ta03.one();
 		ta03.two();

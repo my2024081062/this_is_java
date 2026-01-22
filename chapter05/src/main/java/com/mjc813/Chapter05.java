@@ -179,22 +179,40 @@ public class Chapter05 {
 
 	}
 	public void task03(){
-		char[][] chInput =
-				{
-						{'*', ' ', '*', '*', ' '}
-						, {'*', '*', ' ', ' ', ' '}
-						, {'*', ' ', '*', ' ', '*'}
-						, {' ', '*', '*', ' ', '*'}
-						, {'*', ' ', '*', ' ', '*'}
-						, {' ', ' ', '*', '*', '*'}
+		char[][][] chInput = {
+					{
+						{'*', '*', '*', '*', ' '},
+						{'*', '*', ' ', ' ', ' '},
+						{'*', ' ', '*', '*', '*'},
+					},
+					{
+						{'*', ' ', '*', '*', ' '},
+						{'*', '*', ' ', ' ', ' '},
+						{'*', ' ', '*', ' ', '*'},
+						{' ', '*', '*', ' ', '*'},
+						{'*', ' ', '*', ' ', '*'},
+						{' ', ' ', '*', '*', '*'},
+					},
+					{
+						{'*', '*', ' ', '*'},
+						{'*', '*', ' ', ' '},
+						{'*', ' ', '*', ' '},
+						{' ', '*', '*', ' '},
+						{'*', ' ', '*', '*'},
+					},
 				};
-		char[][] chOutput = new char[chInput[0].length][chInput.length];
-		for(int i = 0; i < chOutput.length; i++){
-			for(int j = 0; j < chOutput[i].length; j++){
-				chOutput[i][j] = chInput[j][i];
-				System.out.print(chOutput[i][j]);
+		char[][][] chOutput = new char[chInput.length][][];
+		for(int k = 0; k < chOutput.length;k++){
+			chOutput[k] = new char [chInput[k][0].length][];
+			for(int i = 0; i < chOutput[k].length; i++){
+				chOutput[k][i] = new char[chInput[k].length];
+				for(int j = 0; j < chOutput[k][i].length; j++){
+					chOutput[k][i][j] = chInput[k][j][i];
+					System.out.print(chOutput[k][i][j]);
+				}
+				System.out.println();
 			}
-			System.out.println();
+			System.out.println("=============");
 		}
 		
 	}
