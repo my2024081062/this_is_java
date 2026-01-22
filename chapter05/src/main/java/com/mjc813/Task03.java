@@ -90,7 +90,6 @@ public class Task03 {
             for(int j = front + star; j < chDiamond.length; j++){
                 chDiamond[i][j] = ' ';
             }
-            System.out.println();
         }
 
         for(int i = 0; i < chDiamond.length; i++){
