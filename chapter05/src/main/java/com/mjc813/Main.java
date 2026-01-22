@@ -26,7 +26,7 @@ public class Main {
 		ta03.one();
 		ta03.two();
 
-		EnumName name1 = EnumName.NAME1;
+		EnumName name1 = EnumName.NAME1; //프린트하면 문자열처럼 나옴
 		System.out.println("name = " + name1);
 
 		EnumName name2 = EnumName.NAME2;
