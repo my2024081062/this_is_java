@@ -39,7 +39,7 @@ public class Main {
 	}
 
 }
-
+//public class가 있으면 public 선언이 안됨.
 enum EnumName{
 	NAME1, NAME2, NAME3;
 }
