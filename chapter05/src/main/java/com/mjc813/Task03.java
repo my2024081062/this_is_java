@@ -18,6 +18,8 @@ public class Task03 {
         String[] strArray = new String[25];
         for (int i = 0; i< strArray.length; i++){
             strArray[i] = dArray[i] + " => " + (int) dArray[i];
+        }
+        for (int i = 0; i< strArray.length; i++){
             System.out.print(i != strArray.length-1 ? strArray[i] + ", " : strArray[i]);
         }
         System.out.println();

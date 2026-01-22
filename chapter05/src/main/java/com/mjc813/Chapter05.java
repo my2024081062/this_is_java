@@ -101,7 +101,6 @@ public class Chapter05 {
 		Scanner scanner = new Scanner(System.in);
 
 		int[] nResult = new int[length];
-		int number = 0;
 		String sInput = scanner.nextLine();
 		try {
 			String[] arrItem = sInput.split(" ");
