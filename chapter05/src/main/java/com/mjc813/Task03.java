@@ -79,8 +79,8 @@ public class Task03 {
 
         char[][] chDiamond = new char[5][5];
         for(int i = 0; i < chDiamond.length; i++){
-            int front = Math.abs(i-chDiamond.length/2);
-            int star = chDiamond.length - Math.abs(i-chDiamond.length/2)*2;
+            int front = i - chDiamond.length/2 < 0 ? chDiamond.length/2 - i : i - chDiamond.length/2;
+            int star = chDiamond.length - front*2;
             for(int j = 0; j < front; j++){
                 chDiamond[i][j] = ' ';
             }
