@@ -89,7 +89,7 @@ public class Task03 {
             for(int j = front; j < front + star; j++){
                 chDiamond[i][j] = '*';
             }
-            for(int j = front + star; j < chDiamond.length; j++){
+            for(int j = front + star; j < chDiamond[i].length; j++){
                 chDiamond[i][j] = ' ';
             }
         }
