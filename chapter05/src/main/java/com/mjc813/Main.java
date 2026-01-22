@@ -25,6 +25,21 @@ public class Main {
 		Task03 ta03 = new Task03();
 		ta03.one();
 		ta03.two();
+
+		EnumName name1 = EnumName.NAME1;
+		System.out.println("name = " + name1);
+
+		EnumName name2 = EnumName.NAME2;
+		System.out.println("name = " + name2);
+
+		EnumName name3 = EnumName.NAME3;
+		System.out.println("name = " + name3);
+		//EnumName 타입은 NAME1,2,3중 하나만 가지할 수 있다.
+		//특정 열거타입인지 비교해서 사용하는데 많이 사용하는듯
 	}
 
+}
+
+enum EnumName{
+	NAME1, NAME2, NAME3;
 }
