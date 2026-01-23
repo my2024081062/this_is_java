@@ -101,4 +101,71 @@ public class Task03 {
             System.out.println();
         }
     }
+
+    public void newArrayTask(){
+        String[] month = {"January","February","March","April","May","June","July","August","September","October","November","December"};
+        String[] week = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+        for(int i = 0; i < month.length; i++){
+            System.out.println(i+1 + "월은 " +month[i]);
+        }
+        for(int i = 0; i < week.length; i++){
+            System.out.println(i + "번째 요일은 " +week[i]);
+        }
+        for(String m : month){
+            System.out.print(m + ", ");
+        }
+        System.out.println();
+        for(String w : week){
+            System.out.print(w + ", ");
+        }
+        System.out.println();
+        int ran1 = (int) (Math.random()*7+3);
+        int ran2 = (int) (Math.random()*7+3);
+        short[][] random3_9 = new short[ran1][ran2];
+
+        for(int i = 0; i < random3_9.length; i++){
+            for(int j = 0; j < random3_9[i].length; j++){
+                random3_9[i][j] = (short) (Math.random()*7+3);
+            }
+        }
+        for(int i = 0; i < random3_9.length; i++){
+            System.out.print(i+1 + "번째 줄 => ");
+            for(int j = 0; j < random3_9[i].length; j++){
+                System.out.print((j != 0 ? ", " : "") + random3_9[i][j] );
+            }
+            System.out.println();
+        }
+        for(short[] line1 : random3_9){
+            for(short line2 : line1){
+                line2 = (short) (Math.random()*7+3);
+                System.out.print(line2 + ", ");
+            }
+            System.out.println();
+        }
+
+        int[][][] nums = new int[4][5][7];
+
+        for (int k = 0; k < nums.length; k++) {
+            for (int i = 0; i < nums[k].length; i++) {
+                for (int j = 0; j < nums[k][i].length; j++) {
+                    nums[k][i][j] = (int) (Math.random()*201.5 - 101);
+                }
+            }
+        }
+        int min = 101,max = -101; int count = 0;
+        for (int k = 0; k < nums.length; k++) {
+            for (int i = 0; i < nums[k].length; i++) {
+                for (int j = 0; j < nums[k][i].length; j++) {
+                    if( nums[k][i][j] > max ){
+                        max = nums[k][i][j];
+                    }
+                    if( nums[k][i][j] < min ){
+                        min = nums[k][i][j];
+                    }
+                    count++;
+                }
+            }
+        }
+        System.out.printf("가장 작은 수는 %d이고 가장 큰 수는 %d이다. 배열 원소는 %d번 등장했다.\n", min, max, count);
+    }
 }

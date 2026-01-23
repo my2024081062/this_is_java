@@ -1,7 +1,5 @@
 package com.mjc813;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -267,7 +265,7 @@ public class Chapter05 {
 		System.out.println("점수 평균 = " + avg);
 	}
 
-	public void ch5_11(String @NotNull [] args) {
+	public void ch5_11(String [] args) {
 		if (args.length != 2) {
 			System.out.println("프로그램 사용법 : java Main 정수1 정수2");
 			System.exit(0);
