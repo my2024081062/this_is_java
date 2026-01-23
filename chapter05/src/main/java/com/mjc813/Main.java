@@ -19,27 +19,18 @@ public class Main {
 //
 //		ch05.runTest();
 //		ch05.acmicpcNet_problem_10818();
-		ch05.task01();
-		ch05.task02();
-		ch05.task03();
-		Task03 ta03 = new Task03();
-		ta03.one();
-		ta03.two();
+//		ch05.task01();
+//		ch05.task02();
+//		ch05.task03();
+//		Task03 ta03 = new Task03();
+//		ta03.one();
+//		ta03.two();
 
-		EnumName name1 = EnumName.NAME1; //프린트하면 문자열처럼 나옴
-		System.out.println("name = " + name1);
-
-		EnumName name2 = EnumName.NAME2;
-		System.out.println("name = " + name2);
-
-		EnumName name3 = EnumName.NAME3;
-		System.out.println("name = " + name3);
-		//EnumName 타입은 NAME1,2,3중 하나만 가지할 수 있다.
-		//특정 열거타입인지 비교해서 사용하는데 많이 사용하는듯
+		ch05.ch5_8();
+		ch05.ch5_9();
+		ch05.ch5_10();
+		ch05.ch5_11(args);
+		ch05.ch5_12();
+		ch05.check();
 	}
-
-}
-//public class가 있으면 public 선언이 안됨.
-enum EnumName{
-	NAME1, NAME2, NAME3;
 }
