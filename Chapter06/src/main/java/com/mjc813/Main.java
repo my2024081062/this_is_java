@@ -157,7 +157,7 @@ public class Main {
                 System.out.println("-----------");
                 for (int i = 0; i< 100; i++){
                     if(ba.accounts[i] == null) break;
-                    System.out.printf("%s\t%s\t%d",ba.accounts[i].getAccountNumber(),ba.accounts[i].getAccountName(),ba.accounts[i].getBalance());
+                    System.out.printf("%s\t%s\t%d\n",ba.accounts[i].getAccountNumber(),ba.accounts[i].getAccountName(),ba.accounts[i].getBalance());
                 }
             }
             if(select == 3){
