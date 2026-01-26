@@ -7,13 +7,12 @@ public class Car1 {
     int speed = 0;
     int maxSpeed = 350;
     boolean start = false;
-    Tire tire = new Tire();
     int gas = 0;
 
-    Car1(String company, String model, String color, int speed, int maxSpeed, Tire tire){
+    Car1(String company, String model, String color, int speed, int maxSpeed){
     }
     Car1(){
-        this(null,null,null,0,0,new Tire());
+        this(null,null,null,0,0);
     }
 
     void setGas(int gas){
