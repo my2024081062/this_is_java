@@ -143,9 +143,9 @@ public class Main {
                 int bal;
 
                 System.out.print("계좌번호: " );
-                num = scanner.nextLine();
+                num = scanner.next();
                 System.out.print("계좌주: " );
-                name = scanner.nextLine();
+                name = scanner.next();
                 System.out.print("초기입금액: " );
                 bal = scanner.nextInt();
 
@@ -168,7 +168,7 @@ public class Main {
                 String num;
                 int bal;
                 System.out.print("계좌번호: " );
-                num = scanner.nextLine();
+                num = scanner.next();
                 System.out.print("예금액: " );
                 bal = scanner.nextInt();
                 for (int i = 0; i< 100; i++){
@@ -176,8 +176,9 @@ public class Main {
                         System.out.println("계좌를 찾지 못했습니다." );
                         break;
                     }
-                    if(ba.accounts[i].equals(num)){
+                    if(ba.accounts[i].getAccountNumber().equals(num)){
                         ba.accounts[i].setBalance(num,bal);
+                        break;
                     }
                 }
             }
@@ -189,7 +190,7 @@ public class Main {
                 String num;
                 int bal;
                 System.out.print("계좌번호: " );
-                num = scanner.nextLine();
+                num = scanner.next();
                 System.out.print("출금액: " );
                 bal = scanner.nextInt();
                 for (int i = 0; i< 100; i++){
@@ -197,7 +198,7 @@ public class Main {
                         System.out.println("계좌를 찾지 못했습니다." );
                         break;
                     }
-                    if(ba.accounts[i].equals(num)){
+                    if(ba.accounts[i].getAccountNumber().equals(num)){
                         if(ba.accounts[i].getBalance() - bal >= 0) {
                             ba.accounts[i].setBalance(num, -bal);
                             System.out.println("결과: 출금이 성공하였습니다.");
@@ -205,6 +206,7 @@ public class Main {
                         else{
                             System.out.println("결과: 출금하지 못하였습니다.");
                         }
+                        break;
                     }
                 }
             }
