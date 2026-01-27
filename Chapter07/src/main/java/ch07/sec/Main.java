@@ -4,14 +4,20 @@ package ch07.sec;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        SmartPhone myPhone = new SmartPhone("갤럭시","은색");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        System.out.println("모델: " + myPhone.getModel());
+        System.out.println("색상: " + myPhone.getColor());
+
+        System.out.println("와이파이 상태: " + myPhone.isWifi());
+
+        myPhone.bell();
+        myPhone.sendVoice("여보세요");
+        myPhone.receiveVoice("안녕하세요~");
+        myPhone.sendVoice("반갑습니다.~");
+        myPhone.handUp();
+        myPhone.setWifi(true);
+
+
     }
 }
