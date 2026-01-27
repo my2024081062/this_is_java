@@ -6,10 +6,20 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
 public class Phone {
     private String model;
     private String color;
+
+    public Phone(){
+        System.out.println("Phone() 생성자 실행");
+    }
+
+
+    public Phone(String model, String color) {
+        this.setModel(model);
+        this.setColor(color);
+        System.out.println("Phone(String model, String color) 생성자 실행");
+    }
 
     public void bell(){
         System.out.println("벨이 울립니다.");

@@ -5,9 +5,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Label {
-    int width;
-    int height;
-    String text;
+    private final int width;
+    private final int height;
+    private String text;
 
     public Label(String text) {
         this.text = text;

@@ -11,7 +11,7 @@ public class Block {
     int width;
     int height;
 
-    Label label = null;
+    Label[] labels = new Label[0];
     Image image = null;
     Input input = null;
     InputSelect inputSelect = null;
@@ -31,7 +31,9 @@ public class Block {
     }
 
     public void add(Label label){
-        this.label = label;
+        Label[] resizing = new Label[labels.length+1];
+        System.arraycopy(labels, 0, resizing, 0, labels.length);
+        this.labels = resizing;
     }
     public void add(Image image){
         this.image = image;

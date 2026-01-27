@@ -3,6 +3,11 @@ package com.mjc813.game;
 public class InputSelectGanre extends InputSelect {
     private Ganre ganre;
 
+    public InputSelectGanre() {
+        super();
+        this.selectList();
+    }
+
     public InputSelectGanre(Ganre ganre) {
         super(); // This calls the parent class constructor
         this.ganre = ganre;
@@ -20,6 +25,7 @@ public class InputSelectGanre extends InputSelect {
             case RPG -> this.selectedItem = "RPG";
             case ACTION -> this.selectedItem = "액션";
             case SPORTS -> this.selectedItem = "스포츠";
+            case null -> this.selectedItem = null;
         }
     }
     public void setGanre(String s) {
@@ -28,6 +34,6 @@ public class InputSelectGanre extends InputSelect {
             case "액션" -> this.ganre = Ganre.ACTION;
             case "스포츠" -> this.ganre = Ganre.SPORTS;
         }
-        this.selectList();
+        selectList();
     }
 }
