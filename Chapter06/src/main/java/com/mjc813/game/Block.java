@@ -33,6 +33,7 @@ public class Block {
     public void add(Label label){
         Label[] resizing = new Label[labels.length+1];
         System.arraycopy(labels, 0, resizing, 0, labels.length);
+        resizing[labels.length] = label;
         this.labels = resizing;
     }
     public void add(Image image){

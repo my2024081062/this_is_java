@@ -38,10 +38,16 @@ public class Area {
         else {
             for(int i = 0; i < size; i++){
                 if(blocks[i].getId() == id){
-                    Block[] reBlock = new Block[size-1];
+                    Block[] resize = new Block[size-1];
                     for(int j = 0; j < i; j++){
-
+                        resize[j] = blocks[j];
                     }
+                    for(int j = i; j < size-1;j++){
+                        int d = i+1;
+                        resize[j] = blocks[d];
+                    }
+                    blocks = resize;
+                    size-=1;
                 }
                 else return;
             }
@@ -51,13 +57,13 @@ public class Area {
     private void resizing(Block block){
         Block[] resize = new Block[size];
         System.arraycopy(blocks, 0, resize, 0, blocks.length);
-        resize[--size] = block;
+        resize[size-1] = block;
         blocks = resize;
     }
 
     public void showBlockId(){
         for(int i = 0; i < blocks.length; i++){
-            System.out.print(",블럭 id: " + blocks[i].getId());
+            System.out.println(",블럭 id: " + blocks[i].getId());
         }
     }
 }

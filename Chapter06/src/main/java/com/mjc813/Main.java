@@ -1,6 +1,7 @@
 package com.mjc813;
 
 import com.mjc813.CheckQuestion.*;
+import com.mjc813.game.Pane;
 
 import java.util.Scanner;
 
@@ -88,42 +89,44 @@ public class Main {
 //            System.out.println("다른 객체입니다 (주소가 다른 여러 객체)");
 //        }
 
-        Member user1 = new Member("홍길동","hong");
-        MemberService ms = new MemberService();
-        boolean result = ms.login("hong","12345");
-        if(result){
-            System.out.println("로그인 되었습니다.");
-             ms.logout("hong");
-        }
-        else{
-            System.out.println("id또는 password가 올바르지 않습니다.");
-        }
-        Printer p = new Printer();
-        p.println(10);
-        p.println(true);
-        p.println(5.7);
-        p.println("홍길동");
+//        Member user1 = new Member("홍길동","hong");
+//        MemberService ms = new MemberService();
+//        boolean result = ms.login("hong","12345");
+//        if(result){
+//            System.out.println("로그인 되었습니다.");
+//             ms.logout("hong");
+//        }
+//        else{
+//            System.out.println("id또는 password가 올바르지 않습니다.");
+//        }
+//        Printer p = new Printer();
+//        p.println(10);
+//        p.println(true);
+//        p.println(5.7);
+//        p.println("홍길동");
+//
+//        StaticPrinter.println(10);
+//        StaticPrinter.println(true);
+//        StaticPrinter.println(5.7);
+//        StaticPrinter.println("홍길동");
+//
+//        ShopService obj1 = ShopService.getInstance();
+//        ShopService obj2 = ShopService.getInstance();
+//
+//        if(obj1 == obj2){
+//            System.out.println("같은 객체입니다 (주소가 같은 유일 객체)");
+//        }
+//        else{
+//            System.out.println("다른 객체입니다 (주소가 다른 여러 객체)");
+//        }
+//
+//        Account account = new Account();
+//        account.setBalance(10000);
+//        System.out.println("현재잔고: " + account.getBalance());
 
-        StaticPrinter.println(10);
-        StaticPrinter.println(true);
-        StaticPrinter.println(5.7);
-        StaticPrinter.println("홍길동");
-
-        ShopService obj1 = ShopService.getInstance();
-        ShopService obj2 = ShopService.getInstance();
-
-        if(obj1 == obj2){
-            System.out.println("같은 객체입니다 (주소가 같은 유일 객체)");
-        }
-        else{
-            System.out.println("다른 객체입니다 (주소가 다른 여러 객체)");
-        }
-
-        Account account = new Account();
-        account.setBalance(10000);
-        System.out.println("현재잔고: " + account.getBalance());
-
-        account();
+//        account();
+        Pane pane = new Pane();
+        pane.buttonEvent();
     }
     public static void account(){
         Scanner scanner = new Scanner(System.in);
