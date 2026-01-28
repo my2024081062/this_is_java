@@ -1,6 +1,6 @@
 package ch07.sec;
 
-public class Parent {
+public class Parent1 {
     public void method1(){
         System.out.println("부모1");
     }

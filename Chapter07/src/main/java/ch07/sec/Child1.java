@@ -1,6 +1,6 @@
 package ch07.sec;
 
-public class Child extends Parent{
+public class Child1 extends Parent1 {
 
     @Override
     public void method2() {
