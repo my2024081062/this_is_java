@@ -1,4 +1,4 @@
-package ch07.sec;
+package ch07.sec.sugang;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
