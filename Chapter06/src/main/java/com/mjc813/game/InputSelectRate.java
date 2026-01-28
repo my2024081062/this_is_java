@@ -30,7 +30,7 @@ public class InputSelectRate extends InputSelect{
         }
     }
 
-    public void setRate(String s) {
+    public void setSelect(String s) {
         switch (s){
             case "전체이용가" -> this.rate = Rated.RATEDALL;
             case "18세이용가" -> this.rate = Rated.RATED18;

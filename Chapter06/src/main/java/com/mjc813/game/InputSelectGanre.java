@@ -28,7 +28,7 @@ public class InputSelectGanre extends InputSelect {
             case null -> this.selectedItem = null;
         }
     }
-    public void setGanre(String s) {
+    public void setSelect(String s) {
         switch (s){
             case "RPG" -> this.ganre = Ganre.RPG;
             case "액션" -> this.ganre = Ganre.ACTION;

@@ -40,7 +40,7 @@ public class InputSelect {
         int findIndex = s.nextInt();
         selectedItem = list.length == 0 ? null : list[findIndex];
     }
-
+    protected void setSelect(String s){}
     public String getSelectedItem() {
         return selectedItem == null ? "" : selectedItem ;
     }

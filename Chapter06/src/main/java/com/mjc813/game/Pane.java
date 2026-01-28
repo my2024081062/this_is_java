@@ -15,8 +15,8 @@ public class Pane implements ButtonEvent {
     Image img;
 
     Input inputGameTitle;
-    InputSelectGanre inputGenre;
-    InputSelectRate inputRate;
+    InputSelect inputGenre;
+    InputSelect inputRate;
     Input inputPrice;
     Input inputUrl;
 
@@ -40,8 +40,8 @@ public class Pane implements ButtonEvent {
 
         inputGameTitle = new Input();
 
-        inputGenre = new InputSelectGanre();
-        inputRate = new InputSelectRate();
+        inputGenre = new InputSelectGanre(); //다형성
+        inputRate = new InputSelectRate(); //다형성
 
         inputPrice = new Input();
         inputUrl = new Input("아무 이미지 주소");
@@ -98,12 +98,12 @@ public class Pane implements ButtonEvent {
             if(event.equals(ins.getText())){
                 System.out.print("장르: ");
                 String s = sc.next();
-                inputGenre.setGanre(s);
+                inputGenre.setSelect(s); //다형성
                 Label addGenre = new Label(inputGenre.getSelectedItem());
 
                 System.out.print("등급: ");
                 s = sc.next();
-                inputRate.setRate(s);
+                inputRate.setSelect(s); //다형성
                 Label addRate = new Label(inputRate.getSelectedItem());
 
                 System.out.print("제목: ");
