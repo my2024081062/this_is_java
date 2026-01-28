@@ -54,72 +54,72 @@ public class Main {
 //        c.method2();
 //        c.method3();
 
-        SamsungTV sss = new SamsungTV("T50US", "20AS92GEKS0KEOS", 14.1, 1998);
-        System.out.println(sss.getInfo());
-
-        Television ttt = sss;
-        SamsungTV ss2 = (SamsungTV) ttt;
-        System.out.println(ss2.getInfo());
-
-        Television t1 = new Television();
-//		SamsungTV ss3 = (SamsungTV)t1;  // 부모객체는 자식클래스로 타입캐스팅 안된다.
-//		System.out.println(ss3.getInfo());
-
-        sss.print(ss2); // ss2 의 데이터형은 SamsungTv, Television, Object 3가지 형태로 변환이 가능하다.
-        sss.printAll(t1);
-        sss.printAll(ss2);
-        sss.printAll("object");
-
-        Child child1 = new Child(10, "홍길동", 90, 7);
-        Parent parent1 = child1;
-        Child child2 = null;
-        if ( parent1 instanceof Child ) {
-            child2 = (Child)parent1;
-        }
-        Parent child3 = new Child(170, 70);
-        System.out.println(child1.toString());
-        System.out.println(parent1.toString());
-        System.out.println(child2.toString());
-        System.out.println(child3.toString());
-
-        Parent parent2 = new Parent( 37, "홍순자" );
-        System.out.println(parent2.toString());
-        Child child4 = null;
-        if ( parent2 instanceof Child ) {
-            child4 = (Child)parent2;
-        }
-        System.out.println(child4 == null ? "" : child4.toString());
-
-        LifeOfHuman[] arrayHumans = new LifeOfHuman[10];
-        arrayHumans[0] = new LifeOfHuman( new Human("최치원") );
-        arrayHumans[0].liveHuman();
-        arrayHumans[1] = new LifeOfHuman( new Man("최원철", "큰목젓") );
-        arrayHumans[1].liveHuman();
-        LifeOfHuman loh3 = new LifeOfHuman( new Woman("이나현", "부드러운피부") );
-        loh3.liveHuman();
-        LifeOfHuman loh4 = new LifeOfHuman( new Children("복덩이", "키:90, 몸무게:11") );
-        loh4.liveHuman();
-        LifeOfHuman loh5 = new LifeOfHuman( new ChildStudent("복순이", "키:90, 몸무게:11", "해바라기반") );
-        loh5.liveHuman();
-
-        loh5.whoFamily(arrayHumans[0].getHuman(), loh3.getHuman());
-
-        Human h1 = loh5.getMyself();
-        if ( h1 instanceof Man ) {
-            Man m1 = (Man) h1;
-            System.out.println(m1.toString());
-            // m1.기능(); Man 데이터형이어야 한다.
-        }
-        if ( h1 instanceof ChildStudent cs1 ) {
-//			ChildStudent cs1 = (ChildStudent) h1;
-            System.out.println(cs1.toString());
-            // cs1.기능(); ChildStudent 데이터형이어야 한다.
-        }
-        if ( h1 instanceof Children c1 ) {
-//			Children c1 = (Children)h1;
-            System.out.println(c1.toString());
-            // c1.기능(); Children 데이터형이어야 한다.
-        }
+//        SamsungTV sss = new SamsungTV("T50US", "20AS92GEKS0KEOS", 14.1, 1998);
+//        System.out.println(sss.getInfo());
+//
+//        Television ttt = sss;
+//        SamsungTV ss2 = (SamsungTV) ttt;
+//        System.out.println(ss2.getInfo());
+//
+//        Television t1 = new Television();
+////		SamsungTV ss3 = (SamsungTV)t1;  // 부모객체는 자식클래스로 타입캐스팅 안된다.
+////		System.out.println(ss3.getInfo());
+//
+//        sss.print(ss2); // ss2 의 데이터형은 SamsungTv, Television, Object 3가지 형태로 변환이 가능하다.
+//        sss.printAll(t1);
+//        sss.printAll(ss2);
+//        sss.printAll("object");
+//
+//        Child child1 = new Child(10, "홍길동", 90, 7);
+//        Parent parent1 = child1;
+//        Child child2 = null;
+//        if ( parent1 instanceof Child ) {
+//            child2 = (Child)parent1;
+//        }
+//        Parent child3 = new Child(170, 70);
+//        System.out.println(child1.toString());
+//        System.out.println(parent1.toString());
+//        System.out.println(child2.toString());
+//        System.out.println(child3.toString());
+//
+//        Parent parent2 = new Parent( 37, "홍순자" );
+//        System.out.println(parent2.toString());
+//        Child child4 = null;
+//        if ( parent2 instanceof Child ) {
+//            child4 = (Child)parent2;
+//        }
+//        System.out.println(child4 == null ? "" : child4.toString());
+//
+//        LifeOfHuman[] arrayHumans = new LifeOfHuman[10];
+//        arrayHumans[0] = new LifeOfHuman( new Human("최치원") );
+//        arrayHumans[0].liveHuman();
+//        arrayHumans[1] = new LifeOfHuman( new Man("최원철", "큰목젓") );
+//        arrayHumans[1].liveHuman();
+//        LifeOfHuman loh3 = new LifeOfHuman( new Woman("이나현", "부드러운피부") );
+//        loh3.liveHuman();
+//        LifeOfHuman loh4 = new LifeOfHuman( new Children("복덩이", "키:90, 몸무게:11") );
+//        loh4.liveHuman();
+//        LifeOfHuman loh5 = new LifeOfHuman( new ChildStudent("복순이", "키:90, 몸무게:11", "해바라기반") );
+//        loh5.liveHuman();
+//
+//        loh5.whoFamily(arrayHumans[0].getHuman(), loh3.getHuman());
+//
+//        Human h1 = loh5.getMyself();
+//        if ( h1 instanceof Man ) {
+//            Man m1 = (Man) h1;
+//            System.out.println(m1.toString());
+//            // m1.기능(); Man 데이터형이어야 한다.
+//        }
+//        if ( h1 instanceof ChildStudent cs1 ) {
+////			ChildStudent cs1 = (ChildStudent) h1;
+//            System.out.println(cs1.toString());
+//            // cs1.기능(); ChildStudent 데이터형이어야 한다.
+//        }
+//        if ( h1 instanceof Children c1 ) {
+////			Children c1 = (Children)h1;
+//            System.out.println(c1.toString());
+//            // c1.기능(); Children 데이터형이어야 한다.
+//        }
 
 //    학생이 강의를 수강해서 성적을 받는 생활을 클래스 설계 해보세요.
 //    클래스는 학생, 강의과목, 학생이 과목을 수강 하고 성적을 받는 과정의
