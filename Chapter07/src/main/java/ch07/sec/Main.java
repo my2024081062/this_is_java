@@ -192,6 +192,8 @@ public class Main {
         m1.work();
         d1.work();
 
+        Animal_life al = new Animal_life();
+        al.animal_life();
     }
 
     public static void animalSound(Animal a){
