@@ -9,4 +9,6 @@ public class Animal {
     private static int veterinarian_id = 0;
     private final int id = veterinarian_id++;
     private String name;
+    private EnableAnimal enableAnimal;
+    private boolean careNeed;
 }

@@ -1,4 +1,37 @@
 package ch08.sec.veterinaryClinic;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import java.time.temporal.ChronoUnit;
+
 public class Nurse {
+    private static int veterinarian_id = 0;
+    private final int id = veterinarian_id++;
+    private String name;
+    public void animalOwnersRequestVisitAnimal(Animal a, AnimalOwner ao){
+        Clinic cli = Clinic.getInstance();
+        if(LocalTime.now().getHour() >= 15 && LocalTime.now().getHour() <= 20){
+            for(AnimalChart ac : cli.getAnimalCharts()){
+                if(a.getId() == ac.getAnimalId()){
+                    if(ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())]) {
+                        ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())] = false;
+                        System.out.println("방문 요청을 처리했습니다.");
+                    }
+                    else{
+                        System.out.println("이미 면회 하였습니다.");
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("동물 주인이 아니거나 방문시간이 아닙니다.");
+        }
+    }
+
+    public void veterinarianRequestHospitalizationAnimal(Animal a, AnimalOwner ao, Veterinarian v,int day){
+        Clinic cli = Clinic.getInstance();
+        AnimalChart ac = new AnimalChart(a,v,ao,LocalDate.now(),LocalDate.now().plusDays(day));
+        cli.addAnimalChart(ac);
+    }
 }
