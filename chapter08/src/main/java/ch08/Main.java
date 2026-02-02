@@ -42,13 +42,16 @@ public class Main {
         myClinic.addNerse(nur1);
         myClinic.addNerse(nur2);
 
-        AnimalOwner aniow1 = new AnimalOwner("정");
-        AnimalOwner aniow2 = new AnimalOwner("이");
-
         Animal ani1 = new Animal("뽀삐",EnableAnimal.DOG,true);
         Animal ani2 = new Animal("삐삐",EnableAnimal.DOG,false);
-
         Animal ani3 = new Animal("나비",EnableAnimal.CAT,true);
+
+        Animal[] aniow1sAnimal = {ani1,ani2};
+        Animal[] aniow2sAnimal = {ani3};
+
+        AnimalOwner aniow1 = new AnimalOwner("정",aniow1sAnimal);
+        AnimalOwner aniow2 = new AnimalOwner("이",aniow2sAnimal);
+
 
         aniow1.requestCareAnimal(ani1,vet1,nur1);
         aniow1.requestCareAnimal(ani2,vet1,nur2);

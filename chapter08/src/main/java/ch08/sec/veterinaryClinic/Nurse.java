@@ -1,6 +1,5 @@
 package ch08.sec.veterinaryClinic;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +9,14 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 @Getter
 @Setter
-@AllArgsConstructor
-public class Nurse {
+public class Nurse extends Human{
     private static int nurse_id = 0;
     private final int id = nurse_id++;
-    private String name;
-    public void animalOwnersRequestVisitAnimal(Animal a, AnimalOwner ao){
+
+    public Nurse(String name) {
+        super(name);
+    }
+    public void animalOwnersRequestVisitAnimal(Animal a){
         Clinic cli = Clinic.getInstance();
         if(LocalTime.now().getHour() >= 15 && LocalTime.now().getHour() <= 20){
             for(AnimalChart ac : cli.getAnimalCharts()){
