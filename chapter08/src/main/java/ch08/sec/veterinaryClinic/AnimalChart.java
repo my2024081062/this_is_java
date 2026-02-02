@@ -13,6 +13,7 @@ public class AnimalChart {
     private static int animalChart_id = 0;
     private final int id = animalChart_id++;
     private Animal animal;
+    private EnableAnimal enableAnimal;
     private int animalId;
     private Veterinarian veterinarian;
     private AnimalOwner animalOwner;
@@ -27,6 +28,7 @@ public class AnimalChart {
         this.animalOwner = animalOwner;
         this.enterClinicDate = enterClinicDate;
         this.externalClinicDate = externalClinicDate;
+        this.enableAnimal = animal.getEnableAnimal();
         this.animalId = animal.getId();
         visitable = new boolean[(int) ChronoUnit.DAYS.between(this.getEnterClinicDate(), this.getExternalClinicDate())+1];
         Arrays.fill(visitable, true);
