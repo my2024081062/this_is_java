@@ -50,12 +50,45 @@ public class Clinic {
         this.setAnimalCharts(addAnimalCharts);
     }
 
-    public void nurses_job(){
+    public void nurses_job0816(Nurse n){
+        Animal[] animals = new Animal[this.getAnimalCharts().length];
+        for (int i = 0; i < animals.length; i++) {
+            animals[i] = this.getAnimalCharts()[i].getAnimal(); // 필드 추출
+        }
+        while (true){ //실험용으로 true
+            if(LocalTime.now() == LocalTime.of(8,0,0) || true){
+                for(Animal animal : animals){
+                    System.out.println(animal.getName() + "에게 아침 약을 먹입니다.");
+                }
+            }
+            if(LocalTime.now() == LocalTime.of(13,0,0) || true){
+                for(Animal animal : animals){
+                    System.out.println(animal.getName() + "에게 점심 약을 먹입니다.");
+                }
+            }
+            if(LocalTime.now() == LocalTime.of(20,0,0) || true){
+                System.out.println(n.getName() + "간호사가 퇴근합니다.");
+                this.nurses_job1624(this.getNurses()[1]);
+            }
+            break;
+        }
+    }
+    public void nurses_job1624(Nurse n){
+        Animal[] animals = new Animal[this.getAnimalCharts().length];
+        for (int i = 0; i < animals.length; i++) {
+            animals[i] = this.getAnimalCharts()[i].getAnimal(); // 필드 추출
+        }
         while (true){
-            if(LocalTime.now() == LocalTime.of(20,0,0)){
-                System.out.println("간호사가 퇴근합니다.");
+            if(LocalTime.now() == LocalTime.of(18,0,0) || true){
+                for(Animal animal : animals){
+                    System.out.println(animal.getName() + "에게 저녁 약을 먹입니다.");
+                }
+            }
+            if(LocalTime.now() == LocalTime.of(20,0,0) || true){
+                System.out.println(n.getName() + "간호사가 퇴근합니다.");
                 break;
             }
+            break;
         }
     }
 }

@@ -1,13 +1,19 @@
 package ch08.sec.veterinaryClinic;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import java.time.temporal.ChronoUnit;
-
+@Getter
+@Setter
+@AllArgsConstructor
 public class Nurse {
-    private static int veterinarian_id = 0;
-    private final int id = veterinarian_id++;
+    private static int nurse_id = 0;
+    private final int id = nurse_id++;
     private String name;
     public void animalOwnersRequestVisitAnimal(Animal a, AnimalOwner ao){
         Clinic cli = Clinic.getInstance();
@@ -19,7 +25,7 @@ public class Nurse {
                         System.out.println("방문 요청을 처리했습니다.");
                     }
                     else{
-                        System.out.println("이미 면회 하였습니다.");
+                        System.out.println("오늘 이미 면회 하였습니다.");
                     }
                 }
             }

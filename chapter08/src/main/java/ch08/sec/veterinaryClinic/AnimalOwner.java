@@ -10,11 +10,13 @@ public class AnimalOwner {
     private final int id = veterinarian_id++;
     private String name;
 
+    public void requestCareAnimal(Animal a, Veterinarian v, Nurse n){
+        v.AnimalCare(a,this,n);
+    }
+
     public void visitAnimal(Animal a, Nurse n){
         n.animalOwnersRequestVisitAnimal(a,this);
     }
 
-    public void requestCareAnimal(Animal a, Veterinarian v, Nurse n){
-        v.AnimalCare(a,this,n);
-    }
+
 }
