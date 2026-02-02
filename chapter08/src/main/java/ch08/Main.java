@@ -1,8 +1,4 @@
 package ch08;
-import ch08.sec.electronics.*;
-import ch08.sec.mjc813.Mjc813Human;
-import ch08.sec.test.DoInterfaces;
-import ch08.sec.test.*;
 import ch08.sec.veterinaryClinic.*;
 
 public class Main {
@@ -42,15 +38,15 @@ public class Main {
         myClinic.addNerse(nur1);
         myClinic.addNerse(nur2);
 
-        Animal ani1 = new Animal("뽀삐",EnableAnimal.DOG,true);
-        Animal ani2 = new Animal("삐삐",EnableAnimal.DOG,false);
-        Animal ani3 = new Animal("나비",EnableAnimal.CAT,true);
+        Pet ani1 = new Pet("뽀삐",EnableAnimal.DOG,true);
+        Pet ani2 = new Pet("삐삐",EnableAnimal.DOG,false);
+        Pet ani3 = new Pet("나비",EnableAnimal.CAT,true);
 
-        Animal[] aniow1sAnimal = {ani1,ani2};
-        Animal[] aniow2sAnimal = {ani3};
+        Pet[] aniow1SPet = {ani1,ani2};
+        Pet[] aniow2SPet = {ani3};
 
-        AnimalOwner aniow1 = new AnimalOwner("정",aniow1sAnimal);
-        AnimalOwner aniow2 = new AnimalOwner("이",aniow2sAnimal);
+        petOwner aniow1 = new petOwner("정", aniow1SPet);
+        petOwner aniow2 = new petOwner("이", aniow2SPet);
 
 
         aniow1.requestCareAnimal(ani1,vet1,nur1);

@@ -7,6 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public abstract class Human {
+public abstract class Human implements Animal{
     private String name;
+
+    @Override
+    public void sound(){
+        System.out.println("아아");
+    }
 }

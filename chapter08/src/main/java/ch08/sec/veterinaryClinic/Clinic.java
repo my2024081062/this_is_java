@@ -7,12 +7,12 @@ import java.time.LocalTime;
 @Getter
 public class Clinic {
     private final static Clinic clinic = new Clinic();
-    private AnimalChart[] animalCharts = new AnimalChart[0];
+    private petChart[] petCharts = new petChart[0];
     private Veterinarian[] veterinarians = new Veterinarian[0];
     private Nurse[] nurses = new Nurse[0];
 
-    private void setAnimalCharts(AnimalChart[] animalCharts) {
-        this.animalCharts = animalCharts;
+    private void setPetCharts(petChart[] petCharts) {
+        this.petCharts = petCharts;
     }
 
     private void setVeterinarians(Veterinarian[] veterinarians) {
@@ -43,27 +43,27 @@ public class Clinic {
         this.setVeterinarians(addVeterinarians);
     }
 
-    public void addAnimalChart(AnimalChart ac){
-        AnimalChart[] addAnimalCharts = new AnimalChart[this.getAnimalCharts().length+1];
-        System.arraycopy(this.getAnimalCharts(),0,addAnimalCharts,0,this.getAnimalCharts().length);
-        addAnimalCharts[this.getAnimalCharts().length] = ac;
-        this.setAnimalCharts(addAnimalCharts);
+    public void addAnimalChart(petChart ac){
+        petChart[] addPetCharts = new petChart[this.getPetCharts().length+1];
+        System.arraycopy(this.getPetCharts(),0, addPetCharts,0,this.getPetCharts().length);
+        addPetCharts[this.getPetCharts().length] = ac;
+        this.setPetCharts(addPetCharts);
     }
 
     public void nurses_job0816(Nurse n){
-        Animal[] animals = new Animal[this.getAnimalCharts().length];
-        for (int i = 0; i < animals.length; i++) {
-            animals[i] = this.getAnimalCharts()[i].getAnimal(); // 필드 추출
+        Pet[] pets = new Pet[this.getPetCharts().length];
+        for (int i = 0; i < pets.length; i++) {
+            pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
         }
         while (true){ //실험용으로 true
             if(LocalTime.now() == LocalTime.of(8,0,0) || true){
-                for(Animal animal : animals){
-                    System.out.println(animal.getName() + "에게 아침 약을 먹입니다.");
+                for(Pet pet : pets){
+                    System.out.println(pet.getName() + "에게 아침 약을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(13,0,0) || true){
-                for(Animal animal : animals){
-                    System.out.println(animal.getName() + "에게 점심 약을 먹입니다.");
+                for(Pet pet : pets){
+                    System.out.println(pet.getName() + "에게 점심 약을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(20,0,0) || true){
@@ -74,14 +74,14 @@ public class Clinic {
         }
     }
     public void nurses_job1624(Nurse n){
-        Animal[] animals = new Animal[this.getAnimalCharts().length];
-        for (int i = 0; i < animals.length; i++) {
-            animals[i] = this.getAnimalCharts()[i].getAnimal(); // 필드 추출
+        Pet[] pets = new Pet[this.getPetCharts().length];
+        for (int i = 0; i < pets.length; i++) {
+            pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
         }
         while (true){
             if(LocalTime.now() == LocalTime.of(18,0,0) || true){
-                for(Animal animal : animals){
-                    System.out.println(animal.getName() + "에게 저녁 약을 먹입니다.");
+                for(Pet pet : pets){
+                    System.out.println(pet.getName() + "에게 저녁 약을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(20,0,0) || true){
