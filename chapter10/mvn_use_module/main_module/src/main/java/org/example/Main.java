@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example2.TransJson2;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
         System.out.println("Hello and welcome!");
 
         Student stu = new Student("이순신", "mjc9283819", Major.InfoTelecom);
-        TransJson tj = new TransJson();
+        TransJson2 tj = new TransJson2();
 
         String strJson = tj.toJsonStringFromObject(stu);
         System.out.println(strJson);
