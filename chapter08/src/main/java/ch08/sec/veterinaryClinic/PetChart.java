@@ -15,13 +15,13 @@ public class PetChart {
     private Pet pet;
     private int animalId;
     private Veterinarian veterinarian;
-    private petOwner animalOwner;
+    private PetOwner animalOwner;
     private LocalDate enterClinicDate;
     private LocalDate externalClinicDate;
     private boolean[] visitable;
     private boolean isExtern;
     //Approximately[]로 약 배열로 줄 약 목록을 추가해도 될듯
-    public PetChart(Pet pet, Veterinarian veterinarian, petOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate) {
+    public PetChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate) {
         this.pet = pet;
         this.veterinarian = veterinarian;
         this.animalOwner = animalOwner;

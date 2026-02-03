@@ -36,7 +36,7 @@ public class Nurse extends Human{
         }
     }
 
-    public void veterinarianRequestHospitalizationAnimal(Pet a, petOwner ao, Veterinarian v, int day){
+    public void veterinarianRequestHospitalizationAnimal(Pet a, PetOwner ao, Veterinarian v, int day){
         Clinic cli = Clinic.getInstance();
         PetChart ac = new PetChart(a,v,ao,LocalDate.now(),LocalDate.now().plusDays(day));
         cli.addAnimalChart(ac);
