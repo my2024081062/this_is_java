@@ -7,12 +7,12 @@ import java.time.LocalTime;
 @Getter
 public class Clinic {
     private final static Clinic clinic = new Clinic();
-    private petChart[] petCharts = new petChart[0];
+    private PetChart[] PetCharts = new PetChart[0];
     private Veterinarian[] veterinarians = new Veterinarian[0];
     private Nurse[] nurses = new Nurse[0];
 
-    private void setPetCharts(petChart[] petCharts) {
-        this.petCharts = petCharts;
+    private void setPetCharts(PetChart[] PetCharts) {
+        this.PetCharts = PetCharts;
     }
 
     private void setVeterinarians(Veterinarian[] veterinarians) {
@@ -43,8 +43,8 @@ public class Clinic {
         this.setVeterinarians(addVeterinarians);
     }
 
-    public void addAnimalChart(petChart ac){
-        petChart[] addPetCharts = new petChart[this.getPetCharts().length+1];
+    public void addAnimalChart(PetChart ac){
+        PetChart[] addPetCharts = new PetChart[this.getPetCharts().length+1];
         System.arraycopy(this.getPetCharts(),0, addPetCharts,0,this.getPetCharts().length);
         addPetCharts[this.getPetCharts().length] = ac;
         this.setPetCharts(addPetCharts);
