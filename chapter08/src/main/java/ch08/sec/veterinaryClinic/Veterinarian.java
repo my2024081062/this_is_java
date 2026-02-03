@@ -1,24 +1,31 @@
 package ch08.sec.veterinaryClinic;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import java.util.Calendar;
 @Getter
-@AllArgsConstructor
-public class Veterinarian {
+public class Veterinarian extends Human {
     private static int veterinarian_id = 0;
     private final int id = veterinarian_id++;
-    private String name;
+    private EnableAnimal[] enableAnimals;
+    public Veterinarian(String name, EnableAnimal[] enableAnimals) {
+        super(name);
+        this.enableAnimals = enableAnimals;
+    }
 
-    public void AnimalCare(Animal animal, AnimalOwner ao, Nurse nurse){
-        System.out.println(animal.getName() + "을(를) 진료합니다.");
-        if(animal.isCareNeed()){
-            int day = (int)(Math.random()*4);
-            nurse.veterinarianRequestHospitalizationAnimal(animal,ao,this,day);
-            System.out.println(animal.getName() + "을(를) " + (day == 0 ? "당일" : day + "일") + " 입원 시켰습니다.");
+    public void AnimalCare(Pet pet, PetOwner ao, Nurse nurse){
+        for(EnableAnimal enableAnimal : enableAnimals){
+            if(pet.getEnableAnimal() == enableAnimal){
+                System.out.println(pet.getName() + "을(를) 진료합니다.");
+                if(pet.isCareNeed()){
+                    int day = (int)(Math.random()*4);
+                    nurse.veterinarianRequestHospitalizationAnimal(pet,ao,this,day);
+                    System.out.println(pet.getName() + "을(를) " + (day == 0 ? "당일" : day + "일") + " 입원 시켰습니다.");
+                }
+                else {
+                    System.out.println(pet.getName() + "이(가) 건강하여 입원할 필요가 없습니다.");
+                }
+            }
+            break;
         }
-        else {
-            System.out.println(animal.getName() + "이(가) 건강하여 입원할 필요가 없습니다.");
-        }
+        System.out.println("이 동물은 진료할 수 없습니다.");
     }
 }

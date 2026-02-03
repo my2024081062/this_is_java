@@ -1,8 +1,4 @@
-package ch08;
-import ch08.sec.electronics.*;
-import ch08.sec.mjc813.Mjc813Human;
-import ch08.sec.test.DoInterfaces;
-import ch08.sec.test.*;
+package ch08.sec;
 import ch08.sec.veterinaryClinic.*;
 
 public class Main {
@@ -34,21 +30,29 @@ public class Main {
 
         Clinic myClinic = Clinic.getInstance();
 
-        Veterinarian vet1 = new Veterinarian("차");
+        EnableAnimal[] enani1 = {EnableAnimal.CAT,EnableAnimal.DOG,EnableAnimal.PARROT,EnableAnimal.RABBIT};
+        EnableAnimal[] enani2 = {EnableAnimal.CAT,EnableAnimal.DOG,EnableAnimal.PARROT,EnableAnimal.RABBIT,EnableAnimal.CHICKEN,EnableAnimal.HEDGEHOG};
+        Veterinarian vet1 = new Veterinarian("차",enani1);
+        Veterinarian vet2 = new Veterinarian("성",enani2);
+
         myClinic.addVeterinarian(vet1);
+        myClinic.addVeterinarian(vet2);
 
         Nurse nur1 = new Nurse("김");
         Nurse nur2 = new Nurse("박");
         myClinic.addNerse(nur1);
         myClinic.addNerse(nur2);
 
-        AnimalOwner aniow1 = new AnimalOwner("정");
-        AnimalOwner aniow2 = new AnimalOwner("이");
+        Pet ani1 = new Pet("뽀삐",EnableAnimal.DOG,true);
+        Pet ani2 = new Pet("삐삐",EnableAnimal.DOG,false);
+        Pet ani3 = new Pet("나비",EnableAnimal.CAT,true);
 
-        Animal ani1 = new Animal("뽀삐",EnableAnimal.DOG,true);
-        Animal ani2 = new Animal("삐삐",EnableAnimal.DOG,false);
+        Pet[] aniow1SPet = {ani1,ani2};
+        Pet[] aniow2SPet = {ani3};
 
-        Animal ani3 = new Animal("나비",EnableAnimal.CAT,true);
+        PetOwner aniow1 = new PetOwner("정", aniow1SPet);
+        PetOwner aniow2 = new PetOwner("이", aniow2SPet);
+
 
         aniow1.requestCareAnimal(ani1,vet1,nur1);
         aniow1.requestCareAnimal(ani2,vet1,nur2);
