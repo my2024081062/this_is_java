@@ -70,7 +70,7 @@ public class Clinic {
                     System.out.println(pet.getName() + "에게 점심 약을 먹입니다.");
                 }
             }
-            if(LocalTime.now() == LocalTime.of(20,0,0) || true){
+            if(LocalTime.now() == LocalTime.of(16,0,0) || true){
                 System.out.println(n.getName() + "간호사가 퇴근합니다.");
                 this.nurses_job1624(this.getNurses()[1]);
             }
@@ -88,7 +88,7 @@ public class Clinic {
                     System.out.println(pet.getName() + "에게 저녁 약을 먹입니다.");
                 }
             }
-            if(LocalTime.now() == LocalTime.of(20,0,0) || true){
+            if(LocalTime.now() == LocalTime.of(24,0,0) || true){
                 System.out.println(n.getName() + "간호사가 퇴근합니다.");
                 break;
             }
