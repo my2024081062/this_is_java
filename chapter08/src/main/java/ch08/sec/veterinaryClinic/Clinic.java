@@ -2,6 +2,7 @@ package ch08.sec.veterinaryClinic;
 
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -53,6 +54,9 @@ public class Clinic {
     public void nurses_job0816(Nurse n){
         Pet[] pets = new Pet[this.getPetCharts().length];
         for (int i = 0; i < pets.length; i++) {
+            if(LocalDate.now().equals(this.getPetCharts()[i].getExternalClinicDate())){
+                this.getPetCharts()[i].setExtern(true);
+            }
             pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
         }
         while (true){ //실험용으로 true

@@ -30,8 +30,13 @@ public class Main {
 
         Clinic myClinic = Clinic.getInstance();
 
-        Veterinarian vet1 = new Veterinarian("차");
+        EnableAnimal[] enani1 = {EnableAnimal.CAT,EnableAnimal.DOG,EnableAnimal.PARROT,EnableAnimal.RABBIT};
+        EnableAnimal[] enani2 = {EnableAnimal.CAT,EnableAnimal.DOG,EnableAnimal.PARROT,EnableAnimal.RABBIT,EnableAnimal.CHICKEN,EnableAnimal.HEDGEHOG};
+        Veterinarian vet1 = new Veterinarian("차",enani1);
+        Veterinarian vet2 = new Veterinarian("성",enani2);
+
         myClinic.addVeterinarian(vet1);
+        myClinic.addVeterinarian(vet2);
 
         Nurse nur1 = new Nurse("김");
         Nurse nur2 = new Nurse("박");
