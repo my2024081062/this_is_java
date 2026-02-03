@@ -11,7 +11,8 @@ public class Clinic {
     private PetChart[] PetCharts = new PetChart[0];
     private Veterinarian[] veterinarians = new Veterinarian[0];
     private Nurse[] nurses = new Nurse[0];
-
+    private Nurse[] nurses0816 = new Nurse[0];
+    private Nurse[] nurses1624 = new Nurse[0];
     private void setPetCharts(PetChart[] PetCharts) {
         this.PetCharts = PetCharts;
     }
@@ -51,7 +52,7 @@ public class Clinic {
         this.setPetCharts(addPetCharts);
     }
 
-    public void nurses_job0816(Nurse[] n){
+    public void nurses_job0816(Nurse[] nurses){
         Pet[] pets = new Pet[this.getPetCharts().length];
         for (int i = 0; i < pets.length; i++) {
             if(LocalDate.now().equals(this.getPetCharts()[i].getExternalClinicDate())){
@@ -71,7 +72,9 @@ public class Clinic {
                 }
             }
             if(LocalTime.now() == LocalTime.of(16,0,0) || true){
-                System.out.println(n.getName() + "간호사가 퇴근합니다.");
+                for(Nurse n : nurses){
+                    System.out.println(n.getName() + "간호사가 퇴근합니다.");
+                }
                 this.nurses_job1624(this.getNurses()[1]);
             }
             break;

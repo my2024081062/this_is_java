@@ -64,7 +64,6 @@ public class Main {
         aniow1.visitAnimal(ani1,nur1);
         aniow1.visitAnimal(ani2,nur2);
 
-
-        myClinic.nurses_job0816(nur1);
+        myClinic.nurses_job0816(nurses);
     }
 }
