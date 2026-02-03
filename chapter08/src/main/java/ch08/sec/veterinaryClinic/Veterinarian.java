@@ -10,7 +10,7 @@ public class Veterinarian extends Human {
         super(name);
     }
 
-    public void AnimalCare(Pet pet, petOwner ao, Nurse nurse){
+    public void AnimalCare(Pet pet, PetOwner ao, Nurse nurse){
         System.out.println(pet.getName() + "을(를) 진료합니다.");
         if(pet.isCareNeed()){
             int day = (int)(Math.random()*4);

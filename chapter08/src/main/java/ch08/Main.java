@@ -45,8 +45,8 @@ public class Main {
         Pet[] aniow1SPet = {ani1,ani2};
         Pet[] aniow2SPet = {ani3};
 
-        petOwner aniow1 = new petOwner("정", aniow1SPet);
-        petOwner aniow2 = new petOwner("이", aniow2SPet);
+        PetOwner aniow1 = new PetOwner("정", aniow1SPet);
+        PetOwner aniow2 = new PetOwner("이", aniow2SPet);
 
 
         aniow1.requestCareAnimal(ani1,vet1,nur1);

@@ -3,12 +3,12 @@ package ch08.sec.veterinaryClinic;
 import lombok.Getter;
 
 @Getter
-public class petOwner extends Human{
+public class PetOwner extends Human{
     private static int veterinarian_id = 0;
     private final int id = veterinarian_id++;
     private final Pet[] pets;
 
-    public petOwner(String name, Pet[] pets) {
+    public PetOwner(String name, Pet[] pets) {
         super(name);
         this.pets = pets;
     }

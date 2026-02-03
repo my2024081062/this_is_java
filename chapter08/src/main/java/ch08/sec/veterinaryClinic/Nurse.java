@@ -19,7 +19,7 @@ public class Nurse extends Human{
     public void animalOwnersRequestVisitAnimal(Pet a){
         Clinic cli = Clinic.getInstance();
         if(LocalTime.now().getHour() >= 15 && LocalTime.now().getHour() <= 20){
-            for(petChart ac : cli.getPetCharts()){
+            for(PetChart ac : cli.getPetCharts()){
                 if(a.getId() == ac.getAnimalId()){
                     if(ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())]) {
                         ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())] = false;
@@ -36,9 +36,9 @@ public class Nurse extends Human{
         }
     }
 
-    public void veterinarianRequestHospitalizationAnimal(Pet a, petOwner ao, Veterinarian v, int day){
+    public void veterinarianRequestHospitalizationAnimal(Pet a, PetOwner ao, Veterinarian v, int day){
         Clinic cli = Clinic.getInstance();
-        petChart ac = new petChart(a,v,ao,LocalDate.now(),LocalDate.now().plusDays(day));
+        PetChart ac = new PetChart(a,v,ao,LocalDate.now(),LocalDate.now().plusDays(day));
         cli.addAnimalChart(ac);
     }
 
