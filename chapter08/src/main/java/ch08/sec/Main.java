@@ -58,12 +58,11 @@ public class Main {
         aniow1.requestCareAnimal(ani2,vet1,nur2);
 
         aniow2.requestCareAnimal(ani3,vet1,nur1);
-        //병원에 '현재 있는' 간호사가 자동으로 담당하게 하면 좋을듯
-        aniow1.visitAnimal(ani1,nur2);
-        aniow1.visitAnimal(ani3,nur1);
-        aniow1.visitAnimal(ani1,nur1);
-        aniow1.visitAnimal(ani2,nur2);
+        aniow1.visitAnimal(ani1);
+        aniow1.visitAnimal(ani3);
+        aniow1.visitAnimal(ani1);
+        aniow1.visitAnimal(ani2);
 
-        myClinic.nurses_job0816(nurses);
+        myClinic.nurses_job0816(myClinic.getNurses0816());
     }
 }

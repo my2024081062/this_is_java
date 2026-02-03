@@ -10,7 +10,6 @@ public class Clinic {
     private final static Clinic clinic = new Clinic();
     private PetChart[] PetCharts = new PetChart[0];
     private Veterinarian[] veterinarians = new Veterinarian[0];
-    private Nurse[] nurses = new Nurse[0];
     private Nurse[] nurses0816 = new Nurse[0];
     private Nurse[] nurses1624 = new Nurse[0];
     private void setPetCharts(PetChart[] PetCharts) {
@@ -21,8 +20,11 @@ public class Clinic {
         this.veterinarians = veterinarians;
     }
 
-    private void setNurses(Nurse[] nurses) {
-        this.nurses = nurses;
+    private void setNurses0816(Nurse[] nurses) {
+        this.nurses0816 = nurses;
+    }
+    private void setNurses1624(Nurse[] nurses) {
+        this.nurses1624 = nurses;
     }
 
     private Clinic(){
@@ -32,10 +34,18 @@ public class Clinic {
     }
 
     public void addNerse(Nurse n){
-        Nurse[] addNerses = new Nurse[this.getNurses().length+1];
-        System.arraycopy(this.getNurses(),0,addNerses,0,this.getNurses().length);
-        addNerses[this.getNurses().length] = n;
-        this.setNurses(addNerses);
+        if(n.isWork_from_8_to_16()){
+            Nurse[] addNerses = new Nurse[this.getNurses0816().length+1];
+            System.arraycopy(this.getNurses0816(),0,addNerses,0,this.getNurses0816().length);
+            addNerses[this.getNurses0816().length] = n;
+            this.setNurses0816(addNerses);
+        }
+        else{
+            Nurse[] addNerses = new Nurse[this.getNurses1624().length+1];
+            System.arraycopy(this.getNurses1624(),0,addNerses,0,this.getNurses1624().length);
+            addNerses[this.getNurses1624().length] = n;
+            this.setNurses1624(addNerses);
+        }
     }
 
     public void addVeterinarian(Veterinarian v){
@@ -75,12 +85,12 @@ public class Clinic {
                 for(Nurse n : nurses){
                     System.out.println(n.getName() + "간호사가 퇴근합니다.");
                 }
-                this.nurses_job1624(this.getNurses()[1]);
+                this.nurses_job1624(this.getNurses1624());
             }
             break;
         }
     }
-    public void nurses_job1624(Nurse[] n){
+    public void nurses_job1624(Nurse[] nurses){
         Pet[] pets = new Pet[this.getPetCharts().length];
         for (int i = 0; i < pets.length; i++) {
             pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
@@ -92,7 +102,9 @@ public class Clinic {
                 }
             }
             if(LocalTime.now() == LocalTime.of(24,0,0) || true){
-                System.out.println(n.getName() + "간호사가 퇴근합니다.");
+                for(Nurse n : nurses){
+                    System.out.println(n.getName() + "간호사가 퇴근합니다.");
+                }
                 break;
             }
             break;
