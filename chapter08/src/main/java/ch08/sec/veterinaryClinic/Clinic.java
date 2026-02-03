@@ -51,7 +51,7 @@ public class Clinic {
         this.setPetCharts(addPetCharts);
     }
 
-    public void nurses_job0816(Nurse n){
+    public void nurses_job0816(Nurse[] n){
         Pet[] pets = new Pet[this.getPetCharts().length];
         for (int i = 0; i < pets.length; i++) {
             if(LocalDate.now().equals(this.getPetCharts()[i].getExternalClinicDate())){
@@ -77,7 +77,7 @@ public class Clinic {
             break;
         }
     }
-    public void nurses_job1624(Nurse n){
+    public void nurses_job1624(Nurse[] n){
         Pet[] pets = new Pet[this.getPetCharts().length];
         for (int i = 0; i < pets.length; i++) {
             pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출

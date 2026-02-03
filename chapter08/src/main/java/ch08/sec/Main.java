@@ -38,8 +38,8 @@ public class Main {
         myClinic.addVeterinarian(vet1);
         myClinic.addVeterinarian(vet2);
 
-        Nurse nur1 = new Nurse("김");
-        Nurse nur2 = new Nurse("박");
+        Nurse nur1 = new Nurse("김",true);
+        Nurse nur2 = new Nurse("박",false);
         myClinic.addNerse(nur1);
         myClinic.addNerse(nur2);
 
@@ -63,6 +63,7 @@ public class Main {
         aniow1.visitAnimal(ani3,nur1);
         aniow1.visitAnimal(ani1,nur1);
         aniow1.visitAnimal(ani2,nur2);
+
 
         myClinic.nurses_job0816(nur1);
     }

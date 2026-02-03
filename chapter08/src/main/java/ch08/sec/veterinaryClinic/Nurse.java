@@ -13,9 +13,11 @@ import java.time.temporal.ChronoUnit;
 public class Nurse extends Human{
     private static int nurse_id = 0;
     private final int id = nurse_id++;
+    private boolean work_from_8_to_16;
 
-    public Nurse(String name) {
+    public Nurse(String name, boolean work_from_8_to_16) {
         super(name);
+        this.work_from_8_to_16 = work_from_8_to_16;
     }
     public void animalOwnersRequestVisitAnimal(Pet a){
         Clinic cli = Clinic.getInstance();

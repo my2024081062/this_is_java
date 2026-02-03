@@ -12,6 +12,7 @@ public class Veterinarian extends Human {
     }
 
     public void AnimalCare(Pet pet, PetOwner ao, Nurse nurse){
+        Clinic cli = Clinic.getInstance();
         for(EnableAnimal enableAnimal : enableAnimals){
             if(pet.getEnableAnimal() == enableAnimal){
                 System.out.println(pet.getName() + "을(를) 진료합니다.");
