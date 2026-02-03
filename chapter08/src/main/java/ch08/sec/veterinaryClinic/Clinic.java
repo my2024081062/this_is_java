@@ -1,5 +1,6 @@
 package ch08.sec.veterinaryClinic;
 
+import ch08.sec.veterinaryClinic.petCharts.CatChart;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -63,22 +64,20 @@ public class Clinic {
     }
 
     public void nurses_job0816(Nurse[] nurses){
-        Pet[] pets = new Pet[this.getPetCharts().length];
-        for (int i = 0; i < pets.length; i++) {
+        for (int i = 0; i < this.getPetCharts().length; i++) {
             if(LocalDate.now().equals(this.getPetCharts()[i].getExternalClinicDate())){
                 this.getPetCharts()[i].setExtern(true);
             }
-            pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
         }
         while (true){ //실험용으로 true
             if(LocalTime.now() == LocalTime.of(8,0,0) || true){
-                for(Pet pet : pets){
-                    System.out.println(pet.getName() + "에게 아침 약을 먹입니다.");
+                for(PetChart petChart : this.getPetCharts()){
+                    System.out.println("아침에 " + petChart.getPet().getName() + "에게" + petChart.getApproximately().getName() +"을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(13,0,0) || true){
-                for(Pet pet : pets){
-                    System.out.println(pet.getName() + "에게 점심 약을 먹입니다.");
+                for(PetChart petChart : this.getPetCharts()){
+                    System.out.println("점심에 " + petChart.getPet().getName() + "에게" + petChart.getApproximately().getName() +"을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(16,0,0) || true){
@@ -86,19 +85,15 @@ public class Clinic {
                     System.out.println(n.getName() + "간호사가 퇴근합니다.");
                 }
                 this.nurses_job1624(this.getNurses1624());
+                break;
             }
-            break;
         }
     }
     public void nurses_job1624(Nurse[] nurses){
-        Pet[] pets = new Pet[this.getPetCharts().length];
-        for (int i = 0; i < pets.length; i++) {
-            pets[i] = this.getPetCharts()[i].getPet(); // 필드 추출
-        }
         while (true){
             if(LocalTime.now() == LocalTime.of(18,0,0) || true){
-                for(Pet pet : pets){
-                    System.out.println(pet.getName() + "에게 저녁 약을 먹입니다.");
+                for(PetChart petChart : this.getPetCharts()){
+                    System.out.println("저녁에 " + petChart.getPet().getName() + "에게" + petChart.getApproximately().getName() +"을 먹입니다.");
                 }
             }
             if(LocalTime.now() == LocalTime.of(24,0,0) || true){
@@ -107,7 +102,6 @@ public class Clinic {
                 }
                 break;
             }
-            break;
         }
     }
 }

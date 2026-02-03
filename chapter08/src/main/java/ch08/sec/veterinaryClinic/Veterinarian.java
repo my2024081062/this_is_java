@@ -1,7 +1,9 @@
 package ch08.sec.veterinaryClinic;
 
+import ch08.sec.veterinaryClinic.petCharts.*;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -21,19 +23,20 @@ public class Veterinarian extends Human {
                 System.out.println(pet.getName() + "을(를) 진료합니다.");
                 if(pet.isCareNeed()){
                     int day = (int)(Math.random()*4);
+                    Approximately approximately = new Approximately(pet);
                     if(LocalTime.now().getHour() >= 8 && LocalTime.now().getHour() < 16){
                         int headcount = cli.getNurses0816().length;
                         if(headcount == 0) {
                             return;
                         }
-                        cli.getNurses0816()[(int)(Math.random()*headcount)].veterinarianRequestHospitalizationAnimal(pet,ao,this,day);
+                        cli.getNurses0816()[(int)(Math.random()*headcount)].veterinarianRequestHospitalizationAnimal(pet,ao,approximately,this,day);
                     }
                     else if(LocalTime.now().getHour() >= 16){
                         int headcount = cli.getNurses1624().length;
                         if(headcount == 0) {
                             return;
                         }
-                        cli.getNurses1624()[(int)(Math.random()*headcount)].veterinarianRequestHospitalizationAnimal(pet,ao,this,day);
+                        cli.getNurses1624()[(int)(Math.random()*headcount)].veterinarianRequestHospitalizationAnimal(pet,ao,approximately,this,day);
                     }
                     System.out.println(pet.getName() + "을(를) " + (day == 0 ? "당일" : day + "일") + " 입원 시켰습니다.");
                 }

@@ -23,7 +23,7 @@ public class Nurse extends Human{
         Clinic cli = Clinic.getInstance();
         if(LocalTime.now().getHour() >= 15 && LocalTime.now().getHour() <= 20){
             for(PetChart ac : cli.getPetCharts()){
-                if(a.getId() == ac.getAnimalId()){
+                if(a.getId() == ac.getPet().getId()){
                     if(ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())]) {
                         ac.getVisitable()[(int) ChronoUnit.DAYS.between(ac.getEnterClinicDate(), LocalDate.now())] = false;
                         System.out.println("방문 요청을 처리했습니다.");
@@ -39,26 +39,26 @@ public class Nurse extends Human{
         }
     }
 
-    public void veterinarianRequestHospitalizationAnimal(Pet pet, PetOwner petOwner, Veterinarian veterinarian, int day){
+    public void veterinarianRequestHospitalizationAnimal(Pet pet, PetOwner petOwner,Approximately approximately ,Veterinarian veterinarian, int day){
         Clinic cli = Clinic.getInstance();
         PetChart ac = switch (pet.getEnableAnimal()){
             case EnableAnimal.CAT -> {
-                yield new CatChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                yield new CatChart(pet,veterinarian,petOwner, approximately, LocalDate.now(),LocalDate.now().plusDays(day));
             }
             case EnableAnimal.DOG -> {
-                yield new DogChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                yield new DogChart(pet,veterinarian,petOwner, approximately,LocalDate.now(),LocalDate.now().plusDays(day));
             }
             case EnableAnimal.CHICKEN -> {
-                yield new ChickenChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                yield new ChickenChart(pet,veterinarian,petOwner, approximately,LocalDate.now(),LocalDate.now().plusDays(day));
             }
             case EnableAnimal.RABBIT -> {
-                yield new RabbitChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                yield new RabbitChart(pet,veterinarian,petOwner, approximately,LocalDate.now(),LocalDate.now().plusDays(day));
             }
             case EnableAnimal.PARROT -> {
-                    yield new ParrotChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                    yield new ParrotChart(pet,veterinarian,petOwner, approximately,LocalDate.now(),LocalDate.now().plusDays(day));
             }
             case EnableAnimal.HEDGEHOG -> {
-                yield new HedgehogChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+                yield new HedgehogChart(pet,veterinarian,petOwner, approximately,LocalDate.now(),LocalDate.now().plusDays(day));
             }
         };
         cli.addAnimalChart(ac);
