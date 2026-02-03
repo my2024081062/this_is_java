@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class HedgehogChart extends PetChart{
     public final EnableAnimal enableAnimal = EnableAnimal.HEDGEHOG;
-    public HedgehogChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate, EnableAnimal enableAnimal) {
+    public HedgehogChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate) {
         super(pet, veterinarian, animalOwner, enterClinicDate, externalClinicDate);
     }
 }

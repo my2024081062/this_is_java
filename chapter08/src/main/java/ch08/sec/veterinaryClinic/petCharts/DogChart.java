@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class DogChart extends PetChart{
     public final EnableAnimal enableAnimal = EnableAnimal.DOG;
-    public DogChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate, EnableAnimal enableAnimal) {
+    public DogChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner, LocalDate enterClinicDate, LocalDate externalClinicDate) {
         super(pet, veterinarian, animalOwner, enterClinicDate, externalClinicDate);
     }
 }

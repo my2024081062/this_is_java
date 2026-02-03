@@ -1,5 +1,6 @@
 package ch08.sec.veterinaryClinic;
 
+import ch08.sec.veterinaryClinic.petCharts.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,7 +39,26 @@ public class Nurse extends Human{
 
     public void veterinarianRequestHospitalizationAnimal(Pet pet, PetOwner petOwner, Veterinarian veterinarian, int day){
         Clinic cli = Clinic.getInstance();
-        PetChart ac = new PetChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+        PetChart ac = switch (pet.getEnableAnimal()){
+            case EnableAnimal.CAT -> {
+                yield new CatChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+            case EnableAnimal.DOG -> {
+                yield new DogChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+            case EnableAnimal.CHICKEN -> {
+                yield new ChickenChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+            case EnableAnimal.RABBIT -> {
+                yield new RabbitChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+            case EnableAnimal.PARROT -> {
+                    yield new ParrotChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+            case EnableAnimal.HEDGEHOG -> {
+                yield new HedgehogChart(pet,veterinarian,petOwner,LocalDate.now(),LocalDate.now().plusDays(day));
+            }
+        };
         cli.addAnimalChart(ac);
     }
 }
