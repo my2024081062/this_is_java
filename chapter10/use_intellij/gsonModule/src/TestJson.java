@@ -17,5 +17,7 @@ public class TestJson {
         int[] values = { 1 };
         System.out.println(gson.toJson(values));
         System.out.println(gson.toJson(care));
+
+
     }
 }

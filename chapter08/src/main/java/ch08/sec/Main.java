@@ -1,4 +1,4 @@
-package ch08;
+package ch08.sec;
 import ch08.sec.veterinaryClinic.*;
 
 public class Main {
