@@ -23,7 +23,8 @@
             <version>1.18.42</version>
             <scope>provided</scope>
         </dependency>
-        <!-- 모듈을 dependency로 추가해야 main에서 사용가능 -->
+        <!--사용할 모듈을 사용하는 모듈의 pom.xml에서 dependency로 추가해야 사용이 가능하다 -->
+        <!--project structure에서 사용할 모듈을 추가하기만 하면 안됨. pom.xml에 명시해줘야함.-->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>gson_module</artifactId>
