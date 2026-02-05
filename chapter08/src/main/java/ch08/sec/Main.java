@@ -54,9 +54,8 @@ public class Main {
         PetOwner aniow2 = new PetOwner("이", aniow2SPet);
 
 
-        aniow1.requestCareAnimal(ani1,vet1,nur1);
-        aniow1.requestCareAnimal(ani2,vet1,nur2);
-
+        aniow1.requestCareAnimal(ani1,vet2,nur1);
+        aniow1.requestCareAnimal(ani2,vet2,nur2);
         aniow2.requestCareAnimal(ani3,vet1,nur1);
         aniow1.visitAnimal(ani1);
         aniow1.visitAnimal(ani3);

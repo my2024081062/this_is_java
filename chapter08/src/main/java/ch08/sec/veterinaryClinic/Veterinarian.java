@@ -2,11 +2,13 @@ package ch08.sec.veterinaryClinic;
 
 import ch08.sec.veterinaryClinic.petCharts.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
+@Setter
 public class Veterinarian extends Human {
     private static int veterinarian_id = 0;
     private final int id = veterinarian_id++;
@@ -18,8 +20,10 @@ public class Veterinarian extends Human {
 
     public void AnimalCare(Pet pet, PetOwner ao){
         Clinic cli = Clinic.getInstance();
+        boolean b = false;
         for(EnableAnimal enableAnimal : enableAnimals){
-            if(pet.getEnableAnimal() == enableAnimal){
+            if(pet.getEnableAnimal() == enableAnimal || pet.getEnableAnimal() == EnableAnimal.DOG){
+                b=true;
                 System.out.println(pet.getName() + "을(를) 진료합니다.");
                 if(pet.isCareNeed()){
                     int day = (int)(Math.random()*4);
@@ -46,6 +50,8 @@ public class Veterinarian extends Human {
             }
             break;
         }
-        System.out.println("이 동물은 진료할 수 없습니다.");
+        if(!b){
+            System.out.println("이 동물은 진료할 수 없습니다.");
+        }
     }
 }

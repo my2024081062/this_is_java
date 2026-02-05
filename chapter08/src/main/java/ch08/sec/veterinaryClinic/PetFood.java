@@ -6,7 +6,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PetFood {
+    protected EnableAnimal enableAnimal = null;
     private int amount = 0;
+    protected PetFood(EnableAnimal enableAnimal){
+        this.enableAnimal = enableAnimal;
+    }
+    public PetFood(){
+        this(null);
+    }
     public void addFood(int amount){
         this.setAmount(getAmount()+amount);
     }

@@ -20,19 +20,27 @@ public class PetChart {
     private LocalDate enterClinicDate;
     private LocalDate externalClinicDate;
     private boolean[] visitable;
-    private boolean isExtern;
-    private LocalTime eatFoodTime;
+    private boolean Extern;
+    private LocalTime[] eatFoodTimes;
     private int eatFoodAmount;
 
     public PetChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner,Approximately approximately,
-                    LocalDate enterClinicDate, LocalDate externalClinicDate,LocalTime eatFoodTime,int eatFoodAmount) {
+                    LocalDate enterClinicDate, LocalDate externalClinicDate,LocalTime[] eatFoodTimes,int eatFoodAmount) {
         this.pet = pet;
         this.veterinarian = veterinarian;
         this.animalOwner = animalOwner;
         this.approximately = approximately;
         this.enterClinicDate = enterClinicDate;
         this.externalClinicDate = externalClinicDate;
-        visitable = new boolean[(int) ChronoUnit.DAYS.between(this.getEnterClinicDate(), this.getExternalClinicDate())+1];
+        this.visitable = new boolean[(int) ChronoUnit.DAYS.between(this.getEnterClinicDate(), this.getExternalClinicDate())+1];
         Arrays.fill(visitable, true);
+        this.eatFoodTimes = eatFoodTimes;
+        this.eatFoodAmount = eatFoodAmount;
+    }
+    public PetChart(Pet pet, Veterinarian veterinarian, PetOwner animalOwner,Approximately approximately,
+                    LocalDate enterClinicDate, LocalDate externalClinicDate) {
+        this(pet,veterinarian,animalOwner,approximately,enterClinicDate,externalClinicDate
+            , new LocalTime[]{LocalTime.of(8,0,0),LocalTime.of(13,0,0),LocalTime.of(18,0,0)}
+            ,1);
     }
 }
