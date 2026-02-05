@@ -4,7 +4,7 @@ import com.mjc813.banking.BankAccount;
 import com.mjc813.banking.IMachine;
 import com.mjc813.banking.MachineNotWorkingException;
 import com.mjc813.student.Student;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
