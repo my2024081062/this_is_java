@@ -1,6 +1,6 @@
 package org.example.ch12;
 
-public class DoSomething {
+public class DoCh12Example {
     public void doSomething() throws Exception{
         Member member = new Member(null);
         member.member();

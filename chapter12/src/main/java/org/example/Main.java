@@ -1,8 +1,7 @@
 package org.example;
 
 import org.example.ch12.DoExit;
-import org.example.ch12.DoSomething;
-import org.example.ch15.Hash;
+import org.example.ch12.DoCh12Example;
 
 
 public class Main {
@@ -38,8 +37,8 @@ public class Main {
 //        hash1.hash2();
 //        hash1.hash3();
 
-        DoSomething doSomething = new DoSomething();
-        doSomething.doSomething();
+        DoCh12Example doCh12Example = new DoCh12Example();
+        doCh12Example.doSomething();
 
         DoExit doExit = new DoExit();
         doExit.doExit();
