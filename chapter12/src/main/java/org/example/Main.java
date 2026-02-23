@@ -2,7 +2,8 @@ package org.example;
 
 import org.example.ch12.DoExit;
 import org.example.ch12.DoCh12Example;
-
+import org.example.aNewCh12.*;
+import org.example.check.DoMethods;
 
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException, Exception{
@@ -37,10 +38,39 @@ public class Main {
 //        hash1.hash2();
 //        hash1.hash3();
 
-        DoCh12Example doCh12Example = new DoCh12Example();
-        doCh12Example.doSomething();
+//        DoCh12Example doCh12Example = new DoCh12Example();
+//        doCh12Example.doSomething();
+//
+//        DoExit doExit = new DoExit();
+//        doExit.doExit();
 
-        DoExit doExit = new DoExit();
-        doExit.doExit();
+//        UseBoxing useBoxing = new UseBoxing();
+//        useBoxing.boxingAndUnBoxing();
+//        useBoxing.valueCompare();
+//
+//        UseMath useMath = new UseMath();
+//        useMath.math();
+//        useMath.random();
+//
+//        UseDays useDays = new UseDays();
+//        useDays.useDateClasses();
+//
+//        UseFormat useFormat = new UseFormat();
+//        useFormat.decimal();
+//        useFormat.simpleDate();
+//
+//        UseRegex useRegex = new UseRegex();
+//        useRegex.pattern();
+//
+//        UseReflection useReflection = new UseReflection();
+//        useReflection.getClassSimpleInfo();
+//        useReflection.getClassInfo();
+//        useReflection.getResourceURL();
+//
+//        UseAnnotation useAnnotation = new UseAnnotation();
+//        useAnnotation.useAnnotation();
+
+        DoMethods doMethods = new DoMethods();
+        doMethods.doChecks();
     }
 }
