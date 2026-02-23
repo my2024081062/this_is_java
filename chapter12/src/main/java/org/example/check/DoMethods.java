@@ -39,7 +39,7 @@ public class DoMethods {
         System.out.println(avg);
 
         long endTime = System.nanoTime();
-        System.out.println("실행 시간: " + (endTime - startTime) / 100000000.0 + "초");
+        System.out.println("실행 시간: " + (endTime - startTime) / 1000000000.0 + "초");
     }
 
     public void doCheck09(){
