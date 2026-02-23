@@ -55,8 +55,6 @@ public class DoMethods {
         }
         System.out.println(str);
 
-        str = "";
-
         StringBuilder sbr = new StringBuilder();
         for(int i = 0; i <=100;i++){
             sbr.append(i);
