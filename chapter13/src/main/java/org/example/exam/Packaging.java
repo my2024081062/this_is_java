@@ -4,14 +4,12 @@ import lombok.Getter;
 @Getter
 public class Packaging<T> {
     private final Object[] list;
-    @SuppressWarnings("unchecked")
     public Packaging(){
-        this.list = (T[]) new Object[10];
+        this.list = new Object[10];
     }
-
     private int index = -1;
     public void add(T obj){
-        if( this.index >= this.list.length){
+        if( this.index >= this.list.length-1){
             return;
         }
         this.list[++index] = obj;
@@ -21,6 +19,9 @@ public class Packaging<T> {
         if( this.index < 0){
             return null;
         }
-        return (T) this.list[index--];
+        //remove할 때 형변환
+        T value = (T) list[index];
+        list[index--] = null;
+        return value;
     }
 }
