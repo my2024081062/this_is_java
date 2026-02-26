@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.exam.InputNintendoGame;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -13,9 +12,7 @@ public class Main {
 //        System.out.println(a[0]);
         Collect collect = new Collect();
         collect.collect();
-
-        InputNintendoGame inputNintendoGame = new InputNintendoGame();
-        inputNintendoGame.work();
+        System.out.println();
     }
 }
 
