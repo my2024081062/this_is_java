@@ -1,0 +1,47 @@
+package org.example.ch17;
+import java.util.*;
+import java.util.stream.IntStream;
+
+public class Six {
+    public void run(){
+        List<Student> list = Arrays.asList(
+            new Student("hgd",85)
+            ,new Student("hgd",92)
+            ,new Student("hgd",87));
+
+        list.stream()
+            .mapToInt(Student::getScore)
+            .forEach(System.out::println);
+        System.out.println();
+
+        int[] intAry =  {1,2,3,4,5};
+        IntStream intStream1 = Arrays.stream(intAry);
+        intStream1.asDoubleStream().forEach(System.out::println);
+        System.out.println();
+        intStream1 = Arrays.stream(intAry);
+        intStream1.boxed().forEach(obj -> System.out.println(obj.intValue()));
+        System.out.println();
+
+        List<String> list1 = new ArrayList<>();
+        list1.add("this is java");
+        list1.add("i am a best developer");
+
+        list1.stream()
+            .flatMap(data -> Arrays.stream(data.split(" ")))
+            .forEach(System.out::println);
+        System.out.println();
+
+        List<String> list2 = Arrays.asList("10, 20, 30", "40, 50");
+        list2.stream()
+            .flatMapToInt(data -> {
+                String[] strArr = data.split(",");
+                int[] intArr = new int[strArr.length];
+                for (int i = 0; i < strArr.length; i++) {
+                    intArr[i] = Integer.parseInt(strArr[i].trim());
+                }
+                return Arrays.stream(intArr);
+            })
+            .forEach(System.out::println);
+        System.out.println();
+    }
+}

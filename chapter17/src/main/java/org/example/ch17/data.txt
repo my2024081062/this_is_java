@@ -1,0 +1,5 @@
+{"pno"=1, "name"="상풍1", "company"="멋진 회사", "price"=1926}
+{"pno"=2, "name"="상풍2", "company"="멋진 회사", "price"=4392}
+{"pno"=3, "name"="상풍3", "company"="멋진 회사", "price"=1210}
+{"pno"=4, "name"="상풍4", "company"="멋진 회사", "price"=2383}
+{"pno"=5, "name"="상풍5", "company"="멋진 회사", "price"=4444}
