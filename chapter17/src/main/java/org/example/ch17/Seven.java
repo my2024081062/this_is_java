@@ -1,7 +1,7 @@
 package org.example.ch17;
 import java.util.*;
 import java.util.stream.Stream;
-public class Seven {
+public class Seven extends Decimal{
     public void run(){
         List<Student> list = new ArrayList<>();
         list.add(new Student("hgd",30));

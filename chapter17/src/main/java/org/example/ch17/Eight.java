@@ -1,6 +1,6 @@
 package org.example.ch17;
 import java.util.*;
-public class Eight {
+public class Eight extends Decimal{
     public void run(){
         int[] intArr =  {1,2,3,4,5};
         Arrays.stream(intArr)

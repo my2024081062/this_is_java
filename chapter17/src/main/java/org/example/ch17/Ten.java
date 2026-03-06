@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public class Ten {
+public class Ten extends Decimal{
     public void run(){
         int[] intArr =  {1,2,3,4,5};
         long count = Arrays.stream(intArr)
@@ -47,7 +47,7 @@ public class Ten {
                     .getAsDouble();
         }
         catch (Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
 
         OptionalDouble optionalDouble = list.stream()

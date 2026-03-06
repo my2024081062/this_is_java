@@ -2,7 +2,7 @@ package org.example.ch17;
 
 import java.util.Arrays;
 
-public class Nine {
+public class Nine extends Decimal {
     public void run(){
         int[] intArr =  {2,4,6};
         boolean result = Arrays.stream(intArr)

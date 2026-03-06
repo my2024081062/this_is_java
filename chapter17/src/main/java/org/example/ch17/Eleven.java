@@ -3,7 +3,7 @@ package org.example.ch17;
 import java.util.Arrays;
 import java.util.List;
 
-public class Eleven {
+public class Eleven extends Decimal{
     public void run(){
         List<Student> list = Arrays.asList(
                 new Student("hgd",92)

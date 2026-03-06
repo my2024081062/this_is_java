@@ -1,6 +1,6 @@
 package org.example.ch17;
 import java.util.*;
-public class Three {
+public class Three extends Decimal{
     public void run(){
         List<Student> list = Arrays.asList(
             new Student("hgd",10)

@@ -3,7 +3,7 @@ package org.example.ch17;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class One {
+public class One extends Decimal {
     public void run(){
         Set<String> set = new HashSet<>();
         set.add("hgd");

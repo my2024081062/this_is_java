@@ -6,7 +6,7 @@ import java.nio.charset.*;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-public class Fore {
+public class Fore extends Decimal{
     private static int sum;
 
     public void run(){

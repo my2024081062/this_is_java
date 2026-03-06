@@ -2,7 +2,7 @@ package org.example.ch17;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Six {
+public class Six extends Decimal{
     public void run(){
         List<Student> list = Arrays.asList(
             new Student("hgd",85)
