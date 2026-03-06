@@ -37,3 +37,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### createdExamFile
+*.db
+*.dat
+*.jpg
+*.txt
