@@ -3,8 +3,7 @@ package org.example.networking;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class InetAddressExample implements Run {
-    @Override
+public class InetAddressExample {
     public void run() {
         try{
             InetAddress local = InetAddress.getLocalHost();
@@ -17,5 +16,7 @@ public class InetAddressExample implements Run {
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static void main(String[] args) {
     }
 }
