@@ -24,6 +24,7 @@ public class ServerApp {
     public static void main(String[] args){
         try {
             ServerApp serverApp = new ServerApp();
+            Scanner s = new Scanner(System.in);
             while (true) {
                 Socket socket = serverApp.accept();
 
@@ -35,7 +36,6 @@ public class ServerApp {
                         String msg = dis.readUTF(); // 2.받기
                         System.out.println("Client \n" + msg);
 
-                        Scanner s = new Scanner(System.in);
                         StringBuilder str = new StringBuilder();
                         String tmp;
                         System.out.println("메시지를 보내고 싶으면 Z를 누른 후 엔터키를 누르세요.");
@@ -46,10 +46,8 @@ public class ServerApp {
                             }
                             str.append(tmp).append("\n");
                         } while (true);
-                        s.close();
                         dos.writeUTF(str.toString()); //1.보내기
                         dos.flush();
-
                     } catch (Exception e) {
                         System.err.println(e.getMessage());
                     }
