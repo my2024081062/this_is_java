@@ -22,14 +22,23 @@ public class ClientApp2 {
     }
     public void connect() throws IOException {
 //        this.socket.bind(new InetSocketAddress("localhost",59999)); //ip와 포트 정보를 묶음
-        this.socket.connect(new InetSocketAddress("localhost",59999)); //진짜 접속
+        this.socket.connect(new InetSocketAddress("localhost",59997)); //진짜 접속
         this.dis = new DataInputStream(this.socket.getInputStream());
         this.dos = new DataOutputStream(this.socket.getOutputStream());
     }
-    public void close() throws IOException {
-        dos.close();
-        dis.close();
-        this.socket.close();
+    public void close() {
+        try {
+            dos.close();
+        } catch (Exception e) {
+        }
+        try {
+            dis.close();
+        } catch (Exception e) {
+        }
+        try {
+            this.socket.close();
+        } catch (Exception e) {
+        }
     }
     public String read(){
         String str = null;
@@ -37,17 +46,18 @@ public class ClientApp2 {
             str = this.dis.readUTF();
         } catch (IOException e) {
             System.err.println(e.getMessage());
+            System.exit(-938);
         }
         return str;
     }
 
-    public void send(){
-        try (Scanner s = new Scanner(System.in)) {
+    public void send(Scanner scanner){
+        try {
             StringBuilder str = new StringBuilder();
             String tmp;
             System.out.println("메시지를 보내고 싶으면 Z를 누른 후 엔터키를 누르세요.");
             do {
-                tmp = s.nextLine();
+                tmp = scanner.nextLine();
                 if (tmp.equals("Z")){
                     break;
                 }
@@ -62,19 +72,22 @@ public class ClientApp2 {
     }
 
     public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+        ClientApp1 clientApp = null;
         try {
-            ClientApp2 clientApp = new ClientApp2();
+            clientApp = new ClientApp1();
             clientApp.connect();
 
-            clientApp.send(); //1.보내기
+            clientApp.send(scanner); //1.보내기
 
             String msg = clientApp.read(); //2.받기
             System.out.println("Server \n" + msg);
-
-            clientApp.close();
         }
         catch (Exception e){
             System.err.println(e.getMessage());
+        } finally {
+            clientApp.close();
+            scanner.close();
         }
     }
 }

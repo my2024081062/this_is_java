@@ -10,7 +10,7 @@ public class ServerApp {
     private final ServerSocket serverSocket;
 
     public ServerApp() throws IOException {
-        this.serverSocket = new ServerSocket(59999);
+        this.serverSocket = new ServerSocket(59998);
     }
 
     public Socket accept() throws IOException{

@@ -21,7 +21,7 @@ public class ClientApp2 {
     }
     public void connect() throws IOException {
 //        this.socket.bind(new InetSocketAddress("localhost",59999)); //ip와 포트 정보를 묶음
-        this.socket.connect(new InetSocketAddress("localhost",59999)); //진짜 접속
+        this.socket.connect(new InetSocketAddress("localhost",59998)); //진짜 접속
         this.dis = new DataInputStream(this.socket.getInputStream());
         this.dos = new DataOutputStream(this.socket.getOutputStream());
     }

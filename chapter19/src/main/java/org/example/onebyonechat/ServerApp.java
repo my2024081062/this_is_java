@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerApp {
     private final ServerSocket serverSocket;
 
     public ServerApp() throws IOException {
-        this.serverSocket = new ServerSocket(59999);
+        this.serverSocket = new ServerSocket(59997);
     }
 
     public Socket accept() throws IOException{
@@ -24,9 +25,10 @@ public class ServerApp {
     public static void main(String[] args){
         try {
             ServerApp serverApp = new ServerApp();
-            Scanner s = new Scanner(System.in);
-            while (true) {
+            AtomicBoolean nonQuit = new AtomicBoolean(true);
+            while (nonQuit.get()) {
                 Socket socket = serverApp.accept();
+                Scanner scanner = new Scanner(System.in);
 
                 new Thread(() -> {
                     try (
@@ -40,8 +42,12 @@ public class ServerApp {
                         String tmp;
                         System.out.println("메시지를 보내고 싶으면 Z를 누른 후 엔터키를 누르세요.");
                         do {
-                            tmp = s.nextLine();
+                            tmp = scanner.nextLine();
                             if (tmp.equals("Z")){
+                                break;
+                            }
+                            if(tmp.equals("Q")){
+                                nonQuit.set(false);
                                 break;
                             }
                             str.append(tmp).append("\n");
@@ -53,6 +59,7 @@ public class ServerApp {
                     }
                 }).start();
             }
+            serverApp.close();
         }
         catch (Exception e){
             System.err.println(e.getMessage());
