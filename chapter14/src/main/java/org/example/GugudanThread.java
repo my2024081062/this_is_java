@@ -1,6 +1,6 @@
 package org.example;
 
-public class Gugudan extends Thread{
+public class GugudanThread extends Thread{
     @Override
     public void run() {
         for (int i = 7; i <= 9; i++) {

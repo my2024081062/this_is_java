@@ -17,16 +17,12 @@ public class Main {
 //        });
 //        thread1.start();
         //3
-        Gugudan gugudan = new Gugudan();
-        Thread thread2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                gugudan(4,6,50);
-            }
-        });
+        GugudanThread gugudanThread = new GugudanThread();
+        GugudanRunnable gugudanRunnable = new GugudanRunnable();
+
         gugudan(2,3,50);
-        thread2.start();
-        gugudan.start();
+        gugudanRunnable.run();
+        gugudanThread.start();
     }
 
     private static void doThread1(){
