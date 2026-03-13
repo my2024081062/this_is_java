@@ -1,6 +1,9 @@
 package org.example;
 
+import org.example.task5.Input;
+import org.example.task6.PrintGugudan;
 import org.example.thread1.*;
+import org.example.thread2.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,13 +19,27 @@ public class Main {
 //            }
 //        });
 //        thread1.start();
-        //3
-        GugudanThread gugudanThread = new GugudanThread();
-        GugudanRunnable gugudanRunnable = new GugudanRunnable();
-
-        gugudan(2,3,50);
-        gugudanRunnable.run();
-        gugudanThread.start();
+//        //3
+//        GugudanThread gugudanThread = new GugudanThread();
+//        GugudanRunnable gugudanRunnable = new GugudanRunnable();
+//
+//        gugudan(2,3,50);
+//        gugudanRunnable.run();
+//        gugudanThread.start();
+//        //4
+//        PrintOneLetter printOneLetter = PrintOneLetter.getPrintOneLetter();
+//        InputOneLetter inputOneLetter = new InputOneLetter();
+//        inputOneLetter.start();
+//        printOneLetter.start();
+//        //5
+//        Input input = new Input();
+//        input.input();
+//        //6
+//        PrintGugudan printGugudan = new PrintGugudan();
+//        printGugudan.printGugudan();
+        Solution solution = new Solution();
+        int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+        solution.solution(nums,"left");
     }
 
     private static void doThread1(){
@@ -50,5 +67,8 @@ public class Main {
             }
         }
     }
-
+    private static void doThread2(){
+        SynchronizedExample synchronizedExample = new SynchronizedExample();
+        synchronizedExample.synchronizedExample();
+    }
 }
