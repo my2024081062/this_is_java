@@ -5,6 +5,28 @@ import org.example.thread1.*;
 public class Main {
     public static void main(String[] args) {
 //        doThread1();
+//        // 1
+//        gugudan(2,9,100);
+//        // 2
+//        gugudan(2,4,50);
+//        Thread thread1 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                gugudan(5,9,50);
+//            }
+//        });
+//        thread1.start();
+        //3
+        Gugudan gugudan = new Gugudan();
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gugudan(4,6,50);
+            }
+        });
+        gugudan(2,3,50);
+        thread2.start();
+        gugudan.start();
     }
 
     private static void doThread1(){
@@ -20,4 +42,17 @@ public class Main {
         YieldExample yieldExample = new YieldExample();
         yieldExample.yieldExample();
     }
+
+    private static void gugudan(int start, int end, int sleep){
+        for (int i = start; i <= end; i++) {
+            for (int j = 1; j <= 9; j++) {
+                System.out.println(i + " * " + j  + " = " + i*j);
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
+    }
+
 }
