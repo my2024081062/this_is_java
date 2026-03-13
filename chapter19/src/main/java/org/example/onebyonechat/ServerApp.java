@@ -31,6 +31,8 @@ public class ServerApp {
                 Scanner scanner = new Scanner(System.in);
 
                 new Thread(() -> {
+                    // 익명 쓰레드에서 메인의 변수를 못 사용 하는 이유: 메인이 다 끝나고 실행 될 수 있기 때문에
+                    // final로 만들어서 종료되어도 메모리에 남아 있게해야함.
                     try (
                         DataInputStream dis = new DataInputStream(socket.getInputStream());
                         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
