@@ -33,4 +33,4 @@ replay_pid*
 ## db ##
 *mysql-data
 *postgresql-data
-*mariadb-data
+*mariadb_data
