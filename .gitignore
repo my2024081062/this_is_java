@@ -29,3 +29,8 @@ replay_pid*
 ### gradle ###
 **.gradle
 **gradle/
+
+## db ##
+*mysql-data
+*postgresql-data
+*mariadb-data
