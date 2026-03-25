@@ -102,10 +102,10 @@ h1 {
 .itemData{
   background-color: rgba(147, 112, 216, 0.2);
 }
-#id {
-  display: none;
-  visibility: hidden;
-}
+/*#id {*/
+/*  display: none;*/
+/*  visibility: hidden;*/
+/*}*/
 
 @media (min-width: 768px) {
   #inputDatas {
