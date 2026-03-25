@@ -96,7 +96,7 @@ class NintendoGame {
 
   createGameData(forAdd) {
     return forAdd == "forAdd" ? { id: NintendoGame.#uniqueId++, name: $("#name").val(), genre: $("#genre").val(), grade: $("#grade").val(), price: $("#price").val(), imgUrl: $("#imgUrl").val() }
-      : { id: $("#id").val(), name: $("#name").val(), genre: $("#genre").val(), grade: $("#grade").val(), price: $("#price").val(), imgUrl: $("#imgUrl").val() };
+      : { id: $("#id").val(), name: $("#name").val(), genre: $("#genre").val(), grade: $("#grade").val(), price: parseInt($("#price").val()), imgUrl: $("#imgUrl").val() };
   }
   
   addGame() {
@@ -109,8 +109,6 @@ class NintendoGame {
     // this.#gameList.push(newGame);
     // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
     this.insertData(newGame);
-    this.clearInputBox();
-    this.printList();
   }
 
   updateGame() {
@@ -173,6 +171,7 @@ class NintendoGame {
   }
 
   insertData(newGame) {
+      let self = this;
     // 1. 화면에서는 JSON 데이터를 서버 URL 과 Method POST 로 전송하는 Jquery AJAX 를 구현해야 한다.
     // 2. 웹서버에서는 서버 URL 와 Method POST 와 JSON 데이터를 받아들이는 컨트롤러를 구현해야 한다.
     // 3. 웹서버 컨트롤러는 DataBase Service 에 inset 하는 동작을 실행해야 한다.
@@ -190,7 +189,8 @@ class NintendoGame {
 	    // 요청 성공 시 실행
 	    console.log("성공:", data);
 //	    $("#result").text(data.message);
-        this.clearInputBox();
+        self.clearInputBox();
+        self.printList();
 	})
 	.fail(function(jqXHR, textStatus, errorThrown) {
 	    // 요청 실패 시 실행
