@@ -5,4 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GameMybatis {
     void insertData(GameDto gameDto);
+    void updateData(GameDto gameDto);
 }
