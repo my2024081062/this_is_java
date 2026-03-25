@@ -3,10 +3,9 @@ package com.mjc813.chapter21.gamecrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class GameRestController {
@@ -35,6 +34,27 @@ public class GameRestController {
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CommonResponse(101,"UpdateFail"));
+        }
+    }
+    @PostMapping("/api/delete-data")
+    @ResponseBody
+    public ResponseEntity<CommonResponse> deleteData(@RequestBody GameDto gameDto){
+        try {
+            System.out.println("deleteData" + gameDto.toString());
+            this.gameService.deleteData(gameDto);
+            return ResponseEntity.ok(new CommonResponse(2,"Delete"));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CommonResponse(102,"DeleteFail"));
+        }
+    }
+
+    @PostMapping("/api/get-all-games")
+    public List<GameDto> getAllGames(){
+        try {
+            return this.gameService.getAllGames();
+        } catch (Exception e) {
+            throw new RuntimeException("실패");
         }
     }
 }

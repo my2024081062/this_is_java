@@ -1,9 +1,24 @@
 class NintendoGame {
   static #uniqueId = 3;
-  #gameList = [
-    { id: 1, name: "마리오 골프", genre: "S", grade: "ALL", price: 20000, imgUrl: "https://pimg.mk.co.kr/news/cms/202504/06/news-p.v1.20250404.ad221f845db2489a86c2ff50f32c53fa_P1.png" },
-    { id: 2, name: "젤다의전설", genre: "R", grade: "ALL", price: 20000, imgUrl: "https://store.nintendo.co.kr/media/catalog/product/cache/3be328691086628caca32d01ffcc430a/_/-/_-_-_-_-_-_-nintendo-switch-2-editiond.jpg" },
-  ];
+  #gameList = [{}];
+  setList(){
+      let self = this;
+      $.ajax({
+          url: "/api/get-all-games",  // your backend URL to fetch all games
+          type: "POST",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify({})
+      })
+          .done(function(dataList) {
+              self.#gameList = dataList;
+              self.printList();
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+              console.log("게임 목록 가져오기 실패:", textStatus);
+              alert("게임 목록을 불러오는데 실패했습니다.");
+          });
+  }
 
   printList() {
     $("#listDataBlock").empty();
@@ -24,7 +39,6 @@ class NintendoGame {
       </div>
     `)
     this.#gameList.forEach((item) => {
-      // 배열을 순환하면서 item 을 class="frame-2" 태그 안의 자식 태그로 추가한다.
       $("#listDataBlock").append(this.printRow(item));
     });
   }
@@ -95,10 +109,16 @@ class NintendoGame {
   }
 
   createGameData(forAdd) {
-    return forAdd == "forAdd" ? { id: NintendoGame.#uniqueId++, name: $("#name").val(), genre: $("#genre").val(), grade: $("#grade").val(), price: $("#price").val(), imgUrl: $("#imgUrl").val() }
-      : { id: $("#id").val(), name: $("#name").val(), genre: $("#genre").val(), grade: $("#grade").val(), price: parseInt($("#price").val()), imgUrl: $("#imgUrl").val() };
+    return {
+        id: forAdd == "forAdd" ? NintendoGame.#uniqueId++ : $("#id").val()
+        , name: $("#name").val()
+        , genre: $("#genre").val()
+        , grade: $("#grade").val()
+        , price: $("#price").val()
+        , imgUrl: $("#imgUrl").val()
+    }
   }
-  
+
   addGame() {
     // 사용자 입력 데이터가 유효한지 검증해야 한다. 유효하지 않으면 경고창 띄우고 리턴;
     if(this.checkInputDataIsError())
@@ -136,39 +156,19 @@ class NintendoGame {
     if(this.checkInputDataIsError())
       return;
     // gameList 배열에서 기존의 id 번호랑 같은 원소를 찾는다.
-    let findIndex = this.#gameList.findIndex((item) => {
-      return item.id * 1 === $("#id").val() * 1; //여기서 input id="id"가 일치하는지 찾기 때문에 0이 있어도 이상한 값 추가 안되고 리턴
-    })
-    if (findIndex === -1)
-      return;
-    else
-      // 찾는객체를 gameList 배열에서 삭제한다.
-      this.#gameList.splice(findIndex, 1);
-    // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
-    $("#showImage").attr("src", "../bin.png");
-    this.printList();
-    this.clearInputBox();
+    // let findIndex = this.#gameList.findIndex((item) => {
+    //   return item.id * 1 === $("#id").val() * 1; //여기서 input id="id"가 일치하는지 찾기 때문에 0이 있어도 이상한 값 추가 안되고 리턴
+    // })
+    // if (findIndex === -1)
+    //   return;
+    // else
+    //   // 찾는객체를 gameList 배열에서 삭제한다.
+    //   this.#gameList.splice(findIndex, 1);
+    // // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
+    // $("#showImage").attr("src", "../bin.png");
+    let deletedGame = this.createGameData("");
+    this.deleteData(deletedGame.id);
   }
-  
-  clearInputBox() {
-    $("#id").val(0);
-    $("#name").val("");
-    $("#genre").prop("selectedIndex", 0);
-    $("#grade").prop("selectedIndex", 0);
-    $("#price").val("");
-    $("#imgUrl").val("");
-  }
-
-  setData2InputBox(game) {
-    $("#id").val(game.id);
-    $("#name").val(game.name);
-    $("#genre").val(game.genre);
-    $("#grade").val(game.grade);
-    $("#price").val(game.price);
-    $("#imgUrl").val(game.imgUrl);
-    $("#showImage").attr("src", game.imgUrl);
-  }
-
   insertData(newGame) {
       let self = this;
     // 1. 화면에서는 JSON 데이터를 서버 URL 과 Method POST 로 전송하는 Jquery AJAX 를 구현해야 한다.
@@ -189,7 +189,7 @@ class NintendoGame {
 	    console.log("성공:", data);
 //	    $("#result").text(data.message);
         self.clearInputBox();
-        self.printList();
+        self.setList();
 	})
 	.fail(function(jqXHR, textStatus, errorThrown) {
 	    // 요청 실패 시 실행
@@ -212,32 +212,76 @@ class NintendoGame {
           // 요청 성공 시 실행
           alert("성공:", data);
           //$("#result").text(data.message);
-          self.printList();
+          self.setList();
           self.clearInputBox();
       }).fail(function(jqXHR, textStatus, errorThrown) {
           // 요청 실패 시 실행
           alert("실패:", textStatus);
       }).always(function() {
-              // 성공/실패 관계없이 항상 실행
-              // console.log("요청 완료");
+          // 성공/실패 관계없이 항상 실행
+          // console.log("요청 완료");
       });
   }
+  deleteData(gameId) {
+      let self = this;
+      $.ajax({
+          url: "/api/delete-data"
+          , type: "POST"
+          , dataType: "json"
+          , data: JSON.stringify({id: gameId})
+          , contentType: "application/json"
+      })
+      .done(function(data, textStatus, jqXHR) {
+          // 요청 성공 시 실행
+          alert("성공:", data);
+          //$("#result").text(data.message);
+          self.setList();
+          self.clearInputBox();
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+          // 요청 실패 시 실행
+          alert("실패:", textStatus);
+      })
+      .always(function() {
+          // 성공/실패 관계없이 항상 실행
+          // console.log("요청 완료");
+      });
+  }
+
   printOneGame(id) {
     // 화면의 id 값으로 gameList배열에서 찾는다. let id값 = $("#id").val();, let 찾은원소 = this.#gameList.find(() => {});
     let findGame = this.#gameList.find((game) => {
       return game.id * 1 === id * 1;
     });
-    if (findGame === undefined)
-      return;
+    if (findGame === undefined){
+    }
     else
       this.setData2InputBox(findGame);
+  }
+
+  setData2InputBox(game) {
+      $("#id").val(game.id);
+      $("#name").val(game.name);
+      $("#genre").val(game.genre);
+      $("#grade").val(game.grade);
+      $("#price").val(game.price);
+      $("#imgUrl").val(game.imgUrl);
+      $("#showImage").attr("src", game.imgUrl);
+  }
+  clearInputBox() {
+      $("#id").val(0);
+      $("#name").val("");
+      $("#genre").prop("selectedIndex", 0);
+      $("#grade").prop("selectedIndex", 0);
+      $("#price").val("");
+      $("#imgUrl").val("");
   }
 }
 
 $(() => {
   // jquery 실행
   let nint = new NintendoGame();
-  nint.printList();
+  nint.setList();
 
   $("#btnAdd").click((e) => {
     nint.addGame();

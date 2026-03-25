@@ -29,4 +29,15 @@
             , img_url = #{imgUrl}
         WHERE id = #{id}
     </update>
+
+    <delete id="deleteData" parameterType="GameDto">
+        DELETE FROM game_tbl
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getAllGames" parameterType="com.mjc813.chapter21.gamecrud.GameDto">
+        SELECT id, name, genre, grade, price, img_url
+        FROM game_tbl
+        ORDER BY id ASC
+    </select>
 </mapper>
