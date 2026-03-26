@@ -22,6 +22,10 @@ public class GameService {
         this.gameMybatis.deleteData(gameDto);
     }
 
+    public GameDto findById(Integer id) {
+        return this.gameMybatis.findById(id);
+    }
+
     public List<GameDto> getAllGames(){
         return this.gameMybatis.getAllGames();
     }

@@ -48,6 +48,18 @@ public class GameRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CommonResponse(102,"DeleteFail"));
         }
     }
+    @ResponseBody
+    @GetMapping("/api/getdata")
+    public ResponseEntity<CommonResponse> getData(@RequestParam("id") Integer id) {
+        try {
+            System.out.println("getData, id=" + id);
+            GameDto find = this.gameService.findById(id);
+            return ResponseEntity.ok().body(new CommonResponse(0, "OK", find));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CommonResponse(-999, "Server Error", null));
+        }
+    }
 
     @PostMapping("/api/get-all-games")
     public List<GameDto> getAllGames(){

@@ -35,6 +35,12 @@
         WHERE id = #{id}
     </delete>
 
+    <select id="findById" parameterType="Integer" resultType="GameDto">
+        SELECT id, name, genre, grade, price, img_url
+        FROM game_tbl
+        WHERE id = #{id}
+    </select>
+    
     <select id="getAllGames" parameterType="com.mjc813.chapter21.gamecrud.GameDto">
         SELECT id, name, genre, grade, price, img_url
         FROM game_tbl

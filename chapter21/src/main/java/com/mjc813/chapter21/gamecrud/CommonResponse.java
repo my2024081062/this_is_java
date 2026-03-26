@@ -12,4 +12,10 @@ import lombok.ToString;
 public class CommonResponse {
     private int code;
     private String str;
+    private Object resultData;
+    
+    public CommonResponse(int code, String str) {
+        this.code = code;
+        this.str = str;
+    }
 }

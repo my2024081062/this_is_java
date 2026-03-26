@@ -9,5 +9,6 @@ public interface GameMybatis {
     void insertData(GameDto gameDto);
     void updateData(GameDto gameDto);
     void deleteData(GameDto gameDto);
+    GameDto findById(Integer id);
     List<GameDto> getAllGames();
 }
