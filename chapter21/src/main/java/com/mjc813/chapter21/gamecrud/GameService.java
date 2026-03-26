@@ -18,8 +18,8 @@ public class GameService {
         this.gameMybatis.updateData(gameDto);
     }
 
-    public void deleteData(GameDto gameDto){
-        this.gameMybatis.deleteData(gameDto);
+    public void deleteData(Integer id){
+        this.gameMybatis.deleteData(id);
     }
 
     public GameDto findById(Integer id) {

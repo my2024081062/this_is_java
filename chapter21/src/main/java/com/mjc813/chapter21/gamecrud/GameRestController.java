@@ -36,12 +36,12 @@ public class GameRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CommonResponse(101,"UpdateFail"));
         }
     }
-    @PostMapping("/api/delete-data")
+    @DeleteMapping("/api/delete-data")
     @ResponseBody
     public ResponseEntity<CommonResponse> deleteData(@RequestBody GameDto gameDto){
         try {
-            System.out.println("deleteData" + gameDto.toString());
-            this.gameService.deleteData(gameDto);
+            System.out.println("deleteData" + gameDto.getId());
+            this.gameService.deleteData(gameDto.getId());
             return ResponseEntity.ok(new CommonResponse(2,"Delete"));
         }
         catch (Exception e){

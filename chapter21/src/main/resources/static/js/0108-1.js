@@ -231,7 +231,7 @@ class NintendoGame {
         let self = this;
         $.ajax({
             url: "/api/delete-data"
-            , type: "POST"
+            , type: "DELETE"
             , dataType: "json"
             , data: JSON.stringify({id: gameId})
             , contentType: "application/json"

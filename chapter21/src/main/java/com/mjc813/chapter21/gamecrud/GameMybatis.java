@@ -8,7 +8,7 @@ import java.util.List;
 public interface GameMybatis {
     void insertData(GameDto gameDto);
     void updateData(GameDto gameDto);
-    void deleteData(GameDto gameDto);
+    void deleteData(Integer id);
     GameDto findById(Integer id);
     List<GameDto> getAllGames();
 }
