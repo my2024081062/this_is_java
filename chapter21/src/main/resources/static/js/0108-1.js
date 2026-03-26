@@ -3,8 +3,9 @@ class NintendoGame {
   #gameList = [{}];
   setList(){
       let self = this;
+      // select문 ajax
       $.ajax({
-          url: "/api/get-all-games",  // your backend URL to fetch all games
+          url: "/api/get-all-games",
           type: "POST",
           dataType: "json",
           contentType: "application/json",
