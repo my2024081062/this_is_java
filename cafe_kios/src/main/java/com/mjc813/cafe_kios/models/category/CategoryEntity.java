@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(name = "category")
 @Builder
+@Entity(name = "category")
 public class CategoryEntity implements IdName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
