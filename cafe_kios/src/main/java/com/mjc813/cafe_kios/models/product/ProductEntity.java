@@ -1,5 +1,7 @@
 package com.mjc813.cafe_kios.models.product;
 
+import com.mjc813.cafe_kios.models.category.Category;
+import com.mjc813.cafe_kios.models.category.CategoryDto;
 import com.mjc813.cafe_kios.models.category.CategoryEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +26,13 @@ public class ProductEntity implements Product{
 
     @JoinColumn(name = "category_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    private CategoryEntity category;
+    private CategoryEntity category  = new CategoryEntity();
 
     @Column(length = 500, nullable = true)
     private String picture;
+
+    @Override
+    public void setCategory(Category category) {
+        this.category.copyMembers(category,true);
+    }
 }

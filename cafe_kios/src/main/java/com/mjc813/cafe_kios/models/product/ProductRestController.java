@@ -27,11 +27,7 @@ public class ProductRestController {
     @PatchMapping
     public ResponseEntity<ApiResponse<ProductDto>> update(@RequestBody ProductDto newDto) {
         ProductDto result = this.productService.update(newDto);
-        ApiResponse<ProductDto> apiResponse = ApiResponse.<ProductDto>builder()
-            .code(ResponseCode.Success)
-            .message("OK")
-            .responseData(result)
-            .build();
+        ApiResponse<ProductDto> apiResponse = ApiResponse.make(ResponseCode.Success,"OK",result);
         return ResponseEntity.status(200).body(apiResponse);
     }
 }

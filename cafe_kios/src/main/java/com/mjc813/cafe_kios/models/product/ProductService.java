@@ -11,28 +11,26 @@ public class ProductService {
     private final ProductRepository repository;
 //    private final CategoryRepository categoryRepository;
     public ProductDto insert(ProductDto newDto){
-        //JoinColumn은 Entity 타입이기 때문에 categoryRepository 불러서 getId까지 사용함
-//        CategoryEntity category = categoryRepository.findById(newDto.getCategory().getId())
-//            .orElseThrow(() -> new RuntimeException("해당 카테고리가 없습니다. ID:"));
-        ProductEntity newEntity = new ProductEntity();
-        CategoryEntity category = CategoryEntity.builder().id(newDto.getCategory().getId()).build();
-        newEntity.copyMembers(newDto);
-        newEntity.setCategory(category);
+        ProductEntity newEntity = (ProductEntity) new ProductEntity().copyMembers(newDto,true);
         newEntity.setId(null);
-        this.repository.save(newEntity);
 
-        ProductDto result = new ProductDto();
-        result.copyMembers(newEntity);
+        ProductEntity save = this.repository.save(newEntity);
+
+        ProductDto result = (ProductDto) new ProductDto().copyMembers(save,true);
         return result;
     }
 
-    public ProductDto update(ProductDto updateDto) {
-        ProductEntity emptyEntity = new ProductEntity();
-        ProductEntity findEntity = this.repository.findById(updateDto.getId()).orElseThrow(); //업데이트 dto에서 getId로 entity얻고
-        findEntity.copyMembers(updateDto); //dta로 entity를 업데이트
-        this.repository.save(findEntity); //그것을 저장
-        ProductDto result = new ProductDto(); //
-        result.copyMembers(findEntity);
+    public ProductDto update(ProductDto updateDto) {//영속성 문제 가능?
+        //업데이트를 하긴 하지만 null 값이 들어올 수 있으니
+        ProductEntity find = this.repository.findById(updateDto.getId()).orElseThrow();
+        //일단 찾은 걸로 복사 시킨 뒤
+        ProductEntity updateEntity = (ProductEntity) new ProductEntity().copyMembers(find,true);
+        //들어온 Dto로 null값을 제외하고 복사한다.
+        updateEntity.copyMembers(updateDto,false);
+
+        ProductEntity save = this.repository.save(updateEntity);
+
+        ProductDto result = (ProductDto) new ProductDto().copyMembers(save,true);
         return result;
     }
 }

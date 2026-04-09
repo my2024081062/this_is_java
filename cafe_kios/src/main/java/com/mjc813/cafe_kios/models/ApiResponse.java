@@ -14,4 +14,12 @@ public class ApiResponse<T> {
     private ResponseCode code;
     private String message;
     private T responseData;
+
+    public static <T> ApiResponse<T> make(ResponseCode code, String message, T resultData) {
+        return ApiResponse.<T>builder()
+            .code(code)
+            .message(message)
+            .responseData(resultData)
+            .build();
+    }
 }

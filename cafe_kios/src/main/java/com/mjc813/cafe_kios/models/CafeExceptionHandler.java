@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CafeExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ApiResponse<String>> ThrowableHandler(Throwable ex) {
-        ApiResponse<String> apiResponse = ApiResponse.<String>builder()
-            .code(ResponseCode.Fail)
-            .message(ex.getMessage())
-            .responseData(ex.toString())
-            .build();
+    public ResponseEntity<ApiResponse<String>> ThrowableHandler(Throwable throwable) {
+        ApiResponse<String> apiResponse = ApiResponse.make(ResponseCode.Fail,throwable.getMessage(),throwable.toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponse);
     }
 }

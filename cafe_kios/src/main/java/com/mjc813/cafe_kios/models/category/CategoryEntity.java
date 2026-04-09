@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @Builder
 @Entity(name = "category")
-public class CategoryEntity implements IdName {
+public class CategoryEntity implements Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

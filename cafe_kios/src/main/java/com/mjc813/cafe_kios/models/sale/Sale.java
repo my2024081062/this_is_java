@@ -1,6 +1,5 @@
 package com.mjc813.cafe_kios.models.sale;
 
-import com.mjc813.cafe_kios.models.category.IdName;
 import com.mjc813.cafe_kios.models.product.ProductEntity;
 
 import java.time.LocalDateTime;
