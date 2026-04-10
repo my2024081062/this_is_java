@@ -2,10 +2,12 @@ package com.mjc813.cafe_kios.models.product;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository  extends JpaRepository<ProductEntity,Integer> {
+    @EntityGraph(value = "ProductEntity.fetchCat")
     Slice<ProductEntity> findByNameContains(String name, Pageable pageable);
 }

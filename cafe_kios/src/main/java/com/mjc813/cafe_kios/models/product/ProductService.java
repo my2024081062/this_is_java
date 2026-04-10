@@ -52,8 +52,10 @@ public class ProductService {
         Slice<ProductEntity> slice = this.repository.findByNameContains(name, pageable);
         List<ProductEntity> entityList = slice.getContent();
         List<ProductDto> resultList = entityList.stream()
-            .map(productEntity -> (ProductDto)ProductDto.builder().build()
-                .copyMembers(productEntity, true)).toList();
+            .map(productEntity -> (ProductDto)ProductDto.builder()
+                .build()
+                .copyMembers(productEntity, true))
+            .toList();
         return new SliceImpl<>(resultList, pageable, slice.hasNext());
     }
 
