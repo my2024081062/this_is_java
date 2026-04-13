@@ -4,9 +4,7 @@ import com.mjc813.cafe_kios.models.category.CategoryDto;
 import com.mjc813.cafe_kios.models.category.CategoryEntity;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +55,28 @@ public class ProductService {
                 .copyMembers(productEntity, true))
             .toList();
         return new SliceImpl<>(resultList, pageable, slice.hasNext());
+    }
+
+    public List<ProductDto> findByPriceGreaterThan(Integer price) {
+        List<ProductEntity> list = this.repository.findByPriceGreaterThan(price);
+        List<ProductDto> resultList = list.stream()
+            .map(productEntity -> (ProductDto)ProductDto.builder()
+                .build()
+                .copyMembers(productEntity, true))
+            .toList();
+        return resultList;
+    }
+
+    Page<ProductDto> findByCategoryEntity(CategoryDto category, Pageable pageable) {
+        CategoryEntity categoryEntity = (CategoryEntity) new CategoryEntity().copyMembers(category, true);
+        Page<ProductEntity> find = this.repository.findByCategoryEquals(categoryEntity, pageable);
+        List<ProductDto> list = find.getContent().stream()
+            .map( item -> {
+                ProductDto convert = (ProductDto) new ProductDto().copyMembers(item, true);
+                return convert;
+            }).toList();
+        Page<ProductDto> result = new PageImpl<>(list, find.getPageable(), find.getTotalElements());
+        return result;
     }
 
     private @NonNull ProductDto entityToDto(ProductEntity entity){

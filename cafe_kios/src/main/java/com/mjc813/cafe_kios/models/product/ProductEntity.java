@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 @ToString
 @Entity(name = "product")
-@NamedEntityGraph(name = "ProductEntity.fetchCat", attributeNodes = {
+@NamedEntityGraph(name = "ProductEntity.fetchCategory", attributeNodes = {
     @NamedAttributeNode(value = "category")
 })
 public class ProductEntity implements Product{

@@ -2,9 +2,13 @@ package com.mjc813.cafe_kios.models.product;
 
 import com.mjc813.cafe_kios.ResponseCode;
 import com.mjc813.cafe_kios.models.ApiResponse;
+import com.mjc813.cafe_kios.models.category.CategoryDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +54,22 @@ public class ProductRestController {
         Slice<ProductDto> slice = this.productService.findByNameContains(name,pageable);
         ApiResponse<Slice<ProductDto>> apiResponse = ApiResponse.make(ResponseCode.Success,"OK",slice);
         return ResponseEntity.status(200).body(apiResponse);
+    }
+
+    @GetMapping("/price")
+    public ResponseEntity<ApiResponse<List<ProductDto>>> findByPriceGreaterThan(@RequestParam Integer price){
+        List<ProductDto> list = this.productService.findByPriceGreaterThan(price);
+        ApiResponse<List<ProductDto>> apiResponse = ApiResponse.make(ResponseCode.Success,"OK",list);
+        return ResponseEntity.status(200).body(apiResponse);
+    }
+
+    @GetMapping("/cat")
+    public ResponseEntity<ApiResponse<Page<ProductDto>>> findByCategoryEntity(@RequestBody CategoryDto categoryDto
+        , @PageableDefault(page=0, size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<ProductDto> result = this.productService.findByCategoryEntity(categoryDto, pageable);
+        return ResponseEntity.status(200).body(
+            ApiResponse.make(ResponseCode.Success, "ok", result)
+        );
     }
 }

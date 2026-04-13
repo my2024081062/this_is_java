@@ -1,6 +1,6 @@
 package com.mjc813.cafe_kios.models.sale;
 
-import com.mjc813.cafe_kios.models.product.ProductEntity;
+import com.mjc813.cafe_kios.models.product.Product;
 
 import java.time.LocalDateTime;
 
@@ -8,8 +8,8 @@ public interface Sale {
     Integer getId();
     void setId(Integer id);
 
-    ProductEntity getProductId();
-    void setProductId(ProductEntity productId);
+    Product getProduct();
+    void setProduct(Product product);
 
     Integer getQty();
     void setQty(Integer qty);
@@ -20,21 +20,21 @@ public interface Sale {
     LocalDateTime getSaleTime();
     void setSaleTime(LocalDateTime saleTime);
 
-    default Sale copyMembers(Sale src){
-        if(src !=null){
-            if( src.getId() != null){
+    default Sale copyMembers(Sale src, Boolean doCopy){
+        if( src != null){
+            if( doCopy || src.getId() != null){
                 this.setId(src.getId());
             }
-            if( src.getProductId() != null){
-                this.setProductId(src.getProductId());
+            if( doCopy || src.getProduct() != null){
+                this.getProduct().copyMembers(src.getProduct(), doCopy);
             }
-            if( src.getQty() != null){
+            if( doCopy || src.getQty() != null){
                 this.setQty(src.getQty());
             }
-            if( src.getPrice() != null){
+            if( doCopy || src.getPrice() != null){
                 this.setPrice(src.getPrice());
             }
-            if( src.getSaleTime() != null){
+            if( doCopy || src.getSaleTime() != null){
                 this.setSaleTime(src.getSaleTime());
             }
         }
