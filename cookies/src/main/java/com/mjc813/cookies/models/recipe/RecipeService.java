@@ -17,4 +17,28 @@ public class RecipeService {
         RecipeDto result = (RecipeDto) new RecipeEntity().copyMembers(save,true);
         return result;
     }
+
+    public RecipeDto updateRecipe(RecipeDto updateRecipeDto) {
+        RecipeEntity find = this.recipeRepository.findById(updateRecipeDto.getId()).orElseThrow();
+
+        RecipeEntity updateRecipeEntity = (RecipeEntity) new RecipeEntity().copyMembers(find,true);
+        updateRecipeEntity.copyMembers(updateRecipeDto,false);
+
+        RecipeEntity save = recipeRepository.save(updateRecipeEntity);
+
+        RecipeDto result = (RecipeDto) new RecipeEntity().copyMembers(save,true);
+        return result;
+    }
+
+    public RecipeDto findById(Long id) {
+        RecipeEntity findEntity = this.recipeRepository.findById(id).orElseThrow();
+        RecipeDto result = (RecipeDto)new RecipeDto().copyMembers(findEntity, true);
+        return result;
+    }
+
+    public RecipeDto deleteById(Long id) {
+        RecipeDto findDto = this.findById(id);
+        this.recipeRepository.deleteById(id);
+        return findDto;
+    }
 }

@@ -1,9 +1,7 @@
 package com.mjc813.cookies.models.recipe;
 
-import com.mjc813.cookies.models.category.CategoryEntity;
-import com.mjc813.cookies.models.cookie.CookieDto;
+import com.mjc813.cookies.models.common.IdName;
 import com.mjc813.cookies.models.cookie.CookieEntity;
-import com.mjc813.cookies.models.ingredient.IngredientDto;
 import com.mjc813.cookies.models.ingredient.IngredientEntity;
 import com.mjc813.cookies.models.ingredient.IngredientInterface;
 import jakarta.persistence.*;
@@ -62,7 +60,7 @@ public class RecipeEntity implements Recipe{
     }
 
     @Override
-    public void setCookie(CookieDto cookie) {
+    public void setCookie(IdName cookie) {
         if ( cookie == null ) {
             return;
         }

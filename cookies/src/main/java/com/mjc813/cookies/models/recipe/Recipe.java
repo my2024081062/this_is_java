@@ -1,5 +1,6 @@
 package com.mjc813.cookies.models.recipe;
 
+import com.mjc813.cookies.models.common.IdName;
 import com.mjc813.cookies.models.cookie.CookieDto;
 import com.mjc813.cookies.models.ingredient.IngredientDto;
 import com.mjc813.cookies.models.ingredient.IngredientInterface;
@@ -10,8 +11,8 @@ public interface Recipe {
     Long getId();
     void setId(Long id);
 
-    CookieDto getCookie();
-    void setCookie(CookieDto cookie);
+    IdName getCookie();
+    void setCookie(IdName cookie);
 
     Long getCookieId() ;
     void setCookieId(Long cookieId);

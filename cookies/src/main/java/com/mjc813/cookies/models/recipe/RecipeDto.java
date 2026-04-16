@@ -1,5 +1,6 @@
 package com.mjc813.cookies.models.recipe;
 
+import com.mjc813.cookies.models.common.IdName;
 import com.mjc813.cookies.models.ingredient.IngredientDto;
 import com.mjc813.cookies.models.ingredient.IngredientInterface;
 import lombok.*;
@@ -47,7 +48,7 @@ public class RecipeDto implements Recipe{
     }
 
     @Override
-    public void setCookie(CookieDto cookie) {
+    public void setCookie(IdName cookie) {
         if ( cookie == null ) {
             return;
         }
