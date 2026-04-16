@@ -5,6 +5,7 @@ import com.mjc813.cookies.models.cookie.CookieDto;
 import com.mjc813.cookies.models.cookie.CookieEntity;
 import com.mjc813.cookies.models.ingredient.IngredientDto;
 import com.mjc813.cookies.models.ingredient.IngredientEntity;
+import com.mjc813.cookies.models.ingredient.IngredientInterface;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,28 +23,31 @@ public class RecipeEntity implements Recipe{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cookie_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private CookieEntity cookie;
     @Transient
     private Long cookieId;
 
-    @JoinColumn
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ingredient_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private IngredientEntity ingredient;
     @Transient
     private Long ingredientId;
 
-    @Column(length = 5)
+    @Column(name = "unit",length = 5, nullable = false)
     private RecipeUnit unit;
 
-    @Column()
+    @Column(name = "weight",nullable = false)
     private BigDecimal weight;
 
     @Override
     public Long getCookieId() {
         if ( this.cookie == null ) {
             this.cookie = new CookieEntity();
+        }
+        if( this.cookie.getId() != null ) {
+            this.cookieId = this.cookie.getId();
         }
         return this.cookie.getId();
     }
@@ -73,6 +77,9 @@ public class RecipeEntity implements Recipe{
         if ( this.ingredient == null ) {
             this.ingredient = new IngredientEntity();
         }
+        if( this.ingredient.getId() != null ) {
+            this.ingredientId = this.ingredient.getId();
+        }
         return this.ingredient.getId();
     }
 
@@ -86,7 +93,7 @@ public class RecipeEntity implements Recipe{
     }
 
     @Override
-    public void setIngredient(IngredientDto ingredient) {
+    public void setIngredient(IngredientInterface ingredient) {
         if ( ingredient == null ) {
             return;
         }

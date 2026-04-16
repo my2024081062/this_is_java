@@ -2,6 +2,7 @@ package com.mjc813.cookies.models.recipe;
 
 import com.mjc813.cookies.models.cookie.CookieDto;
 import com.mjc813.cookies.models.ingredient.IngredientDto;
+import com.mjc813.cookies.models.ingredient.IngredientInterface;
 
 import java.math.BigDecimal;
 
@@ -10,22 +11,22 @@ public interface Recipe {
     void setId(Long id);
 
     CookieDto getCookie();
-    public void setCookie(CookieDto cookie);
+    void setCookie(CookieDto cookie);
 
-    public Long getCookieId() ;
-    public void setCookieId(Long cookieId);
+    Long getCookieId() ;
+    void setCookieId(Long cookieId);
 
-    public IngredientDto getIngredient() ;
-    public void setIngredient(IngredientDto ingredient);
+    IngredientInterface getIngredient() ;
+    void setIngredient(IngredientInterface ingredient);
 
-    public Long getIngredientId() ;
-    public void setIngredientId(Long ingredientId) ;
+    Long getIngredientId() ;
+    void setIngredientId(Long ingredientId) ;
 
-    public RecipeUnit getUnit() ;
-    public void setUnit(RecipeUnit unit) ;
+    RecipeUnit getUnit() ;
+    void setUnit(RecipeUnit unit) ;
 
-    public BigDecimal getWeight() ;
-    public void setWeight(BigDecimal weight);
+    BigDecimal getWeight() ;
+    void setWeight(BigDecimal weight);
 
     default Recipe copyMembers(Recipe src,Boolean doCopy){
         if(src == null){
