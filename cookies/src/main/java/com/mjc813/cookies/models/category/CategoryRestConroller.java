@@ -37,6 +37,22 @@ public class CategoryRestConroller {
 		);
 	}
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<CategoryDto>> findById(@PathVariable Long id) {
+        CategoryDto result = this.categoryService.findById(id);
+        return ResponseEntity.status(200).body(
+            ApiResponse.make(ResponseCode.select_ok, "ok", result)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<CategoryDto>> deleteById(@PathVariable Long id) {
+        CategoryDto result = this.categoryService.deleteById(id);
+        return ResponseEntity.status(200).body(
+            ApiResponse.make(ResponseCode.delete_ok, "ok", result)
+        );
+    }
+
     @GetMapping("/name-search")
     public ResponseEntity<ApiResponse<Slice<CategoryDto>>> searchByName(@RequestParam String name,
                 @PageableDefault(size = 10,page = 0, sort="id", direction = Sort.Direction.DESC)Pageable pageable){

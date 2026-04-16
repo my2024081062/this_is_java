@@ -30,6 +30,18 @@ public class CategoryService {
 		return result;
 	}
 
+    public CategoryDto findById(Long id) {
+        CategoryEntity find = this.categoryRepository.findById(id).orElseThrow();
+        CategoryDto result = (CategoryDto)new CategoryDto().copyMembers(find, true);
+        return result;
+    }
+
+    public CategoryDto deleteById(Long id) {
+        CategoryDto find = this.findById(id);
+        this.categoryRepository.deleteById(id);
+        return find;
+    }
+
     public Slice<CategoryDto> findByNameContains(String name, Pageable pageable){
         Slice<CategoryEntity> slc = this.categoryRepository.findByNameContains(name,pageable);
         List<CategoryDto> list = slc.getContent().stream()
