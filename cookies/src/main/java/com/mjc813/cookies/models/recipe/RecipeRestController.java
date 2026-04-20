@@ -34,6 +34,7 @@ public class RecipeRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<RecipeDto>> findById(@PathVariable Long id) {
+
         RecipeDto result = this.recipeService.findById(id);
         return ResponseEntity.status(200).body(
             ApiResponse.make(ResponseCode.select_ok, "ok", result)
@@ -56,9 +57,9 @@ public class RecipeRestController {
     }
 
     @GetMapping("/ingredient/{ingredientId}")
-    public ResponseEntity<ApiResponse<Slice<RecipeDto>>> findAllByIngredient(@PathVariable Long ingredientId
+    public ResponseEntity<ApiResponse<Slice<RecipeDto>>> findByIngredient(@PathVariable Long ingredientId
         , @PageableDefault(size = 10,page = 0,sort = "id",direction = Sort.Direction.DESC) Pageable pageable){
-        Slice<RecipeDto> result = this.recipeService.findAllByIngredient(ingredientId,pageable);
+        Slice<RecipeDto> result = this.recipeService.findByIngredient(ingredientId,pageable);
         return ResponseEntity.status(200).body(
             ApiResponse.make(ResponseCode.select_ok, "ok", result));
     }

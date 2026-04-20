@@ -1,7 +1,6 @@
 package com.mjc813.cookies.models.recipe;
 
 import com.mjc813.cookies.models.cookie.CookieEntity;
-import com.mjc813.cookies.models.cookie.CookieRepository;
 import com.mjc813.cookies.models.ingredient.IngredientEntity;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepository;
-    private final CookieRepository cookieRepository;
 
     public RecipeDto insertRecipe(RecipeDto insertRecipeDto) {
         RecipeEntity insertRecipeEntity = (RecipeEntity) new RecipeEntity().copyMembers(insertRecipeDto,true);
@@ -41,7 +39,8 @@ public class RecipeService {
     }
 
     public RecipeDto findById(Long id) {
-        RecipeEntity findEntity = this.recipeRepository.findById(id).orElseThrow();
+        RecipeEntity findEntity = this.recipeRepository.findJoinAllById(id).orElseThrow();
+//        RecipeEntity findEntity = this.recipeRepository.findById(id).orElseThrow();
         RecipeDto result = (RecipeDto)new RecipeDto().copyMembers(findEntity, true);
         return result;
     }
@@ -59,9 +58,9 @@ public class RecipeService {
         return this.getRecipeDtos(slc);
     }
 
-    public Slice<RecipeDto> findAllByIngredient(Long ingredientId, Pageable pageable) {
+    public Slice<RecipeDto> findByIngredient(Long ingredientId, Pageable pageable) {
         IngredientEntity ingredientEntity = IngredientEntity.builder().id(ingredientId).build();
-        Slice<RecipeEntity> slc = this.recipeRepository.findAllByIngredient(ingredientEntity,pageable);
+        Slice<RecipeEntity> slc = this.recipeRepository.findByIngredient(ingredientEntity,pageable);
 
         return this.getRecipeDtos(slc);
     }
