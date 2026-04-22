@@ -42,8 +42,10 @@ public class RecipeEntity implements Recipe{
     @Transient
     private Long ingredientId;
 
-    @Column(name = "unit",length = 5, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unit", length = 5, nullable = false)
     private RecipeUnit unit;
+
 
     @Column(name = "weight",nullable = false)
     private BigDecimal weight;

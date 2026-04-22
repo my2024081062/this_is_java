@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AttachService {
-    private final AttachRestController attachRestController;
+    private final AttachRepository attachRepository;
 }
