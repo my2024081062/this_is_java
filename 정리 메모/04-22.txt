@@ -1,0 +1,30 @@
+04-22
+방어코딩 : setCookieId,getCookieId 중 어느 것이 호출될 지 모르기 때문에 양쪽 다 cookie==null인지 항상 검사해서 null이라면 new Cookie()로 만들고 그 id에 할당한다.
+setter,getter에서는 멤버변수를 직접 호출한다.
+
+서비스에서 항상 Dto로 객체를 받고, 리턴또한 Dto로 해야 한다.
+받은 후에는 Dto에서 Entity로 형변환 해야하는데, 이유는 Repository가 Entity로 값을 받으므로 Entity로 형변환 해야 한다.
+
+mybatis에서 새 id가 만들어질때 keyProperties, use~를 쓰면 정확히 id를 받아올 수 있다
+
+조인을 여러번 해서 가져오는 방법
+1. Entity의 @을 아래와 같이 작성하고
+@NamedEntityGraph(name = "RecipeEntity.fetchCookieIngredient"
+    , attributeNodes = {
+        @NamedAttributeNode(value = "cookie"),
+        @NamedAttributeNode(value = "ingredient", subgraph = "RecipeIngredient.fetchCategory")}
+    , subgraphs = {
+        @NamedSubgraph(name ="RecipeIngredient.fetchCategory", attributeNodes = {
+            @NamedAttributeNode(value = "category")})
+    }
+)
+repository에 실행할 crud에 @EntityGraph(value = "RecipeEntity.fetchCookieIngredient")를 붙인다.
+
+2. repository에 실행할 crud에 @EntityGraph(attributePaths = {"cookie", "ingredient", "ingredient.category"})를 붙힌다.
+
+스프링부트 yaml파일 db와 user와 password가  각각, cookies, cookies_user, cookies9876 일때
+db에서 실행할 문장
+CREATE DATABASE cookies DEFAULT CHARACTER SET utf8mb4;
+CREATE USER 'cookies_user'@'%' IDENTIFIED BY 'cookies9876';
+GRANT ALL PRIVILEGES ON cookies.* TO 'cookies_user'@'%';
+FLUSH PRIVILEGES;
