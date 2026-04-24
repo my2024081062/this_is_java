@@ -66,5 +66,6 @@ public class AttachEntity implements Attach {
             this.cookie = new CookieEntity();
         }
         this.cookie.copyMembers(cookie,true);
+        this.cookieId = cookie.getId();
     }
 }

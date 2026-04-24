@@ -46,5 +46,6 @@ public class CookingDto implements CookingInterface {
 			this.cookie = new CookieDto();
 		}
 		this.cookie.copyMembers(cookie, true);
+        this.cookieId = cookie.getId();
 	}
 }

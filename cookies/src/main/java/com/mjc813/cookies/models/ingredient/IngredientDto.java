@@ -46,5 +46,6 @@ public class IngredientDto implements IngredientInterface {
 			this.category = new CategoryDto();
 		}
 		this.category.copyMembers(category, true);
+        this.categoryId = category.getId();
 	}
 }

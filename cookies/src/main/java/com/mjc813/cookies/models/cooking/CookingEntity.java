@@ -61,5 +61,6 @@ public class CookingEntity implements CookingInterface {
 			this.cookie = new CookieEntity();
 		}
 		this.cookie.copyMembers(cookie, true);
-	}
+	    this.cookieId = cookie.getId();
+    }
 }

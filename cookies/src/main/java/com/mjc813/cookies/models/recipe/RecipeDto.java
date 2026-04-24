@@ -56,6 +56,7 @@ public class RecipeDto implements Recipe{
             this.cookie = new CookieDto();
         }
         this.cookie.copyMembers(cookie, true);
+        this.cookieId = cookie.getId();
     }
 
     @Override
@@ -87,5 +88,6 @@ public class RecipeDto implements Recipe{
             this.ingredient = new IngredientDto();
         }
         this.ingredient.copyMembers(ingredient, true);
+        this.ingredientId = ingredient.getId();
     }
 }

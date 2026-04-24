@@ -79,6 +79,7 @@ public class RecipeEntity implements Recipe{
             this.cookie = new CookieEntity();
         }
         this.cookie.copyMembers(cookie, true);
+        this.cookieId = cookie.getId();
     }
 
     @Override
@@ -110,5 +111,6 @@ public class RecipeEntity implements Recipe{
             this.ingredient = new IngredientEntity();
         }
         this.ingredient.copyMembers(ingredient, true);
+        this.ingredientId = ingredient.getId();
     }
 }

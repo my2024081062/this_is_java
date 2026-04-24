@@ -49,5 +49,6 @@ public class AttachDto implements Attach {
             this.cookie = new CookieDto();
         }
         this.cookie.copyMembers(cookie,true);
+        this.cookieId = cookie.getId();
     }
 }

@@ -58,5 +58,6 @@ public class IngredientEntity implements IngredientInterface {
 			this.category = new CategoryEntity();
 		}
 		this.category.copyMembers(category, true);
+        this.categoryId = category.getId();
 	}
 }
