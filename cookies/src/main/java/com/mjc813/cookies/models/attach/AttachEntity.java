@@ -20,7 +20,7 @@ public class AttachEntity implements Attach {
     private String fileName;
 
     @Column(name = "size", nullable = false)
-    private Long size;
+    private Integer size;
 
     @Column(name = "ext", length = 10, nullable = false)
     private String ext;

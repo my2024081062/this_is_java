@@ -32,6 +32,12 @@ public class CookieService {
 		return result;
 	}
 
+    public CookieDto findById(Long id) {
+        CookieEntity find = this.cookieRepository.findById(id).orElseThrow();
+        CookieDto result = (CookieDto)new CookieDto().copyMembers(find, true);
+        return result;
+    }
+
     public Slice<CookieDto> findByNameContains(String name, Pageable pageable){
         Slice<CookieEntity> slc = this.cookieRepository.findByNameContains(name,pageable);
         List<CookieDto> list = slc.getContent().stream()

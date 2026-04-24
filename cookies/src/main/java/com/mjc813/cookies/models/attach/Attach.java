@@ -10,8 +10,8 @@ public interface Attach {
     String getFileName();
     void setFileName(String fileName);
 
-    Long getSize();
-    void setSize(Long size);
+    Integer getSize();
+    void setSize(Integer size);
 
     String getExt();
     void setExt(String ext);

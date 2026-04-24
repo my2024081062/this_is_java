@@ -14,9 +14,9 @@ import lombok.*;
 public class AttachDto implements Attach {
     private Long id;
     private String fileName;
-    private Long size;
+    private Integer size;
     private String ext;
-    private String StoredName;
+    private String storedName;
     private String path;
     private Long cookieId;
     private CookieDto cookie;
