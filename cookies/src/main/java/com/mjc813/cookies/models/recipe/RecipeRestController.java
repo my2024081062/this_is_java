@@ -34,14 +34,13 @@ public class RecipeRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<RecipeDto>> findById(@PathVariable Long id) {
-
         RecipeDto result = this.recipeService.findById(id);
         return ResponseEntity.status(200).body(
             ApiResponse.make(ResponseCode.select_ok, "ok", result)
         );
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<RecipeDto>> deleteRecipe(@PathVariable Long id) {
         RecipeDto result = this.recipeService.deleteById(id);
         return ResponseEntity.status(200).body(

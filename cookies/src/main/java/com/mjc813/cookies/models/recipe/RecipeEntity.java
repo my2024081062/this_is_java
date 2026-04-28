@@ -31,13 +31,13 @@ public class RecipeEntity implements Recipe{
     private Long id;
 
     @JoinColumn(name = "cookie_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CookieEntity cookie;
     @Transient
     private Long cookieId;
 
     @JoinColumn(name = "ingredient_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private IngredientEntity ingredient;
     @Transient
     private Long ingredientId;

@@ -21,7 +21,9 @@ mybatis에서 새 id가 만들어질때 keyProperties, use~를 쓰면 정확히 
 repository에 실행할 crud에 @EntityGraph(value = "RecipeEntity.fetchCookieIngredient")를 붙인다.
 
 2. repository에 실행할 crud에 @EntityGraph(attributePaths = {"cookie", "ingredient", "ingredient.category"})를 붙힌다.
+@EntityGraph(attributePaths = {"멤버변수이름1", "멤버변수이름2","외래키멤버변수이름1.외래키멤버변수이름2....) 사용하고있는 멤버변수이름과 정확히 일치해야한다.
 
+방법2가 더 편하다.
 스프링부트 yaml파일 db와 user와 password가  각각, cookies, cookies_user, cookies9876 일때
 db에서 실행할 문장
 CREATE DATABASE cookies DEFAULT CHARACTER SET utf8mb4;
@@ -34,7 +36,7 @@ FLUSH PRIVILEGES;
 무조건 @PostMapping으로, 매개변수에는 @RequestPart가 와야함
 
 로그 찍는 방법
-@Slf4j 어노테이션 사용후
+@Slf4j 어노테이션 사용후 //로그를 기록하는 어노테이션
 log.info(String, 데이터);
 -----------------------------
 04-24
@@ -54,15 +56,76 @@ log.info("name={}",~); {}를 쓰면 성능 향상화
 스프링부트 운영서버는 로그 출력 레벨을 자세하게 하려면 warn, 절약하려면 error로 실행
 warn은 용량 초과의 위험
 
-파일은 MultiPartFile 클래스 
-/*
-* dir존재 하면 true 리턴
-@param dir "D:/temp/a/b/c 디렉존재 여부를 체크할 디렉토리 path문자열
-@retrun
-*/
-Path path = Paths.get(dir)
-if(!Files.isDrectory(path)
-retrun false
+파일은 MultiPartFile 클래스로 다룬다
 
-Files.createDirectories(path); (IOException)
-return true
+단위 테스트 : 폴더에 같은 패키지 같은 클래스명으로 같은 메소드로 Test
+assertThat 사용
+
+사용 예시
+String ext1 = this.fileUtil.getExtention("aaaa.jpg");
+assertThat(ext1).isNotNull();
+assertThat(ext1).isEqualTo("jpg");
+
+String ext2 = this.fileUtil.getExtention("aaaa.112.jpg");
+assertThat(ext2).isNotNull();
+assertThat(ext2).isEqualTo("jpg");
+
+String ext3 = this.fileUtil.getExtention("aaaa.jpeg");
+assertThat(ext3).isNotNull();
+assertThat(ext3).isEqualTo("jpeg");
+
+트랜잭션, 롤백
+@Transaction : 스프링 부트에서 트랜잭션 처리를 위한 어노테이션
+이 어노테이션으로 선언된 메소드는 exception이 발생하면 롤백을 시킬 수 있다
+롤백을 발생시키면 db에 업로드 되지 않게 할 수 있다.
+가능한 예외 : RunTimeException(이 예외에서만 롤백 가능), 
+불가능한 예외 : Exception(롤백 불가)
+Exception을 롤백하고싶으면 메소드에 @Transactional(rollbackFor = {롤백하고싶은클래스.class}) 어노테이션을 붙인다.
+롤백 대상을 catch(예외 e) 안에서 다시 던지지 않으면 롤백이 안되기 때문에 throw e를 해야한다.
+
+서버에 파일을 업로드할때 확장명은 올리지 않는다.
+왜냐면 보안이 제대로 지켜지지않을때 파일을 다른 누군가가 볼수도 있다.
+-----------------------------
+04-28
+개발할때 프로젝트 순서
+1. 개념 모델링, 논리 모델링 , 물리모델링
+2. 화면 설계
+3. Dto, Entity, 공통 로직(AA)
+4. Repoitory(JPA/Mybatis)
+5. Service
+6. Controller(REST/Web)
+
+JPA에서 Dto, Entity에서 외래키를 참조할때 클래스에 Join클래스의 Dto/Entity와 Join클래스 Id를 넣어놓는데 이건 JPA를 위한것이다.
+mybtis는 외래키의 Join클래스의 Id만 있어도 된다.
+mybatis를 쓸 경우 조인되는 아이디와 객체의 아이디 값은 항상 같게 해야한다.
+
+JPARepository는 기본적으로 save(),findById(), deleteById(), findAll()를 지원한다.
+JPA에서 조회할때는 select쿼리를 메소드이름으로 만들 수 있다.
+findBy~, findAllBy, 이런 이름으로 메소드를 만들면 select쿼리 실행이 가능
+findBy멤버변수조회조건정렬조건..();
+
+@어노테이션 : 자바에서 컴파일, 빌드시에 도움을 주는 도구
+
+@Transient // JPA에 테이블을 어떤 컬럼에도 연결시키지 않는다.
+
+@RestController json형식으로 데이터를 주고 받는 컨트롤러 클래스로 만들어준다.
+
+@Autowired : 생성자를 따로 적지 않아도 스프링 부트가 인스턴스로 만들어준다, @Service, @Component 어노테이션이 있는 클래스에만 가능하다.
+
+@Mapping : 
+URI => http://주소/aaa/bbb/ccc
+Method => 해당매핑
+요청데이터 => {"id":값, "name":"값2", ...} (Json)
+
+@JoinColumn 외래키임을 표시, @ManyToOne N:1으로 조인 등.. 조인될 Entity객체 위에 적는다. (JPA)
+@ManyToOne(fetch = FetchType.LAZY) 일일이 다 select로 찾아준다.
+@ManyToOne(fetch = FetchType.EAGER) 조인을 만들어준다.
+내가 직접만든 select문은 EAGER를 써도 조인을 해주지 않는다.
+그래서 
+@EntityGraph를 써서 조인으로 가져와라 라고 내가 만든 select문 함수 위에 적어주면 조인을 다시 해준다. (attributePaths ="{외래키멤버변수이름}" 씀)
+
+controller : url만들고 웹서버를 만들어 준다.(컨트롤러에 해당하는 주소를 입력하면 처리해준다.)
+RESTFUL API : http/https로 Json 데이터 통신을 하는 국제 표준방식
+restController : json형식으로 데이터를 주고 받는 컨트롤러.
+RestponseEntity
+
