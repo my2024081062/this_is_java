@@ -8,28 +8,29 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Entity(name = "swimPool")
 public class SwimPoolEntity implements SwimPoolInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 20, nullable = false)
+    @Column(name = "name", length = 20)
     private String name;
 
-    @Column(name = "tel", length = 20, nullable = false)
+    @Column(name = "tel", length = 20)
     private String tel;
 
-    @Column(name = "addr1", length = 50, nullable = false)
+    @Column(name = "addr1", length = 200)
     private String addr1;
 
-    @Column(name = "addr2", length = 10, nullable = false)
+    @Column(name = "addr2", length = 200)
     private String addr2;
 
-    @Column(name = "line", length = 30, nullable = false)
+    @Column(name = "line", length = 200)
     private String line;
 
-    @Column(name = "size", length = 10, nullable = false)
+    @Column(name = "size", length = 50)
     private String size;
 
 

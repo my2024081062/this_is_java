@@ -1,5 +1,7 @@
 package com.mjc813.swim.models.teacher;
 
+import com.mjc813.swim.models.swimPool.SwimPoolDto;
+import com.mjc813.swim.models.swimPool.SwimPoolEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +19,26 @@ public class TeacherService {
         return result;
     }
 
-    public TeacherDto update(TeacherDto updateDto) {
-        TeacherEntity find = this.teacherRepository.findById(updateDto.getId()).orElseThrow();
-
-        TeacherEntity updateEntity = (TeacherEntity) new TeacherEntity().copyMembers(find,true);
-        updateEntity.copyMembers(updateDto,false);
-
-        TeacherEntity save = this.teacherRepository.save(updateEntity);
-
-        TeacherDto result = (TeacherDto) new TeacherDto().copyMembers(save,true);
-        return result;
-    }
-
     public TeacherDto findById(Long id) {
         TeacherEntity find = this.teacherRepository.findJoinAllById(id).orElseThrow();
 
         TeacherDto result = (TeacherDto) new TeacherDto().copyMembers(find,true);
 
+        return result;
+    }
+
+    public TeacherDto update(TeacherDto updateDto) {
+//        TeacherEntity find = this.teacherRepository.findById(updateDto.getId()).orElseThrow();
+//
+//        TeacherEntity updateEntity = (TeacherEntity) new TeacherEntity().copyMembers(find,true);
+
+        TeacherDto find = this.findById(updateDto.getId());
+        TeacherEntity updateEntity = (TeacherEntity) find.copyMembers(updateDto,true);
+        updateEntity.copyMembers(updateDto,false);
+
+        TeacherEntity save = this.teacherRepository.save(updateEntity);
+
+        TeacherDto result = (TeacherDto) new TeacherDto().copyMembers(save,true);
         return result;
     }
 

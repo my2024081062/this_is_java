@@ -3,7 +3,6 @@ package com.mjc813.swim.models.common;
 import lombok.*;
 
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +13,10 @@ public class ApiResponse<T> {
 	private T responseData;
 
 	public static <T> ApiResponse<T> make(ResponseCode code, String msg, T responseData) {
-		return new ApiResponse<T>(code, msg, responseData);
+		return ApiResponse.<T>builder()
+            .responseCode(code)
+            .message(msg)
+            .responseData(responseData)
+            .build();
 	}
 }

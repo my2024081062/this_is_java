@@ -1,6 +1,5 @@
 package com.mjc813.swim.models.teacher;
 
-import com.mjc813.swim.models.swimPool.SwimPoolDto;
 import com.mjc813.swim.models.swimPool.SwimPoolEntity;
 import com.mjc813.swim.models.swimPool.SwimPoolInterface;
 import jakarta.persistence.*;
@@ -23,14 +22,14 @@ public class TeacherEntity implements TeacherInterface{
     @Column(name = "main",length = 5, nullable = false)
     private String main;
 
-    @Column(name = "birth_year",nullable = false)
+    @Column(name = "birth_year")
     private Integer birthYear;
 
     @Transient
     private Long swimPoolId;
 
     @JoinColumn(name = "swim_pool_id", nullable = false)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER) //casCade도 잘 설정 해야함
     private SwimPoolEntity swimPool;
 
     @Override

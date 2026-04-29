@@ -1,6 +1,5 @@
 package com.mjc813.swim.models.teacher;
 
-import com.mjc813.swim.models.swimPool.SwimPoolEntity;
 import com.mjc813.swim.models.swimPool.SwimPoolInterface;
 
 public interface TeacherInterface  {
