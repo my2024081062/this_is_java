@@ -30,3 +30,8 @@ server:
       enabled: true
       force: true
 
+logging:
+  level:
+    root: info
+    com.mjc813.swim: debug
+    org.springframework.web: debug

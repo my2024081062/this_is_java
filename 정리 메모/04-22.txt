@@ -129,3 +129,39 @@ RESTFUL API : http/https로 Json 데이터 통신을 하는 국제 표준방식
 restController : json형식으로 데이터를 주고 받는 컨트롤러.
 RestponseEntity
 
+-----------------------------------------------------------------------------------
+04-29
+Spring Boot Web 서버 프로젝트 개발 시작 (SwimPool Project)
+1. IntelliJ 에서 New Project > Spring Boot > (JDK버전, Maven/Gradle, groupId, artifactId(프로젝트이름), 버전, dependencies 추가(SpringBoot DevTools, Lombok, Spring Configuration Process, Spring Web, Spring Data JPA, MySQL Driver))
+2. Database DDL 언어를 만들어야 한다. create dababase ..., create user ..., create table ...
+다만 JPA 는 create table 은 없더라도 자동으로 테이블을 생성할 수 있다.
+2-1. dbeaver 를 사용하여 root 로 접속하고 SQL 편집기에서 create database, create user 명령어를 실행해야 한다.
+3. application.yml 에 Database 접속정보, charset, 환경설정 정보를 기입한다.
+4. XXXApplication.java 파일을 Debug 로 실행해본다.
+5.globalExceptionHandler 클래스를 공통 패키지에 만든다. 모든 에러를 Json으로 받기 위해
+6.보안을 위해서 기존 Dto, Entity 이외에 RequestDto, ResponseDto를 더 만들어서 관리해야한다.
+7.Entity를 이용하여 @Repository Repository인터페이스를 만들어야한다. extends JpaRepository<Entity, Long(Integer)>, nosql db는 String
+8.Dto crud, findBy컬럼Containing(검색 조회조건, Pageable), Page<Dto>,Slice<Dto> return Dto 메소드를 @Service 서비스클래스에서 만들어야한다.
+9.@RestController 클래스에서 @RequestMapping("사용할 url") 적용,
+메소드 위에 @XXXMapping이 존재해야한다. 인자에도 @RequestBody, @RequestParam같은 어노테이션이 있어야 한다.
+ResponseEntity<CommonResponse<Dto>> insert,update( Dto dto), deleteById,findById(Long id) return ResponseEntity<CommonResponse<Dto>> 
+ResponseEntity<CommonResponse<<Slice<Dto>>> return ResponseEntity<CommonResponse<<Slice<Dto>>> 
+
+로그는 내부 개발자들이 에러를 고치기 위해서 필수로 봐야하는 정보
+클래스위에 @SLf4j를사용하면 로그사용 가능, 메소드 내부에서 log.trace(String msg); log.debug(String); log.info(String); log.warn(String); 
+log.error(String); 
+로그 설정 : 로그레벨설정(위에), 로그출력표현 형태, 로그 파일명, 로그 로테이션(파일을 어떻게 주기적으로 관리할것인가) 로그맥시멈파일사이즈 ... 설정을 스프링부트에서 관리해야한다.
+
+logging:
+  level:
+    root: info
+    com.mjc813.swim.: debug
+    org.springframework.web: warn
+
+Entity나 Dto의 @ToString 주로 로그 출력용
+형변환용 copyMembers의 forced(doCopy) 는 src에 어떤 값이든 넣으라는 용도를 위한 것
+
+DispatcherServlet : 서버 연결을 준비해주는 서블릿클래스
+
+findAll은 쓰지 않는다.
+DBeaver의 커넥션에서 db이름, 유저, 비밀번호로 만드는 것이 좋다.
