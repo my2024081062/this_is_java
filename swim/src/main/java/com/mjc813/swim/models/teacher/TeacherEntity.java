@@ -30,7 +30,7 @@ public class TeacherEntity implements TeacherInterface{
     private Long swimPoolId;
 
     @JoinColumn(name = "swim_pool_id", nullable = false)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private SwimPoolEntity swimPool;
 
     @Override

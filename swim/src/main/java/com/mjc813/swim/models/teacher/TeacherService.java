@@ -21,7 +21,7 @@ public class TeacherService {
         TeacherEntity find = this.teacherRepository.findById(updateDto.getId()).orElseThrow();
 
         TeacherEntity updateEntity = (TeacherEntity) new TeacherEntity().copyMembers(find,true);
-        updateEntity.copyMembers(updateEntity,false);
+        updateEntity.copyMembers(updateDto,false);
 
         TeacherEntity save = this.teacherRepository.save(updateEntity);
 

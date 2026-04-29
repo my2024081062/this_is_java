@@ -24,7 +24,7 @@ public class SwimPoolService {
         SwimPoolEntity find = this.swimPoolRepository.findById(updateDto.getId()).orElseThrow();
 
         SwimPoolEntity updateEntity = (SwimPoolEntity) new SwimPoolEntity().copyMembers(find,true);
-        updateEntity.copyMembers(updateEntity,false);
+        updateEntity.copyMembers(updateDto,false);
 
         SwimPoolEntity save = this.swimPoolRepository.save(updateEntity);
 
