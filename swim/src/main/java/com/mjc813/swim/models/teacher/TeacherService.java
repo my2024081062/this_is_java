@@ -3,7 +3,12 @@ package com.mjc813.swim.models.teacher;
 import com.mjc813.swim.models.swimPool.SwimPoolDto;
 import com.mjc813.swim.models.swimPool.SwimPoolEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeacherService {
@@ -46,5 +51,15 @@ public class TeacherService {
         TeacherDto find = this.findById(id);
         this.teacherRepository.deleteById(id);
         return find;
+    }
+
+    public Slice<TeacherDto> findAllByName(String name, Pageable pageable) {
+        Slice<TeacherEntity> slc = this.teacherRepository.findAllByName(name, pageable);
+        List<TeacherDto> list = slc.stream()
+            .map(entity -> (TeacherDto) new TeacherDto().copyMembers(entity,true))
+            .toList();
+        Slice<TeacherDto> result = new SliceImpl<>(list,slc.getPageable(),slc.hasNext());
+
+        return result;
     }
 }

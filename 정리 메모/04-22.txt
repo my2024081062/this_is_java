@@ -164,4 +164,5 @@ Entity나 Dto의 @ToString 주로 로그 출력용
 DispatcherServlet : 서버 연결을 준비해주는 서블릿클래스
 
 findAll은 쓰지 않는다.
+여러개 찾을때 list 대신 slice, pageable을 쓰는것이 좋다
 DBeaver의 커넥션에서 db이름, 유저, 비밀번호로 만드는 것이 좋다.

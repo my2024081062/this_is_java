@@ -3,6 +3,10 @@ package com.mjc813.swim.models.teacher;
 import com.mjc813.swim.models.common.ApiResponse;
 import com.mjc813.swim.models.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +48,15 @@ public class TeacherRestController {
         TeacherDto result = this.teacherService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(
             ApiResponse.make(ResponseCode.delete_ok,"ok",result)
+        );
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<ApiResponse<Slice<TeacherDto>>> findAllByName(@RequestParam(name = "name") String name
+        , @PageableDefault(size=10, page=0, sort="name", direction= Sort.Direction.ASC) Pageable pageable){
+        Slice<TeacherDto> result = this.teacherService.findAllByName(name,pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(
+            ApiResponse.make(ResponseCode.select_ok,"ok",result)
         );
     }
 }
