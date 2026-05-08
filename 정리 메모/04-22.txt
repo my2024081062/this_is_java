@@ -166,3 +166,133 @@ DispatcherServlet : 서버 연결을 준비해주는 서블릿클래스
 findAll은 쓰지 않는다.
 여러개 찾을때 list 대신 slice, pageable을 쓰는것이 좋다
 DBeaver의 커넥션에서 db이름, 유저, 비밀번호로 만드는 것이 좋다.
+-----------------------------------------------------------------------------------
+
+05-04
+PatchVariable에는 공백이 있으면 안된다.
+기본으로 로그 저장은 톰캣로그에 저장, 따로 만들어야 한다.
+
+프로젝트를 인텔리제이 없이 실행
+bulid후 jar 파일이 생성, jar 파일을 터미널에서 실행하면 실행 가능하다.(java -jar ~.jar)
+취소는 ctrl c 누르기. 로그도 터미널 화면에 나온다.
+~.jar > app.log 를 실행하면 app.log 로그가 나오는 파일이 만들어진다. (스프링부트가 아니라 window에서 만드는것)
+개발서버/운영서버는 보통 리눅스
+(cd  폴더 
+ java -server -jar ~.jar &)
+
+aws활용
+console.aws.com 이동, sign in using root user email 클릭, 이메일, 암호 입력 후 compute(컴퓨팅) > ec2로 이동
+EC2에 대한 서비스(대쉬보드)가 보임, 
+
+Instances(running) : ec2 서비스 현재 사용하는 수
+Elastic IPs : 인터넷 공인 ip 사용중인 수
+Key Pairs : EC2들에게 접속 할 수 있는 개인 키의 개수
+Placement Groups : 그룹 수
+Snapshots : EC2 등인 클라우드 시스템의 현재 상태를 그대로 스냅샷을 찍어서 저장(백업) // (유료 조심) 스냅샷을 찍은 상태일때 돈이 나감 
+Auto Scaling : 자원(CPU,SSD) 쓰는 양을 늘려줌 up, down 있다.
+Instances : ec2 서비스 사용하는 수
+Load balancers : 분산환경 구축 용도 수
+Security groups : 보안?
+Volumes : 저장공간 (사용 거의 안하고 아마존 s3 서비스에서 저장한다.)
+
+서비스를 생성할때 항상 regions(지역)를 확인 // 아시아, 유럽, 북미 등등  
+이 지역에 만든 서버는 다른 지역으로 이동이 불가능.
+
+Launch an instance
+이름입력, cpu, ram, sdd, os, 그 외 기타 서비스 옵션, 무료만 사용할 것.
+
+Key Pair 생성 시 잘 보관, putty-gen으로 만들어서 올릴 수 있다.
+생성할 때 (.pem)openSSH로 맥북, 리눅스용도 / (.ppk) PuTTy로 윈도우 용도.
+만들어진 파일 잘 보관.
+
+network는 기본 세팅을 사용, security group(보안 그룹)도 기존 것을 사용, 없으면 새로 만들어서 사용
+Allow ssh trafic from 0.0.0.0/0 (모든 ip 접속 가능) , 자기의 공인 ip을 안다면 공인 ip를 입력 가능, 그 공인 ip대역에서만 접속 가능.
+보안그룹을 만들었으면 인바운드 규칙 변경해서 22번, 로컬포트 추가할것
+이것을 해야 putty에서 접속 가능.
+
+configure storage(스토리지 구성)
+8기가 gp3
+file System(파일시스템) 
+EFS
+
+VPC가 없으면 새로 만든다. 기존 것이 있다면 써야 서로 통신이 가능
+10.0.0.0/28
+10.0.0.0~10.0.0.15번 ip까지 나의 네트워크 호스트들이 ip를 사용 할 수 있다.
+VPC안에 subnet이 있다면 기존의 것을 사용, 없다면 새로 만들기.
+
+instances에서 관리, connect terminate instance로 완전히 지워야 요금이 안나감
+
+ppk파일 고장
+
+PuTTy로 서버관리
+session에서 ip adress에 퍼블릭 IPv4 주소(3.34.124.234 등록
+putty.exe 실행, connection > ssh . auth > credentials~ 가서 내 ppk등록 
+session에서 save하면 자동으로 불러와짐 그걸 실행, 항상 실행으로 하면 PuTTy에서 관리할 준비 끝.
+cd .ssh /  authorized_keys 파일로 키 관리 (추가등록 및 삭제)
+
+파일질라로 서버 관리
+가장 왼쪽위 버튼(사이트 관리자) 누르고 새 사이트 누르기
+프로토콜 SFTP로 바꿈
+호스트에 퍼블릭 IPv4 주소 등록
+로그온 유형 키파일
+사용자 ubuntu
+키 파일에 내 ppk파일 넣기
+
+---------------------------------------------------------
+05-06
+- Key Pair 가 고장 났을 경우에 새로 만드는 방법
+PuttyGen 을 실행하세요.
+Generate 클릭 하세요
+마우스를 흔드세요
+개인키가 생성됩니다. 이것을 *.ppk 로 저장하세요.
+puttgen 화면의 공용키는 서버의 .ssh/authorized_keys 파일에 내용을 추가하세요.
+- Ubuntu 26.04 에서 JRE 21 설치
+sudo apt update
+sudo apt upgrade
+sudo apt install openjdk-21-jre-headless -y
+java --version
+
+- Ubuntu 26.04 에서 docker 설치
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+독커 설치
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl status docker
+sudo systemctl start docker
+
+자바 실행 프로그램과 독커 준비 끝, 실행 할 자바 프로그램과 docker-compose.yml 파일이 필요
+docker 폴더 밑 mysql(버전) 폴더 만들고 그 밑에 docker-compose.yml 파일 준비해서 만들기
+
+sudo docker compose up -d
+sudo apt install mysql-client-core
+
+------------------------------------
+05-08
+yml 파일 local(내 컴퓨터로 실행), dev(개발 서버로 실행), prod(운영서버에서 환경 변수에 의해 실행) 모드를 여러개 나눌 수 있다. (application-local.yml, application-dev.yml, application-prod.yml)
+prod처럼 환경변수로 하지 않고 직접 입력하면 깃에 올라갈때 보안상의 위험이 있기 때문에 환경변수를 씀. git에 올리지 않게 한다.
+
+port 80,443 기본
+
+메모리가 부족해서 db서버와 백엔드 서버를 나누어서 관리해야할 수도 있음. (A서버에 jre, B서버에 docker와 mysql 따로 설치)
+
+백엔드 서버에서 db서버로 이동하는법
+db서버의 ppk를 pem으로 변경
+백엔드서버에 .ssh폴더로 이동하여 id_rsa이름으로 복붙, chmod 400으로 변경
+db서버의 프라이빗ip로 접속(ssh {ip})
+이러면 백엔드서버에서 db서버로 접속가능
