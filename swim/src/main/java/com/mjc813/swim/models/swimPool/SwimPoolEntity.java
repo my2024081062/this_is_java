@@ -27,8 +27,8 @@ public class SwimPoolEntity implements SwimPoolInterface {
     @Column(name = "addr2", length = 200)
     private String addr2;
 
-    @Column(name = "line", length = 200)
-    private String line;
+    @Column(name = "lanes", length = 200)
+    private String lanes;
 
     @Column(name = "size", length = 50)
     private String size;

@@ -14,6 +14,6 @@ public class SwimPoolDto implements  SwimPoolInterface{
     private String tel;
     private String addr1;
     private String addr2;
-    private String line;
+    private String lanes;
     private String size;
 }

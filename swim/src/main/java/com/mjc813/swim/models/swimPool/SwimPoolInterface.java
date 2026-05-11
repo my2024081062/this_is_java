@@ -22,9 +22,9 @@ public interface SwimPoolInterface {
 
     void setAddr2(String addr2);
 
-    String getLine();
+    String getLanes();
 
-    void setLine(String line);
+    void setLanes(String line);
 
     String getSize();
 
@@ -48,8 +48,8 @@ public interface SwimPoolInterface {
         if(forced || src.getAddr2() != null){
             this.setAddr2(src.getAddr2());
         }
-        if(forced || src.getLine() != null){
-            this.setLine(src.getLine());
+        if(forced || src.getLanes() != null){
+            this.setLanes(src.getLanes());
         }
         if(forced || src.getSize() != null){
             this.setSize(src.getSize());
