@@ -395,3 +395,33 @@ ENTRYPOINT ["java", "-server", "-jar" \
 	, "/원하는 경로/swim-0.0.1-SNAPSHOT.jar"]
 
 EXPOSE 포트번호
+
+-----------------------------------------------------
+05-15
+
+.env 파일은 프로젝트 루트 바로 밑, .env 플러그인 적용
+docker-build에서 .env파일 , docker-compose 파일, Dorkerfile로 docker에서 백엔드와 db 서버 따로 나누어서 만들 수 있음
+
+logback-spring.xml 파일로 로그 설정 가능(자세한것은 java과목 파일)
+
+docker-compse.prod.yml이 실행이 안되던 이유?
+1. .env 플러그인 없음
+2. docker-compose.prod.yml 파일에 
+environment :
+	MYSQL_ROOT_PASSWORD에서 비밀번호가 틀림. (기존에 1234 사용)?
+3.  docker run -d -p 80:80 컨테이너이름 이미지이름으로 실행 << 이게 제일 큰 문제였을듯
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d 이렇게 실행 했어야함.
+
+이렇게 하면 db 정보가 없는 문제가 있음
+init.sql 파일을 같은 위치에 만들고 db, 유저, 패스워드 만드는 그 문장을 넣고
+docker-compse.prod.yml 파일의 volumes 밑에
+  volumes:
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+이렇게 추가해줘야함.
+
+기존것 down시키고 up하면 계속 insert 문장실행하는 문제 (스프링부트가 계속 재 시작)
+
+springboot 4 부터는 schema.sql, data.sql 을 사용하면 안되고, flyway 라는 라이브러리를 사용
+flyway_schema_history 테이블이 자동으로 생성
+
