@@ -29,7 +29,7 @@ services:
     #   context: .
     #   dockerfile: Dockerfile.prod
     container_name: "backend-container"
-    image: "backend-server:0.0.4"
+    image: "backend-server:0.0.7"
     restart: "always"
     ports:
       - "80:80"
