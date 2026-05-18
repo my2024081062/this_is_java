@@ -1,7 +1,7 @@
 package com.mjc813.swim.models.swimPool;
 
-import com.mjc813.swim.models.common.ApiResponse;
-import com.mjc813.swim.models.common.ResponseCode;
+import com.mjc813.swim.common.ApiResponse;
+import com.mjc813.swim.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

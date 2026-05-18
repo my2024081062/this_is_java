@@ -1,4 +1,4 @@
-package com.mjc813.swim.models.common;
+package com.mjc813.swim.common;
 
 public enum ResponseCode {
 	insert_ok,
