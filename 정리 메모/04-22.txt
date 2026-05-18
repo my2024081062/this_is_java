@@ -396,6 +396,12 @@ ENTRYPOINT ["java", "-server", "-jar" \
 
 EXPOSE 포트번호
 
+
+실행은
+docker build -f Dockerfile.prod -t backend-server:0.0.1 (prod.yml 파일의 버전과 동일하게)
+이후
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+docker compose -f docker-compose.prod.yml down
 -----------------------------------------------------
 05-15
 
@@ -423,5 +429,33 @@ docker-compse.prod.yml 파일의 volumes 밑에
 기존것 down시키고 up하면 계속 insert 문장실행하는 문제 (스프링부트가 계속 재 시작)
 
 springboot 4 부터는 schema.sql, data.sql 을 사용하면 안되고, flyway 라는 라이브러리를 사용
-flyway_schema_history 테이블이 자동으로 생성
+sql 쿼리 실행 할 땐 db/migration 폴더에 차례로 실행 할 sql문 앞에 V1__sql.sql 이런식으로 만들어야함
+기존테이블 위에 flyway_schema_history 테이블이 자동으로 생성
+이렇게 할때는 mysql-data폴더가 만들어지는데, 버전 업그레이드를 할때는 이 폴더를 삭제해줘야함
+
+-----------------------------------------------------
+05-18
+beyond compare4 사용, 폴더비교, 파일비교로 개발 시간을 단축가능
+
+간단 최종 정리
+스프링부트를 빌드를 한다. 앱이름-버전.jar 파일이 생성된다.
+앱이름-버전.jar 파일을 docker 만드는 폴더로 복사&붙어넣기 한다.
+docker build -f Dockerfile.prod --env-file .env.prod -t 도커이미지명:버전 .
+
+만들어진 이미지를 다른 사람에게 배포하고 싶을 땐 먼저 자기 계정에 push 해야한다.
+docker tag 도커이미지명 자신의계정명/도커이미지명:버전
+docker push 자신의계정명/도커이미지명:버전
+docker login => 만약에 로그인이 안되어 있으면 로그인을 명령프롬프트로 한다.
+
+push가 완료 되었고 이것을 배포하고 싶으면 docker-compose.yml, .env 파일로 이름을 바꾸고 init.sql까지 3개의 파일을 준비한다.
+image: 부분에 내계정/업로드된 이미지이름으로 (my2024081062/backend-server:0.0.7) 바꾸고
+
+배포 받은 사람은 이 명령만 실행하면 된다.
+docker compose up -d (docker-compose.yml 파일명, .env)
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+도커 콤포즈로 하나의 도커 가상 같은 네트워크에 mysql8 서버와 스프링부트앱 서버 2개가 실행된다.
+
+독커가 가끔 멋대로 로그아웃한다.
+docker login -u my2024081062
+password ~
 
