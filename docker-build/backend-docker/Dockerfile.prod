@@ -11,12 +11,12 @@ COPY ./swimPool /app
 
 EXPOSE ${PORT}
 
-# CMD ["java", "-jar", "/app/swim-0.0.1-SNAPSHOT.jar"]
+# CMD ["java", "-jar", "/app/swim-0.0.8.jar"]
 
 ENV SPRING_PROFILES_ACTIVE=prod
 
 ENTRYPOINT ["java", "-server", "-jar" \
-, "swim-0.0.1-SNAPSHOT.jar" \
+, "swim-0.0.8.jar" \
 , "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
 
 # 첫번째 이미지 빌드

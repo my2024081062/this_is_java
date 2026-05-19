@@ -13,8 +13,8 @@ EXPOSE ${PORT}
 
 # CMD ["java", "-jar", "/app/sb_test-0.0.1-SNAPSHOT.jar"]
 
-ENV SPRING_PROFILES_ACTIVE=prod
+ENV SPRING_PROFILES_ACTIVE=dev
 
 ENTRYPOINT ["java", "-server", "-jar" \
-, "swiml-0.0.1-SNAPSHOT.jar" \
+, "swiml-0.0.8.jar" \
 , "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]

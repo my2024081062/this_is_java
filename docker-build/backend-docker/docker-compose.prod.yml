@@ -9,12 +9,13 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root1234@
+      MYSQL_DATABASE: swim_db
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       TZ: Asia/Seoul
     volumes:
       - ./mysql-data:/var/lib/mysql
-      # 초기화 스크립트
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
       interval: 10s
@@ -29,7 +30,7 @@ services:
     #   context: .
     #   dockerfile: Dockerfile.prod
     container_name: "backend-container"
-    image: "backend-server:0.0.7"
+    image: "backend-server:0.0.11"
     restart: "always"
     ports:
       - "80:80"
