@@ -443,7 +443,7 @@ beyond compare4 사용, 폴더비교, 파일비교로 개발 시간을 단축가
 docker build -f Dockerfile.prod --env-file .env.prod -t 도커이미지명:버전 .
 
 만들어진 이미지를 다른 사람에게 배포하고 싶을 땐 먼저 자기 계정에 push 해야한다.
-docker tag 도커이미지명 자신의계정명/도커이미지명:버전
+docker tag 도커이미지명:버전 자신의계정명/도커이미지명:버전
 docker push 자신의계정명/도커이미지명:버전
 docker login => 만약에 로그인이 안되어 있으면 로그인을 명령프롬프트로 한다.
 
@@ -459,3 +459,63 @@ docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
 docker login -u my2024081062
 password ~
 
+-----------------------------------------------------------
+05-19
+프로젝트를 배포를 하고자 할땐 build.gradle의 version을 계속 올려야한다.
+새 version에 오류가 있을때 이전 버전으로 롤백하기 위해.
+
+.env 파일에 DB_IP=swimpool_mysql8 / 이렇게 적혀있다.
+ localhost 같은 ip 대신 쓸수있는 이유 > 
+1. environment 밑 DB_IP: swimpool_mysql8 을 적어놔서 or 
+2. services 밑에 swimpool_mysql8로 바로 존재하기 때문?
+
+내 컴퓨터 환경에서 docker compose up -d 명령을 실행하면 hub뿐만 아니라 아직 push 안한 이미지 파일도 같이 compose된다.
+그래서 sudo docker compose up -d --no-build 같이 해야 내 hub에 있는 이미지만 된다.
+
+init.sql 없이 environment 밑에 
+      MYSQL_DATABASE: swim_db
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD} 이런 명령을 추가하면 init.sql 없이 가능
+volumes밑에 init.sql~ 삭제
+
+docker-compose.yml의 environment에 MYSQL_USER와 MYSQL_PASSWORD를 적어두면, 도커가 해당 사용자에게 해당 데이터베이스(swim_db)의 모든 권한(ALL PRIVILEGES)을 자동으로 부여,
+GRANT ALL PRIVILEGES ON swim_db.* TO 'swim_user'@'%';
+FLUSH PRIVILEGES; 이런 설정을 따로 적어줄 필요가 없다.
+
+tag할때 버전만 바꾸면 기존 버전과 새 버전 동시 존재, repository 삭제 할 필요없음
+
+서버는 1개만 있어도 된다.
+내 서버에가서 docker 설치
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl status docker
+
+sudo systemctl start docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+원하는 폴더에 가서 .env, docker-compose.yml 파일을 옮기고
+sudo docker compose up -d --no-build 실행
+
+sudo apt install mysql-client-core로 mysql설치후
+mysql -h 127.0.0.1 -u root -p
+show databases; 실행하면 swim_db가 잘 보임.
+
+퍼블릭 ip로 api 보내면 잘 먹힘.
