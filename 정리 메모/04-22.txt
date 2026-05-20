@@ -519,3 +519,44 @@ mysql -h 127.0.0.1 -u root -p
 show databases; 실행하면 swim_db가 잘 보임.
 
 퍼블릭 ip로 api 보내면 잘 먹힘.
+
+-----------------------------------------------------------
+05-21
+compose yml파일 volunms - 마운트 시키는 것과 비슷하다
+
+flyway 사용안하고 entity에 @table(name = "테이블이름") 추가 
+실행하고 싶은 sql파일을 resoures폴더 밑에 schema.sql, data.sql 이런식으로 추가하고
+application.yml 파일에
+spring:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+이렇게 만들면 flyway없이 db가 잘 만들어 진다.
+
+db Dockerfile을 만들어봄. 조건이 init.sql 을 /docker-entrypoint-initdb.d/init.sql 복사하는 도커 이미지이므로 그에 맞춰서 만듬
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 사용할 MySQL 공식 이미지 버전 지정
+FROM mysql:8.4.5
+
+# 개발 환경에 맞게 언어셋 및 타임존 설정 (선택 사항)
+ENV TZ=Asia/Seoul
+
+# 로컬의 init.sql 파일을 컨테이너 내부의 자동 실행 디렉토리로 복사
+COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
+
+# 보안 및 권한 문제 방지를 위해 실행 권한 부여 (필요 시)
+RUN chmod 644 /docker-entrypoint-initdb.d/init.sql
+
+# mysqld로 실행하게 함, 근데 이미 기본으로  mysqld로 실행하고 있어서 따로 설정을 적어줄 필요가 없다.
+ENTRYPOINT ["docker-entrypoint.sh", "mysqld"]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+이렇게 다 만들었으면 db와 server의 이미지 빌드가 2번 필요함.
+docker build -f ./대상폴더/Dockerfile -t 이미지이름:버전 ./대상폴더
+docker build -f ./mysql8/Dockerfile -t mysql:8.4.5 ./mysql8
+docker build -f ./backend-server/Dockerfile -t backend-server:0.0.13 ./backend-server
+
+컴포즈할때는 yml이 하나만 존재, 환경변수는 .env일때
+docker compose -f docker-compose.yml --env-file .env up -d
+이렇게 하면 컨테이너가 만들어진다.
+apidog로 요청 보냈을때 잘 되었음.
