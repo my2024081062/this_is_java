@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 @ToString
 @Entity(name = "swimPool")
+@Table(name = "swimpool")
 public class SwimPoolEntity implements SwimPoolInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

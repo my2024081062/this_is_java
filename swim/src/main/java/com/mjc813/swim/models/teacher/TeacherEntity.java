@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity(name = "teacher")
+@Table(name = "teacher")
 public class TeacherEntity implements TeacherInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
