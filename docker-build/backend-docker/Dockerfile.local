@@ -16,5 +16,5 @@ EXPOSE ${PORT}
 ENV SPRING_PROFILES_ACTIVE=local
 
 ENTRYPOINT ["java", "-server", "-jar" \
-, "swim-0.0.8.jar" \
+, "swim-0.0.12.jar" \
 , "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]

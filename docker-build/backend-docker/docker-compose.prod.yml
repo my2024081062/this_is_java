@@ -26,18 +26,15 @@ services:
       - my_vnetwork
 
   backend-server:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.prod
     container_name: "backend-container"
-    image: "backend-server:0.0.11"
+    image: "backend-server:0.0.13"
     restart: "always"
     ports:
-      - "80:80"
+      - "${PORT}:${PORT}"
     env_file:
       - .env.prod
     environment:
-      DB_IP: swimpool_mysql8
+      DB_IP: ${DB_IP}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       TZ: Asia/Seoul
     depends_on:
