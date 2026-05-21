@@ -35,11 +35,10 @@ CREATE USER 'auth_user'@'%' IDENTIFIED BY 'qwer1234!';
 GRANT ALL PRIVILEGES ON auth_db.* TO 'auth_user'@'%';
 FLUSH PRIVILEGES;
 
-create table member
-(
+create table member(
     id          bigint          private key auto_increment,
-    signid      varchar(20)     not null unique,
-    password    varchar(20)     not null unique,
+    sign_id     varchar(20)     not null,
+    password    varchar(200)    not null,
     email       varchar(200)    not null unique
     valid_email boolean         default false
     create_at   datetime        not null
