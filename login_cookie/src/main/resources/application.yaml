@@ -1,3 +1,35 @@
 spring:
   application:
     name: login_cookie
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/auth_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: auth_user
+    password: qwer1234!
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+#  web:
+#    resources:
+#      add-mappings: true
+
+server:
+  port: 8093
+
+logging:
+  level:
+    root: info
+    com.mjc813.swim: debug
+    org.springframework.web: debug
+
