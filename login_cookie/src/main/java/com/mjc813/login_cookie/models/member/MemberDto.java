@@ -1,14 +1,22 @@
 package com.mjc813.login_cookie.models.member;
 
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-public class MemberDto {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
+public class MemberDto implements IMember{
     private Long id;
     private String signId;
     private String password;
     private String email;
-    private Boolean valid_email;
-    private LocalDateTime create_at;
-    private LocalDateTime update_at;
-    private LocalDateTime delete_at;
+    private Boolean validEmail;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
+    private LocalDateTime deleteAt;
 }
