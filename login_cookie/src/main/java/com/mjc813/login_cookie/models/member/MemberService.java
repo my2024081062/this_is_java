@@ -23,6 +23,12 @@ public class MemberService {
         return result;
     }
 
+    public MemberDto findById(Long id) {
+        MemberEntity find = memberJpaRepository.findById(id).orElseThrow();
+        MemberDto result = (MemberDto) new MemberDto().mapper(find,true);
+        return result;
+    }
+
     public List<MemberDto> findAll() {
         List<MemberEntity> memberEntities = memberJpaRepository.findAll();
         List<MemberDto> memberDtos = memberEntities.stream()
@@ -30,5 +36,17 @@ public class MemberService {
                 member -> (MemberDto) new MemberDto().mapper(member,true))
                 .toList();
         return memberDtos;
+    }
+
+    public MemberDto updateMember(MemberDto memberDto) {
+        MemberDto existing = this.findById(memberDto.getId());
+
+        MemberEntity updateBefore = (MemberEntity) new MemberEntity().mapper(existing,true);
+        updateBefore.mapper(memberDto,false);
+
+        MemberEntity updateAfter = memberJpaRepository.save(updateBefore);
+
+        MemberDto result = (MemberDto) new MemberDto().mapper(updateAfter,true);
+        return result;
     }
 }
