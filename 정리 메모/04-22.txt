@@ -616,6 +616,5 @@ logging:
 이러고 file > settings > Language & frameworks > Schemas andDTDs > JSON schema Mappings 가서
 application.yaml 파일을 추가해야 노란줄 오류가 안뜸
 
-
-
+web server를 만들때는 restController뿐만 아니라 Controller 또한 필요
 

@@ -18,6 +18,12 @@ public interface IMember {
     Boolean getValidEmail();
     void setValidEmail(Boolean validEmail);
 
+    String getValidText();
+    void setValidText(String validText);
+
+    Role getRole();
+    void setRole(Role role);
+
     LocalDateTime getCreateAt() ;
     void setCreateAt(LocalDateTime createAt);
 
@@ -45,6 +51,12 @@ public interface IMember {
         }
         if(isForced || src.getValidEmail() != null){
             this.setValidEmail(src.getValidEmail());
+        }
+        if(isForced || src.getValidText() != null){
+            this.setValidText(src.getValidText());
+        }
+        if(isForced || src.getRole() != null){
+            this.setRole(src.getRole());
         }
         if(isForced || src.getCreateAt() != null){
             this.setCreateAt(src.getCreateAt());

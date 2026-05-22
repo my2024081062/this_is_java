@@ -39,10 +39,11 @@ create table member(
     id          bigint          private key auto_increment,
     sign_id     varchar(20)     not null,
     password    varchar(200)    not null,
-    email       varchar(200)    not null unique
-    valid_email boolean         default false
-    create_at   datetime        not null
-    update_at   datetime        null
+    email       varchar(200)    not null unique,
+    role        varchar(200)    not null,
+    valid_email boolean         default false,
+    create_at   datetime        not null,
+    update_at   datetime        null,
     delete_at   datetime        null
 );
 ```

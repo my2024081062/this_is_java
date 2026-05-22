@@ -20,6 +20,17 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: #brevo의 id
+    password: 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
+    properties:
+      mail:
+        SMTP:
+          auth: true
+          STARTTLS:
+            enable: true
 #  web:
 #    resources:
 #      add-mappings: true

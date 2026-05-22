@@ -1,5 +1,6 @@
 package com.mjc813.login_cookie.models.member;
 
+import com.mjc813.login_cookie.common.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,18 @@ public class MemberService {
     @Autowired
     private MemberJpaRepository memberJpaRepository;
 
-    public MemberDto insertMember(MemberDto memberDto) {
+    public MemberDto insertMember(MemberDto memberDto,boolean isAdmin) {
         MemberEntity insertBefore = (MemberEntity) new MemberEntity().mapper(memberDto,true);
         insertBefore.setId(null);
         insertBefore.setCreateAt(LocalDateTime.now());
-        insertBefore.setValidEmail(false);
+        if ( isAdmin ) {
+            insertBefore.setValidEmail(true);
+            insertBefore.setRole(Role.USER);
+        } else {
+            insertBefore.setValidEmail(false);
+            insertBefore.setRole(Role.GUEST);
+            insertBefore.setValidText(Util.getRandomAllString(12));
+        }
 
         MemberEntity insertAfter = memberJpaRepository.save(insertBefore);
 
@@ -24,8 +32,8 @@ public class MemberService {
     }
 
     public MemberDto findById(Long id) {
-        MemberEntity find = memberJpaRepository.findById(id).orElseThrow();
-        MemberDto result = (MemberDto) new MemberDto().mapper(find,true);
+        MemberEntity found = memberJpaRepository.findById(id).orElseThrow();
+        MemberDto result = (MemberDto) new MemberDto().mapper(found,true);
         return result;
     }
 
@@ -39,9 +47,9 @@ public class MemberService {
     }
 
     public MemberDto updateMember(MemberDto memberDto) {
-        MemberDto existing = this.findById(memberDto.getId());
+        MemberDto found = this.findById(memberDto.getId());
 
-        MemberEntity updateBefore = (MemberEntity) new MemberEntity().mapper(existing,true);
+        MemberEntity updateBefore = (MemberEntity) new MemberEntity().mapper(found,true);
         updateBefore.mapper(memberDto,false);
 
         MemberEntity updateAfter = memberJpaRepository.save(updateBefore);

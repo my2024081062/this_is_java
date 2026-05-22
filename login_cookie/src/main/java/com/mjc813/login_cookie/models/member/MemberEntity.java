@@ -29,6 +29,12 @@ public class MemberEntity implements IMember{
     @Column(name = "valid_email", nullable = false)
     private Boolean validEmail;
 
+    @Column(name = "valid_text", length = 100,  nullable = false)
+    private String validText;
+
+    @Column(name = "role", length = 10, nullable = false)
+    private Role role;
+
     @Column(name = "create_at", nullable = false)
     private LocalDateTime createAt;
 
