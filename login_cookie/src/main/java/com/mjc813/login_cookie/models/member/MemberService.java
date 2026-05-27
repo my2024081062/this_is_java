@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -56,5 +57,16 @@ public class MemberService {
 
         MemberDto result = (MemberDto) new MemberDto().mapper(updateAfter,true);
         return result;
+    }
+
+    public MemberDto findBySignId(String signId) {
+        Optional<MemberEntity> bySignId = this.memberJpaRepository.findBySignId(signId);
+        if ( bySignId.isPresent() ) {
+            MemberEntity member = bySignId.get();
+            MemberDto result = (MemberDto)new MemberDto().mapper(member, true);
+            return result;
+        } else {
+            return null;
+        }
     }
 }

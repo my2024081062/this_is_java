@@ -19,4 +19,11 @@ public class ComResponseDto<T> {
                 .result(data)
                 .build();
     }
+    public static <T> ComResponseDto<T> make(ResponseCode responseCode, T data) {
+        return ComResponseDto.<T>builder()
+                .responseCode(responseCode)
+                .message(responseCode.toString())
+                .result(data)
+                .build();
+    }
 }

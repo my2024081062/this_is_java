@@ -16,12 +16,16 @@ public class CookieTestController {
     public String home(
             HttpServletResponse response
             , @RequestParam String name
-            , @RequestParam String value){
+            , @RequestParam String value
+            , Model model){
         Cookie cookie = new Cookie(name,value);
         cookie.setPath("/cookie");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(120);
         response.addCookie(cookie);
+        model.addAttribute("cookie_time", cookie.getMaxAge());
+        model.addAttribute("cookie_name", cookie.getName());
+        model.addAttribute("cookie_value", cookie.getValue());
         return "info/home";
     }
 
