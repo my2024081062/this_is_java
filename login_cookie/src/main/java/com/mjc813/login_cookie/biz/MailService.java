@@ -22,6 +22,8 @@ import java.util.Map;
 @Slf4j
 @Service
 public class MailService {
+
+	private final String fromEmail = "ish08175@gmail.com";
 	@Autowired
 	private JavaMailSender mailSender;
 	@Autowired
@@ -55,6 +57,7 @@ public class MailService {
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
 		helper.setTo(memberDto.getEmail());
+		helper.setFrom(fromEmail);
 		helper.setSubject("회원가입시 이메일정보로 확인 합니다.");
 		// 두 번째 인자 'true'를 설정해야 HTML 태그가 정상 렌더링됩니다.
 		helper.setText(htmlContent, true);
