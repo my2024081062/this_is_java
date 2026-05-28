@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class MailService {
-	private final String fromEmail = "softagape@gmail.com";
+	private final String fromEmail = "ish08175@gmail.com";
 
 	@Autowired
 	private JavaMailSender mailSender;

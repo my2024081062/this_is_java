@@ -20,58 +20,28 @@ public class MusicRestController {
 	public ResponseEntity<ComResponseDto<MusicDto>> insert(Model model, @RequestBody MusicDto insertDto) {
 //		IMember signedMember = (IMember)model.getAttribute("signedMember");
 		// Model 클래스에 "signedMember" 키에 해당하는 MemberDto 가 존재하는지 찾는다.
-		if ( !this.IsUserOrAdmin(model) ) {
-			// 존재하지 않으면 인가 에러를 출력한다.
+		IMember signedMember = (IMember)model.getAttribute("signedMember");
+		if (signedMember == null || signedMember.getRole().equals("GUEST")) {
 			return ResponseEntity.status(500).body(
-				ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-			);
+					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null));
 		}
-		MusicDto result = this.musicService.insert(insertDto);
+
+		MusicDto result = this.musicService.insert(insertDto,signedMember.getSignId());
 		return ResponseEntity.status(201).body(
-			ComResponseDto.make(ResponseCode.SUCCESS, result)
-		);
-	}
-
-	// role 이 USER 인지 체크
-	private Boolean IsUser(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
-		}
-		if ( !signedMember.getRole().equals("USER") ) {
-			return false;
-		}
-		return true;
-	}
-
-	private Boolean IsUserOrAdmin(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
-		}
-		if ( signedMember.getRole().equals("GUEST") ) {
-			return false;
-		}
-		return true;
-
-	}
-
-	private Boolean IsAdmin(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
-		}
-		if ( !signedMember.getRole().equals("ADMIN") ) {
-			return false;
-		}
-		return true;
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long id) {
-		MusicDto result = this.musicService.findById(id);
-		return ResponseEntity.status(200).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, result)
+		);
+
+	}
+
+	@GetMapping("/{musicId}")
+	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long musicId) {
+		MusicDto find = this.musicService.findById(musicId);
+		if(find == null) {
+			return ResponseEntity.status(500).body(
+					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null));
+		}
+		return ResponseEntity.status(200).body(
+				ComResponseDto.make(ResponseCode.SUCCESS, find)
 		);
 	}
 
@@ -84,6 +54,11 @@ public class MusicRestController {
 			if (signId != null) {
 				// 로그인 되어 있음
 				List<MusicDto> result = this.musicService.findAll();
+				if(result == null) {
+					return ResponseEntity.status(500).body(
+							ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+					);
+				}
 				return ResponseEntity.status(200).body(
 						ComResponseDto.make(ResponseCode.SUCCESS, result)
 				);
@@ -99,4 +74,54 @@ public class MusicRestController {
 			);
 		}
 	}
+
+	@PatchMapping
+	public ResponseEntity<ComResponseDto<MusicDto>> update(Model model, @RequestBody MusicDto insertDto) {
+		IMember signedMember = (IMember)model.getAttribute("signedMember");
+		if (signedMember == null) {
+			return ResponseEntity.status(500).body(
+					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+			);
+		}
+		if(signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(insertDto.getCreateId())) {
+			MusicDto result = this.musicService.update(insertDto,signedMember.getSignId());
+			if(result == null) {
+				return ResponseEntity.status(500).body(
+						ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+				);
+			}
+			return ResponseEntity.status(201).body(
+					ComResponseDto.make(ResponseCode.SUCCESS, result)
+			);
+		}
+		return ResponseEntity.status(500).body(
+				ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+		);
+	}
+
+	@DeleteMapping("/{musicId}")
+	public ResponseEntity<ComResponseDto<MusicDto>> delete(Model model, @PathVariable Long musicId) {
+		IMember signedMember = (IMember)model.getAttribute("signedMember");
+		if (signedMember == null) {
+			return ResponseEntity.status(500).body(
+					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+			);
+		}
+		if(signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(String.valueOf(musicId))) {
+			MusicDto result = this.musicService.delete(musicId,signedMember.getSignId());
+			if(result == null) {
+				return ResponseEntity.status(500).body(
+						ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+				);
+			}
+			return ResponseEntity.status(201).body(
+					ComResponseDto.make(ResponseCode.SUCCESS, result)
+			);
+		}
+		return ResponseEntity.status(500).body(
+				ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+		);
+	}
+
+
 }

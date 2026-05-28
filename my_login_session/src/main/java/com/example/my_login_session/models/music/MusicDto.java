@@ -1,6 +1,8 @@
 package com.example.my_login_session.models.music;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -12,4 +14,11 @@ public class MusicDto implements IMusic {
 	private String title;
 	private String artist;
 	private String playtime;
+
+	private String createId;
+	private LocalDateTime createDt;
+	private String updateId;
+	private LocalDateTime updateDt;
+	private String deleteId;
+	private LocalDateTime deleteDt;
 }
