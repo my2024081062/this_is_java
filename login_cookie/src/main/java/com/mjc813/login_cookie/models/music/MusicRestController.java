@@ -27,7 +27,7 @@ public class MusicRestController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ComResponseDto<MusicDto>> insert(@PathVariable Long id) {
+	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long id) {
 		MusicDto result = this.musicService.findById(id);
 		return ResponseEntity.status(200).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, result)
