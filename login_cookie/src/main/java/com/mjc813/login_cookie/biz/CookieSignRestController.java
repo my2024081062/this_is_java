@@ -32,12 +32,12 @@ public class CookieSignRestController {
 
     @PostMapping("/sign_up")
     public ResponseEntity<ComResponseDto<IMember>> signUp(@RequestBody SignUpDto singUpDto) {
-        MemberDto memberDto = (MemberDto) new MemberEntity().mapper(singUpDto,true);
+        MemberDto memberDto = (MemberDto) new MemberDto().mapper(singUpDto,true);
 
-        this.memberService.insertMember(memberDto,false);
+        MemberDto result = this.memberService.insertMember(memberDto,false);
 
         try {
-            this.mailService.sendHtmlEmail(memberDto);
+            this.mailService.sendHtmlEmail(result);
         } catch (MessagingException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(500).body(
@@ -102,7 +102,7 @@ public class CookieSignRestController {
         return isValid;
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/sign_in")
     public ResponseEntity<ComResponseDto<Boolean>> signin(@RequestBody SignInDto signInDto
             , HttpServletResponse response) throws LoginException {
         Boolean isSign = this.authService.signMember(signInDto);
