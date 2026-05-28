@@ -32,7 +32,6 @@ public class MemberEntity implements IMember{
     @Column(name = "valid_text", length = 100,  nullable = false)
     private String validText;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 10, nullable = false)
     private Role role;
 
