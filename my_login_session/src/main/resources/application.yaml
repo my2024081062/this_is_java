@@ -20,6 +20,12 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  mustache:
+    suffix: .html
+    servlet:
+      cache: false
+      expose-request-attributes: true
+    charset: UTF-8
   mail:
     host: smtp-relay.brevo.com
     port: 587
