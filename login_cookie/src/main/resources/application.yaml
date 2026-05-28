@@ -23,8 +23,8 @@ spring:
   mail:
     host: smtp-relay.brevo.com
     port: 587
-    username: #brevo의 id
-    password: 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
+    username: ac33cb001@smtp-brevo.com
+    password: xsmtpsib-72f712657dc8f773b4f74e4877e9068db1516c27a59ce25222e7164adc73c311-mZQVd7reyJuXrPHw
     properties:
       mail:
         SMTP:

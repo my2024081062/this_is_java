@@ -26,7 +26,7 @@ public class MemberService {
             insertBefore.setValidText(Util.getRandomAllString(12));
         }
 
-        MemberEntity insertAfter = memberJpaRepository.save(insertBefore);
+        MemberEntity insertAfter = this.memberJpaRepository.save(insertBefore);
 
         MemberDto result = (MemberDto) new MemberDto().mapper(insertAfter,true);
         return result;
