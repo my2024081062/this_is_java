@@ -1,6 +1,6 @@
 spring:
   application:
-    name: login_cookie
+    name: login_session
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/auth_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
