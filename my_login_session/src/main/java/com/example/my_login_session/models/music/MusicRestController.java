@@ -1,6 +1,7 @@
 package com.example.my_login_session.models.music;
 
 import com.example.my_login_session.common.ComResponseDto;
+import com.example.my_login_session.common.Mjc813Exception;
 import com.example.my_login_session.common.ResponseCode;
 import com.example.my_login_session.models.member.IMember;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/music")
@@ -34,7 +36,7 @@ public class MusicRestController {
 	}
 
 	@GetMapping("/{musicId}")
-	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long musicId) {
+	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long musicId) throws Mjc813Exception {
 		MusicDto find = this.musicService.findById(musicId);
 		if(find == null) {
 			return ResponseEntity.status(500).body(
@@ -46,19 +48,14 @@ public class MusicRestController {
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<ComResponseDto<List<MusicDto>>> findAll(
+	public ResponseEntity<ComResponseDto<List<MusicDto>>> findAll (
 //			HttpServletRequest request
 			@SessionAttribute(name = "MJC_LOGIN", required = false) String signId
-	) {
+	) throws Mjc813Exception {
 		try {
 			if (signId != null) {
 				// 로그인 되어 있음
 				List<MusicDto> result = this.musicService.findAll();
-				if(result == null) {
-					return ResponseEntity.status(500).body(
-							ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-					);
-				}
 				return ResponseEntity.status(200).body(
 						ComResponseDto.make(ResponseCode.SUCCESS, result)
 				);
@@ -68,6 +65,8 @@ public class MusicRestController {
 						ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
 				);
 			}
+		} catch (Mjc813Exception m8e){
+			throw m8e;
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body(
 					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
@@ -76,20 +75,11 @@ public class MusicRestController {
 	}
 
 	@PatchMapping
-	public ResponseEntity<ComResponseDto<MusicDto>> update(Model model, @RequestBody MusicDto insertDto) {
+	public ResponseEntity<ComResponseDto<MusicDto>> update(Model model, @RequestBody MusicDto insertDto) throws Mjc813Exception{
 		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if (signedMember == null) {
-			return ResponseEntity.status(500).body(
-					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-			);
-		}
-		if(signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(insertDto.getCreateId())) {
+
+		if (signedMember != null && (signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(insertDto.getCreateId()))) {
 			MusicDto result = this.musicService.update(insertDto,signedMember.getSignId());
-			if(result == null) {
-				return ResponseEntity.status(500).body(
-						ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-				);
-			}
 			return ResponseEntity.status(201).body(
 					ComResponseDto.make(ResponseCode.SUCCESS, result)
 			);
@@ -100,23 +90,17 @@ public class MusicRestController {
 	}
 
 	@DeleteMapping("/{musicId}")
-	public ResponseEntity<ComResponseDto<MusicDto>> delete(Model model, @PathVariable Long musicId) {
+	public ResponseEntity<ComResponseDto<MusicDto>> delete(Model model, @PathVariable Long musicId) throws Mjc813Exception {
 		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if (signedMember == null) {
-			return ResponseEntity.status(500).body(
-					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-			);
-		}
-		if(signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(String.valueOf(musicId))) {
+
+		MusicDto find = this.musicService.findById(musicId);
+
+		if (signedMember != null && (signedMember.getRole().equals("ADMIN") || signedMember.getSignId().equals(find.getCreateId()))) {
 			MusicDto result = this.musicService.delete(musicId,signedMember.getSignId());
-			if(result == null) {
-				return ResponseEntity.status(500).body(
-						ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
-				);
-			}
 			return ResponseEntity.status(201).body(
 					ComResponseDto.make(ResponseCode.SUCCESS, result)
 			);
+
 		}
 		return ResponseEntity.status(500).body(
 				ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)

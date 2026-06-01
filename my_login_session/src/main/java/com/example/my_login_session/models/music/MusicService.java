@@ -1,11 +1,13 @@
 package com.example.my_login_session.models.music;
 
+import com.example.my_login_session.common.Mjc813Exception;
+import com.example.my_login_session.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Optional;
 
 @Service
 public class MusicService {
@@ -22,55 +24,66 @@ public class MusicService {
 		return musicDto;
 	}
 
-	public MusicDto findById(Long id) {
-		MusicEntity musicEntity = this.musicJpaRepository.findById(id).orElseThrow();
-		if(musicEntity.getDeleteId() == null){
-			MusicDto find = (MusicDto)new MusicDto().copyMembers(musicEntity, true);
-			return find;
+	public MusicDto findById(Long id) throws Mjc813Exception {
+//		MusicEntity musicEntity = this.musicJpaRepository.findById(id).orElseThrow();
+//		if(musicEntity.getDeleteId() == null){
+//			MusicDto find = (MusicDto)new MusicDto().copyMembers(musicEntity, true);
+//			return find;
+//		}
+//		return null;
+//		repository에서 null인지 체크하게 하면 좋다.
+		Optional<MusicEntity> musicEntity = this.musicJpaRepository.findByIdAndDeleteIdIsNull(id);
+		if (musicEntity.isEmpty()) {
+			throw new Mjc813Exception(ResponseCode.DATA_NOT_FOUND_ERROR,"data is not exist");
 		}
-		return null;
-	}
-
-	public List<MusicDto> findAll() {
-		List<MusicEntity> musicEntities = this.musicJpaRepository.findAll();
-		AtomicBoolean isContainNull = new AtomicBoolean(false);
-		//하나라도 null이면 isContainNull을 true
-		musicEntities.stream().map(MusicEntity::getDeleteId).forEach(deleteId -> {if(deleteId == null)
-			isContainNull.set(true);
-		});
-		//null인게 하나라도 있으니 null 리턴
-		if(isContainNull.get()) {
-			return null;
-		}
-		List<MusicDto> result = musicEntities.stream().map( item -> (MusicDto)new MusicDto().copyMembers(item, true)).toList();
+		MusicDto result = (MusicDto)new MusicDto().copyMembers(musicEntity.get(), true);
 		return result;
 	}
 
-	public MusicDto update(MusicDto musicDto, String signId) {
-		MusicDto found = this.findById(musicDto.getId());
-		if(found == null){
-			return null;
-		}
-		MusicEntity updated = (MusicEntity)new MusicEntity().copyMembers(found, true);
-		updated.copyMembers(musicDto, false);
-		updated.setUpdateId(signId);
-		updated.setUpdateDt(LocalDateTime.now());
+	public List<MusicDto> findAll() throws Mjc813Exception {
+//		List<MusicEntity> musicEntities = this.musicJpaRepository.findAll();
+//		AtomicBoolean isContainNull = new AtomicBoolean(false);
+//		//하나라도 null이면 isContainNull을 true
+//		musicEntities.stream().map(MusicEntity::getDeleteId).forEach(deleteId -> {if(deleteId == null)
+//			isContainNull.set(true);
+//		});
+//		//null인게 하나라도 있으니 null 리턴
+//		if(isContainNull.get()) {
+//			return null;
+//		}
+//		List<MusicDto> result = musicEntities.stream().map( item -> (MusicDto)new MusicDto().copyMembers(item, true)).toList();
+//		return result;
 
-		MusicEntity saved = this.musicJpaRepository.save(updated);
+//		repository에서 null인지 체크하게 하면 좋다.
+		List<MusicEntity> musicEntities = this.musicJpaRepository.findAllByDeleteIdIsNull();
+		if(musicEntities.isEmpty()) {
+			throw new Mjc813Exception(ResponseCode.DATA_NOT_FOUND_ERROR,"data is not exist");
+		}
+		List<MusicDto> result = musicEntities.stream()
+				.map(musicEntity -> (MusicDto) new MusicDto().copyMembers(musicEntity,true))
+				.toList();
+		return result;
+	}
+
+	public MusicDto update(MusicDto musicDto, String signId) throws Mjc813Exception{
+		MusicDto updateDto = this.findById(musicDto.getId());
+		MusicEntity updateEntity = (MusicEntity)new MusicEntity().copyMembers(updateDto, true);
+		updateEntity.copyMembers(musicDto, false);
+		updateEntity.setUpdateId(signId);
+		updateEntity.setUpdateDt(LocalDateTime.now());
+
+		MusicEntity saved = this.musicJpaRepository.save(updateEntity);
 		MusicDto result = (MusicDto)new MusicDto().copyMembers(saved, true);
 		return result;
 	}
 
-	public MusicDto delete(Long musicId, String signId) {
+	public MusicDto delete(Long musicId, String signId) throws Mjc813Exception {
 		MusicDto found = this.findById(musicId);
-		if(found == null){
-			return null;
-		}
-		found.setDeleteId(signId);
-		found.setDeleteDt(LocalDateTime.now());
 //		this.musicJpaRepository.deleteById(found.getId());
-		MusicEntity delete = (MusicEntity)new MusicEntity().copyMembers(found, true);
-		MusicEntity deleted = this.musicJpaRepository.save(delete);
+		MusicEntity deleting = (MusicEntity)new MusicEntity().copyMembers(found, true);
+		deleting.setDeleteId(signId);
+		deleting.setDeleteDt(LocalDateTime.now());
+		MusicEntity deleted = this.musicJpaRepository.save(deleting);
 		MusicDto result = (MusicDto)new MusicDto().copyMembers(deleted, true);
 		return result;
 	}
