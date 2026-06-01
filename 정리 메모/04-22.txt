@@ -651,3 +651,14 @@ web server를 만들때는 restController뿐만 아니라 Controller 또한 필�
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 이런 링크로 request를 보내면 request의 header에 쿠키가 저장되어있다.
 먼저 1번 링크로 접속하지 않으면 쿠키가 없고, cookie.setMaxAge(60);에서 60초간 살아있게 설정했으니 60초가 지나면 다시 쿠키가 사라진다.
+
+06-01
+----------------------------------------------------------------------------------------
+기능을 만들때, 먼저 jpa에서 먼저 기능을 담당하게 할 수 있게 해야한다.
+예를들어, 모든 컬럼을 가져오는데, 특정 속성이 null이 아닌것만 가져오게 한다. 라는 기능을 구현하고 싶다면, 
+서비스의 코드안에서 null인지 검사하는 귀찮은 과정 없이 먼저 jpa에게 맡겨야한다.
+예시 name이 null이 아닌 것을 찾고싶을 때) List<Entity> findAll()로 가져온 다음, 이 리스트안에서 name이 null인지 일일히 검사하게 구현하지 않는다. 
+대신 List<Entity> findAllByNameIsNotNull(); 이렇게 만들면 jpa에서 실제 sql문을
+select * from [table] where name is not null; 이렇게 만들어 준다.
+서비스에서는 jpa의 findAllByNameIsNotNull만 호출하면 알아서 name이 null이 아닌 모든 컬럼만 가져오게 할 수있기에 위처럼 더 효율적으로 만들 수 있다.
+
