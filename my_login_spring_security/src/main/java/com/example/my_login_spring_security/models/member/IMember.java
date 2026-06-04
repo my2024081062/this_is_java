@@ -79,7 +79,7 @@ public interface IMember extends UserDetails {
 	}
 	@Override
 	default Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+		List<GrantedAuthority> roles = new ArrayList<>();
 		if(this.getRole() != null){
 			roles.add(new SimpleGrantedAuthority(this.getRole()));
 		}

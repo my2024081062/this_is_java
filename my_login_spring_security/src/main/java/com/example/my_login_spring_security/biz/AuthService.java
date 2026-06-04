@@ -15,8 +15,8 @@ public class AuthService {
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 
 	public Boolean checkValidEmail(ValidEmailDto validEmailDto) {
 		MemberEntity find = this.memberJpaRepository.findBySignId(validEmailDto.getSignId()).orElseThrow();
@@ -30,18 +30,18 @@ public class AuthService {
 		}
 	}
 
-	public Boolean signMember(SignInDto signInDto) throws LoginException {
-		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
-		if ( !find.getIsValidEmail() ) {
-			throw new LoginException("not valid email");
-		}
-		if ( find.getRole().equals(Role.GUEST.toString()) ) {
-			throw new LoginException("doesn't need login");
-		}
-//		if ( signInDto.getPassword().equals(find.getPassword()) ) {
-//			return true;
+//	public Boolean signMember(SignInDto signInDto) throws LoginException {
+//		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
+//		if ( !find.getIsValidEmail() ) {
+//			throw new LoginException("not valid email");
 //		}
-        return passwordEncoder.matches(signInDto.getPassword(), find.getPassword());
-    }
+//		if ( find.getRole().equals(Role.GUEST.toString()) ) {
+//			throw new LoginException("doesn't need login");
+//		}
+////		if ( signInDto.getPassword().equals(find.getPassword()) ) {
+////			return true;
+////		}
+//        return passwordEncoder.matches(signInDto.getPassword(), find.getPassword());
+//    }
 
 }

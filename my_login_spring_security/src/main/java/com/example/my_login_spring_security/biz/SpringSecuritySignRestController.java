@@ -108,8 +108,8 @@ public class SpringSecuritySignRestController {
 //			, HttpServletResponse response
 			, HttpSession httpSession
 	) throws LoginException {
-		Boolean isSign = this.authService.signMember(signInDto);
-		if ( isSign ) {
+//		Boolean isSign = this.authService.signMember(signInDto);
+//		if ( isSign ) {
 			Authentication authentication = this.authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(signInDto.getSignId(),signInDto.getPassword())
 			);
@@ -119,13 +119,13 @@ public class SpringSecuritySignRestController {
 			httpSession.setAttribute("MJC_LOGIN", signInDto.getSignId());
 			httpSession.setMaxInactiveInterval(3600);
 			return ResponseEntity.status(200).body(
-					ComResponseDto.make(ResponseCode.SUCCESS, isSign)
+					ComResponseDto.make(ResponseCode.SUCCESS, true)
 			);
-		} else {
-			return ResponseEntity.status(500).body(
-					ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
-			);
-		}
+//		} else {
+//			return ResponseEntity.status(500).body(
+//					ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
+//			);
+//		}
 	}
 
 	@GetMapping("/signout")
