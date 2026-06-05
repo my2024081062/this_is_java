@@ -7,7 +7,6 @@ import com.example.my_login_spring_security.models.member.MemberEntity;
 import com.example.my_login_spring_security.models.member.MemberJpaRepository;
 import com.example.my_login_spring_security.models.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

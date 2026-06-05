@@ -652,8 +652,8 @@ web server를 만들때는 restController뿐만 아니라 Controller 또한 필�
 이런 링크로 request를 보내면 request의 header에 쿠키가 저장되어있다.
 먼저 1번 링크로 접속하지 않으면 쿠키가 없고, cookie.setMaxAge(60);에서 60초간 살아있게 설정했으니 60초가 지나면 다시 쿠키가 사라진다.
 
-06-01
 ----------------------------------------------------------------------------------------
+06-01
 기능을 만들때, 먼저 jpa에서 먼저 기능을 담당하게 할 수 있게 해야한다.
 예를들어, 모든 컬럼을 가져오는데, 특정 속성이 null이 아닌것만 가져오게 한다. 라는 기능을 구현하고 싶다면, 
 서비스의 코드안에서 null인지 검사하는 귀찮은 과정 없이 먼저 jpa에게 맡겨야한다.
@@ -661,4 +661,44 @@ web server를 만들때는 restController뿐만 아니라 Controller 또한 필�
 대신 List<Entity> findAllByNameIsNotNull(); 이렇게 만들면 jpa에서 실제 sql문을
 select * from [table] where name is not null; 이렇게 만들어 준다.
 서비스에서는 jpa의 findAllByNameIsNotNull만 호출하면 알아서 name이 null이 아닌 모든 컬럼만 가져오게 할 수있기에 위처럼 더 효율적으로 만들 수 있다.
+----------------------------------------------------------------------------------------
+06-04
 
+filter : 시작/중간/끝에서 가로채서 실행
+spring security를 추가하면 웹에서 추가로 아이디, 패스워드를 입력해야한다.
+id : user
+password : (Using generated security password: 2a5a41ec-d72d-455c-9b75-908d88f9998b)
+콘솔창에서 이 비밀번호가 있는데 이것을 입력해야함.
+
+spring의 config를 설정
+securityFilterChain(HttpSecurity http) 메소드 안에서 아래와 같은 웹 필터를 설정할 수 있다.
+csrf : Cross-Site Request Forgery 사이트 간 요청 위조 방지 (아직x)
+cors : Cross-Origin Resource Sharing 임의 웹 페이지에서 다른 웹 페이지의 자원 접근 차단
+	CorsConfiguration 객체에서 
+		setAllowedMethods(get,post...),
+		setAllowedHeaders(Authorization, Cache-Control, Content-Type),
+		setAllowCredentials(true)
+	위와 같은 메소드로 설정을 해두고 source에 registerCorsConfiguration("/**", corsConfiguration) 메소드	로 이 객체를 넘기면 이러한 접근에 대해서 허락을 해주게 할 수 있다.
+headers : 아직 x
+authorizeHttpRequests : requestMatchers("/주소") 메소드로 주소 접근에 대한 설정을 할 수 있다.
+	permitAll() : 이 주소는 권한 체크를 하지 않아도 된다.
+	authenticated() : 이 주소는 인증,인가되어야 한다.
+	hasAnyAuthority() : 이 주소는 인증,인가되어야하고, role이 맞아야한다.
+authenticationProvider : userDetailsService, passwordEncoder를 직접 만들어서 DaoAuthenticationProvider를 	설정하여 authenticationProvider에게 넘겨준다. (의존 역전성)
+addFilterBefore : addFilterBefore(커스텀필터, 커스텀필터 이후 실행하게 할 필터.class)
+	내가 원하는 커스텀 필터를 만들어서 특정 필터 이전에 이 필터가 작동 할 수 있게 추가한다.
+이후 SecurityFilterChain을 다른 필터에게 계속 넘겨줘야하기 때문에 http.build()로 리턴을 해준다.
+
+security에서 UserDto는 UserDetails를 상속받아서 만들어야 한다.
+이때 3개의 메소드를 구현해야함. (getUserName, getPassword, getAuthorities)
+앞 2개는 로그인 아이디, 패스워드이고 getAuthorities는 user/admin 같은 역할이다.
+이때 기존에 role 역할을 하던 컬럼이 있다면 
+List<GrantedAuthority> roles;  roles.add(new SimpleGrantedAuthority(this.getMyRole()));로 내 Role을 사용하게 할 수 있다.
+마찬가지로 아이디, 비밀번호 역할을 하던 컬럼이 따로 있다면 그 컬럼을 리턴하게 하면 된다. (의존 역전성)
+
+security에서는 UserService는 UserDetailsService를 상속받아서 만들어야 한다.
+loadUserByUsername() 메소드를 구현해야한다.
+이때 역시 기존 아이디 역할을 하던 컬럼이 있다면 findBy아이디(username);을 리턴하게 하면 된다.
+
+security없이 올바른 로그인인지 확인 할 때는 로그인 서비스에서 올바른 이메일인지, 특정 역할인지, 비밀번호가 같은지 등등을 직접 했어야 하는데 security가 있으면 알아서 잘 해준다. (이메일 체크는 따로 구현 해야하나?)
+UserDetails를 상속받아서 UserDto를 구현 했기 때문에 아이디와 비밀번호 확인은 해준다.
