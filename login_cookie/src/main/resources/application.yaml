@@ -3,8 +3,8 @@ spring:
     name: login_cookie
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/auth_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: auth_user
+    url: jdbc:mysql://localhost:3306/auth_cookie_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: auth_cookie_user
     password: qwer1234!
   jpa:
     hibernate:
