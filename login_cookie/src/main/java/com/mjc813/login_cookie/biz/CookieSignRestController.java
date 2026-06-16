@@ -13,6 +13,7 @@ import com.mjc813.login_cookie.models.member.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,5 +123,13 @@ public class CookieSignRestController {
                     ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
             );
         }
+    }
+
+    @GetMapping("/signout")
+    public ResponseEntity<ComResponseDto<Boolean>> signout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return ResponseEntity.status(200).body(
+                ComResponseDto.make(ResponseCode.SUCCESS, true)
+        );
     }
 }
