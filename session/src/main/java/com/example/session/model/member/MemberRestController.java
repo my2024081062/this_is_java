@@ -5,6 +5,7 @@ import com.example.session.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,12 +33,19 @@ public class MemberRestController {
     }
 
     @GetMapping("/find_all")
-    public ResponseEntity<ComResponseDto<List<MemberDto>>> findAll() {
+    public ResponseEntity<ComResponseDto<List<MemberDto>>> findAll(Model model) {
+        Object obj = model.getAttribute("signedMember");
+        if(obj instanceof IMember signedMember) {
+            if(!signedMember.getRole().equals(Role.ADMIN)){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                        ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR,"error",null));
+            }
+        }
         List<MemberDto> memberDtos = memberService.findAll();
-
         return ResponseEntity.status(HttpStatus.OK).body(
                 ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDtos));
     }
+
 
     @PatchMapping
     public ResponseEntity<ComResponseDto<MemberDto>> updateMember(@RequestBody MemberDto insertMember) {

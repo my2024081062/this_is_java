@@ -19,7 +19,7 @@ public class SessionTestController {
 	{
 		session.setAttribute("MJC_LOGIN", value);
 		session.setMaxInactiveInterval(120);
-		model.addAttribute("session_name", "MJC_LOGIN");
+		model.addAttribute("session_name", name);
 		model.addAttribute("session_value", value);
 		return "info/info";
 	}
@@ -28,8 +28,8 @@ public class SessionTestController {
 	public String get(HttpServletRequest request
 			, HttpSession session
 			, Model model) {
-			model.addAttribute("session_name", "MJC_LOGIN");
-			model.addAttribute("session_value", session.getAttribute("MJC_LOGIN"));
+			model.getAttribute("session_name");
+		Object sessionValue = model.getAttribute("session_value");
 		return "info/info";
 	}
 
