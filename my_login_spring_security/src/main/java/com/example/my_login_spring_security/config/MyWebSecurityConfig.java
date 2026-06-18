@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,8 +36,8 @@ public class MyWebSecurityConfig {
     }
 
     @Bean
-    public AuthFilter authFilter() {
-        return new AuthFilter();
+    public MyAuthFilter myAuthFilter() {
+        return new MyAuthFilter();
     }
 
     @Bean
@@ -50,11 +49,12 @@ public class MyWebSecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        //cors 설정, 다른 사이트 주소에서 어떤 것을 허용하고, 불허하는 설정 (메소드,헤더,인증정보 설정)
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOriginPatterns(List.of("*"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS")); // 메소드 허용
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type")); //헤더 허용
+        corsConfiguration.setAllowCredentials(true); //인증 정보 허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
@@ -62,6 +62,7 @@ public class MyWebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //filterChain은 체인처럼 연속으로 작동하는 메소드, 체인을 걸어주듯이 매개변수를 리턴해줘야한다. (다음 필터에서 실행하게)
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer ->
@@ -70,17 +71,18 @@ public class MyWebSecurityConfig {
                         header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/").permitAll() //permitAll 이 주소는 권한 체크를 하지 마라
+                                .requestMatchers("/").permitAll() //permitAll 이 주소는 인증,인가가 필요없다.
                                 .requestMatchers("/signup").permitAll()
                                 .requestMatchers("/signin").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
-                                .anyRequest().authenticated() //authenticated 이 주소는 인증,인가되어야 한다.
-                                                            //hasAnyAuthority 이 주소는 인증,인가되어야하고, role이 맞아야한다.
+                                .anyRequest().authenticated() //anyRequest() 위 설정한 주소 이외의 모든 주소
+                                                            //authenticated 이 주소는 인증,인가가 필요하다.
+                                                            //hasAnyAuthority 이 주소는 인증,인가가 필요하고, role이 같아야한다.
                         )
                 .authenticationProvider(daoAuthenticationProvider())
-                .addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(myAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         //마지막에 filterChain을 다음 단계에서 실행 할 수 있도록 return
         return http.build();
     }
