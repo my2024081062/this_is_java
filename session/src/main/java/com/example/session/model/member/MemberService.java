@@ -4,6 +4,8 @@ import com.example.session.common.Mjc813Exception;
 import com.example.session.common.ResponseCode;
 import com.example.session.common.Util;
 import com.example.session.conf.LSHPasswordEncoder;
+import com.example.session.model.music.MusicDto;
+import com.example.session.model.music.MusicEntity;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -68,10 +71,22 @@ public class MemberService implements UserDetailsService {
 
         MemberEntity updateBefore = (MemberEntity) new MemberEntity().mapper(found,true);
         updateBefore.mapper(memberDto,false);
+        updateBefore.setUpdateAt(LocalDateTime.now());
 
         MemberEntity updateAfter = memberJpaRepository.save(updateBefore);
 
         MemberDto result = (MemberDto) new MemberDto().mapper(updateAfter,true);
+        return result;
+    }
+
+    public MemberDto delete(Long id) throws Mjc813Exception {
+//		this.musicJpaRepository.deleteById(found.getId());
+        MemberDto findDto = this.findById(id);
+        findDto.setDeleteAt(LocalDateTime.now());
+
+        MemberEntity deleteEntity = (MemberEntity) new MemberEntity().mapper(findDto, true);
+        MemberEntity deleted = this.memberJpaRepository.save(deleteEntity);
+        MemberDto result = (MemberDto)new MemberDto().mapper(deleted, true);
         return result;
     }
 
@@ -91,9 +106,9 @@ public class MemberService implements UserDetailsService {
         return this.findBySignId(username);
     }
 
-    public boolean isMine(String signId) throws Mjc813Exception {
+    public boolean isMine(Long id) throws Mjc813Exception {
         IMember signedMember = this.authenticateAndGetSignedMember();
-        if(signedMember != null && signedMember.getSignId().equals(signId)) {
+        if(signedMember != null && Objects.equals(signedMember.getId(), id)) {
             return true;
         }
         return false;

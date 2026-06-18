@@ -1,6 +1,7 @@
 package com.example.session.model.member;
 
 import com.example.session.common.ComResponseDto;
+import com.example.session.common.Mjc813Exception;
 import com.example.session.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,18 +24,22 @@ public class MemberRestController {
         MemberDto memberDto = memberService.insertMember(insertMember,true);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto));
+                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto)
+        );
     }
     
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @memberService.isMine(#id)")
     public ResponseEntity<ComResponseDto<MemberDto>> findMemberById(@PathVariable Long id) {
         MemberDto memberDto = memberService.findById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto));
+                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto)
+        );
     }
 
     @GetMapping("/find_all")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ComResponseDto<List<MemberDto>>> findAll(Model model) {
         Object obj = model.getAttribute("signedMember");
         if(obj instanceof IMember signedMember) {
@@ -45,15 +50,27 @@ public class MemberRestController {
         }
         List<MemberDto> memberDtos = memberService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(
-                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDtos));
+                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDtos)
+        );
     }
 
 
     @PatchMapping
-    @PreAuthorize("hasAuthority('ADMIN') or @memberService.isMine(#insertMember.signId)")
+    @PreAuthorize("hasAuthority('ADMIN') or @memberService.isMine(#insertMember.id)")
     public ResponseEntity<ComResponseDto<MemberDto>> updateMember(@RequestBody MemberDto insertMember) {
         MemberDto memberDto = memberService.updateMember(insertMember);
         return ResponseEntity.status(HttpStatus.OK).body(
-                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto));
+                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto)
+        );
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @memberService.isMine(#id)")
+    public ResponseEntity<ComResponseDto<MemberDto>> deleteMember(@PathVariable Long id) throws Mjc813Exception {
+        MemberDto memberDto = memberService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                ComResponseDto.make(ResponseCode.SUCCESS,"ok",memberDto)
+        );
+    }
+
 }
