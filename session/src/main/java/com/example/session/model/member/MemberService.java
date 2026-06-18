@@ -1,7 +1,11 @@
 package com.example.session.model.member;
 
 import com.example.session.common.Util;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -9,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService {
     @Autowired
     private MemberJpaRepository memberJpaRepository;
 
@@ -69,5 +73,10 @@ public class MemberService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+        return this.findBySignId(username);
     }
 }
