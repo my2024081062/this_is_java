@@ -5,8 +5,10 @@ import com.example.session.common.Mjc813Exception;
 import com.example.session.common.ResponseCode;
 import com.example.session.model.member.IMember;
 import com.example.session.model.member.Role;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class MusicService {
 	@Autowired
 	private MusicJpaRepository musicJpaRepository;
 
-	public MusicDto insert(MusicDto insertDto) throws LoginException {
+	public MusicDto insert(MusicDto insertDto) throws LoginException, Mjc813Exception {
 		IMember signedMember = this.authenticateAndGetSignedMember();
 		if (signedMember == null) {
 			throw new LoginException("is not valid member");
@@ -67,7 +70,7 @@ public class MusicService {
 //		repository에서 null인지 체크하게 하면 좋다.
 		IMember signedMember = this.authenticateAndGetSignedMember();
 		if ( signedMember == null ) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is now allow for findall");
+			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is now allow for findAll");
 		}
 		List<MusicEntity> musicEntities = this.musicJpaRepository.findAllByDeleteIdIsNull();
 		if(musicEntities.isEmpty()) {
@@ -102,7 +105,7 @@ public class MusicService {
 		if(signedMember == null || (signedMember.getRole() == Role.USER && !signedMember.getSignId().equals(found.getCreateId()))) {
 			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is not allow for delete");
 		}
-		MusicEntity deleting = (MusicEntity)new MusicEntity().copyMembers(found, true);
+		MusicEntity deleting = (MusicEntity) new MusicEntity().copyMembers(found, true);
 		deleting.setDeleteId(signedMember.getSignId());
 		deleting.setDeleteDt(LocalDateTime.now());
 		MusicEntity deleted = this.musicJpaRepository.save(deleting);
@@ -110,9 +113,11 @@ public class MusicService {
 		return result;
 	}
 
-	private @Nullable IMember authenticateAndGetSignedMember() {
+	private @Nullable IMember authenticateAndGetSignedMember() throws Mjc813Exception {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		assert authentication != null;
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			throw new Mjc813Exception(ResponseCode.AUTHENTICATION_ERROR, "you need to authenticate");
+		}
 		IMember signedMember = (IMember) authentication.getPrincipal();
 		return signedMember;
 	}
