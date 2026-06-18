@@ -1,6 +1,7 @@
 package com.example.session.model.member;
 
 import com.example.session.common.Util;
+import com.example.session.conf.LSHPasswordEncoder;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +18,14 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private MemberJpaRepository memberJpaRepository;
 
+    @Autowired
+    private LSHPasswordEncoder passwordEncoder;
+
     public MemberDto insertMember(MemberDto memberDto, boolean isAdmin) {
         MemberEntity insertBefore = (MemberEntity) new MemberEntity().mapper(memberDto,true);
         insertBefore.setId(null);
         insertBefore.setCreateAt(LocalDateTime.now());
+        insertBefore.setPassword(passwordEncoder.encoder().encode(memberDto.getPassword()));
         if ( isAdmin ) {
             insertBefore.setValidEmail(true);
             insertBefore.setRole(Role.USER);
