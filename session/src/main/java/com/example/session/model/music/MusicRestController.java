@@ -45,7 +45,7 @@ public class MusicRestController {
 	}
 
 	@GetMapping("/all")
-	@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+	@PreAuthorize("hasAnyAuthority('ADMIN,USER')")
 	public ResponseEntity<ComResponseDto<List<MusicDto>>> findAll (
 //			HttpServletRequest request
 //			@SessionAttribute(name = "MJC_LOGIN", required = false) String signId
@@ -77,18 +77,18 @@ public class MusicRestController {
 	}
 
 	@PatchMapping
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-	public ResponseEntity<ComResponseDto<MusicDto>> update(@RequestBody MusicDto insertDto) throws Mjc813Exception{
+	@PreAuthorize("hasAnyAuthority('ADMIN') or @musicService.checkCreatedId(#updateDto.id)")
+	public ResponseEntity<ComResponseDto<MusicDto>> update(@RequestBody MusicDto updateDto) throws Mjc813Exception{
 //		IMember signedMember = (IMember)model.getAttribute("signedMember");
 
-		MusicDto result = this.musicService.update(insertDto);
+		MusicDto result = this.musicService.update(updateDto);
 		return ResponseEntity.status(200).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, result)
 		);
 	}
 
 	@DeleteMapping("/{musicId}")
-	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+	@PreAuthorize("hasAnyAuthority('ADMIN') or @musicService.checkCreatedId(#musicId)")
 	public ResponseEntity<ComResponseDto<MusicDto>> delete(@PathVariable Long musicId
 		,@AuthenticationPrincipal MemberDto signedMember
 	) throws Mjc813Exception {

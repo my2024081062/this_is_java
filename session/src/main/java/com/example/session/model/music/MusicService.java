@@ -85,30 +85,31 @@ public class MusicService {
 	public MusicDto update(MusicDto musicDto) throws Mjc813Exception{
 		MusicDto findDto = this.findById(musicDto.getId());
 		IMember signedMember = this.authenticateAndGetSignedMember();
-		if (signedMember == null || (signedMember.getRole() == Role.USER && !signedMember.getSignId().equals(findDto.getCreateId()))) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is not allow for update");
-		}
-		findDto.setUpdateId(signedMember.getSignId());
-		findDto.setUpdateDt(LocalDateTime.now());
-		findDto.copyMembers(musicDto, false);
-		MusicEntity updateEntity = (MusicEntity)new MusicEntity().copyMembers(findDto, true);
 
+        if (signedMember != null) {
+            findDto.setUpdateId(signedMember.getSignId());
+        }
+        findDto.setUpdateDt(LocalDateTime.now());
+		findDto.copyMembers(musicDto, false);
+
+		MusicEntity updateEntity = (MusicEntity)new MusicEntity().copyMembers(findDto, true);
 		MusicEntity saved = this.musicJpaRepository.save(updateEntity);
 		MusicDto result = (MusicDto)new MusicDto().copyMembers(saved, true);
 		return result;
 	}
 
 	public MusicDto delete(Long musicId) throws Mjc813Exception {
-		MusicDto found = this.findById(musicId);
 //		this.musicJpaRepository.deleteById(found.getId());
+		MusicDto findDto = this.findById(musicId);
 		IMember signedMember = this.authenticateAndGetSignedMember();
-		if(signedMember == null || (signedMember.getRole() == Role.USER && !signedMember.getSignId().equals(found.getCreateId()))) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is not allow for delete");
+
+		if (signedMember != null) {
+			findDto.setDeleteId(signedMember.getSignId());
 		}
-		MusicEntity deleting = (MusicEntity) new MusicEntity().copyMembers(found, true);
-		deleting.setDeleteId(signedMember.getSignId());
-		deleting.setDeleteDt(LocalDateTime.now());
-		MusicEntity deleted = this.musicJpaRepository.save(deleting);
+		findDto.setDeleteDt(LocalDateTime.now());
+
+		MusicEntity deleteEntity = (MusicEntity) new MusicEntity().copyMembers(findDto, true);
+		MusicEntity deleted = this.musicJpaRepository.save(deleteEntity);
 		MusicDto result = (MusicDto)new MusicDto().copyMembers(deleted, true);
 		return result;
 	}
@@ -120,5 +121,14 @@ public class MusicService {
 		}
 		IMember signedMember = (IMember) authentication.getPrincipal();
 		return signedMember;
+	}
+
+	public boolean checkCreatedId(Long musicId) throws Mjc813Exception {
+		IMember signedMember = this.authenticateAndGetSignedMember();
+		MusicDto musicDto = this.findById(musicId);
+        if(signedMember != null && musicDto.getCreateId().equals(signedMember.getSignId())) {
+			return true;
+		}
+		return false;
 	}
 }
