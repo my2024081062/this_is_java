@@ -13,17 +13,15 @@ public class AuthService {
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
 
-	public Boolean signMember(SignInDto signInDto) throws LoginException {
+	public Boolean signMember(SignInDto signInDto) {
 		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
 //		if ( !find.getValidEmail() ) {
 //			throw new LoginException("not valid email");
 //		}
-		if ( find.getRole() == Role.GUEST ) {
-			throw new LoginException("doesn't need login");
-		}
-        assert signInDto.getPassword() != null;
-        if ( signInDto.getPassword().equals(find.getPassword()) ) {
-			return true;
+		if(signInDto.getPassword() != null) {
+			if ( signInDto.getPassword().equals(find.getPassword()) && find.getRole() != Role.GUEST ) {
+				return true;
+			}
 		}
 		return false;
 	}
