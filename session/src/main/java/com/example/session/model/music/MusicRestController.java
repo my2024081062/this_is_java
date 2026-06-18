@@ -20,8 +20,8 @@ public class MusicRestController {
 	private MusicService musicService;
 
 	@PostMapping("")
-	@PreAuthorize("hasAnyAuthority('USER,ADMIN')")
-	public ResponseEntity<ComResponseDto<MusicDto>> insert(@RequestBody MusicDto insertDto) throws LoginException {
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+	public ResponseEntity<ComResponseDto<MusicDto>> insert(@RequestBody MusicDto insertDto) throws LoginException, Mjc813Exception {
 //		IMember signedMember = (IMember)model.getAttribute("signedMember");
 		// Model 클래스에 "signedMember" 키에 해당하는 MemberDto 가 존재하는지 찾는다.
 
@@ -77,7 +77,7 @@ public class MusicRestController {
 	}
 
 	@PatchMapping
-	@PreAuthorize("hasAnyAuthority('USER,ADMIN')")
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<ComResponseDto<MusicDto>> update(@RequestBody MusicDto insertDto) throws Mjc813Exception{
 //		IMember signedMember = (IMember)model.getAttribute("signedMember");
 
@@ -88,7 +88,7 @@ public class MusicRestController {
 	}
 
 	@DeleteMapping("/{musicId}")
-	@PreAuthorize("hasAnyAuthority('USER,ADMIN')")
+	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 	public ResponseEntity<ComResponseDto<MusicDto>> delete(@PathVariable Long musicId
 		,@AuthenticationPrincipal MemberDto signedMember
 	) throws Mjc813Exception {
