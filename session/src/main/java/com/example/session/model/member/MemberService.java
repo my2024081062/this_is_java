@@ -1,9 +1,15 @@
 package com.example.session.model.member;
 
+import com.example.session.common.Mjc813Exception;
+import com.example.session.common.ResponseCode;
 import com.example.session.common.Util;
 import com.example.session.conf.LSHPasswordEncoder;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -83,5 +89,22 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         return this.findBySignId(username);
+    }
+
+    public boolean isMine(String signId) throws Mjc813Exception {
+        IMember signedMember = this.authenticateAndGetSignedMember();
+        if(signedMember != null && signedMember.getSignId().equals(signId)) {
+            return true;
+        }
+        return false;
+    }
+
+    private @Nullable IMember authenticateAndGetSignedMember() throws Mjc813Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            throw new Mjc813Exception(ResponseCode.AUTHENTICATION_ERROR, "you need to authenticate");
+        }
+        IMember signedMember = (IMember) authentication.getPrincipal();
+        return signedMember;
     }
 }

@@ -5,6 +5,7 @@ import com.example.session.common.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class MemberRestController {
     private MemberService memberService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ComResponseDto<MemberDto>> insertMember(@RequestBody MemberDto insertMember) {
         MemberDto memberDto = memberService.insertMember(insertMember,true);
 
@@ -48,6 +50,7 @@ public class MemberRestController {
 
 
     @PatchMapping
+    @PreAuthorize("hasAuthority('ADMIN') or @memberService.isMine(#insertMember.signId)")
     public ResponseEntity<ComResponseDto<MemberDto>> updateMember(@RequestBody MemberDto insertMember) {
         MemberDto memberDto = memberService.updateMember(insertMember);
         return ResponseEntity.status(HttpStatus.OK).body(
