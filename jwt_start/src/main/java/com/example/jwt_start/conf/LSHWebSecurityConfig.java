@@ -1,7 +1,9 @@
 package com.example.jwt_start.conf;
 
 import com.example.jwt_start.model.member.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,11 +27,13 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class LSHWebSecurityConfig{
-    @Autowired
-    private LSHPasswordEncoder lshEncoder;
-    @Autowired
-    private MemberService memberService;
+    private final LSHPasswordEncoder lshEncoder;
+
+    private final MemberService memberService;
+
+    private final LSHAuthenticationFilter lshAuthenticationFilter;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -51,14 +56,20 @@ public class LSHWebSecurityConfig{
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    LSHAuthenticationFilter lshAuthenticationFilter(){
-        return new LSHAuthenticationFilter();
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration){
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+                // 스프링 부트가 제공하는 기본 정적 리소스 경로 자동 허용
+                // (css, js, images, webjars, favicon 등 포함)
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                // 만약 resources/static 밑에 커스텀 폴더가 있다면 추가 지정
+                .requestMatchers("/custom/**");
     }
 
     @Bean
@@ -82,7 +93,7 @@ public class LSHWebSecurityConfig{
                                 .anyRequest().authenticated()
                         )
                 .authenticationProvider(this.daoAuthenticationProvider())
-                .addFilterBefore(this.lshAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(lshAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

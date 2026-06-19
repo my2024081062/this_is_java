@@ -3,6 +3,8 @@ package com.example.jwt_start.biz;
 import com.example.jwt_start.common.ComResponseDto;
 import com.example.jwt_start.common.LoginException;
 import com.example.jwt_start.common.ResponseCode;
+import com.example.jwt_start.jwt.JwtUtils;
+import com.example.jwt_start.model.auth.AuthTokenDto;
 import com.example.jwt_start.model.auth.SignInDto;
 import com.example.jwt_start.model.auth.SignUpDto;
 import com.example.jwt_start.model.member.IMember;
@@ -28,6 +30,9 @@ public class SessionRestController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtUtils  jwtUtils;
+
     @PostMapping("/sign_up")
     public ResponseEntity<ComResponseDto<IMember>> signUp(@RequestBody SignUpDto singUpDto) {
         MemberDto memberDto = (MemberDto) new MemberDto().mapper(singUpDto,true);
@@ -40,7 +45,7 @@ public class SessionRestController {
     }
 
     @PostMapping("/sign_in")
-    public ResponseEntity<ComResponseDto<Boolean>> signIn(@RequestBody SignInDto signInDto
+    public ResponseEntity<ComResponseDto<AuthTokenDto>> signIn(@RequestBody SignInDto signInDto
             , HttpSession session) throws LoginException {
 //        Boolean isSign = this.authService.signMember(signInDto);
 //        if ( isSign ) {
@@ -56,14 +61,20 @@ public class SessionRestController {
 //                    ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
 //            );
 //        }
+
         Authentication auth = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInDto.getSignId(),signInDto.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
-        session.setAttribute("MJC_LOGIN", signInDto);
-        session.setMaxInactiveInterval(3600);
+
+//        session.setAttribute("MJC_LOGIN", signInDto);
+//        session.setMaxInactiveInterval(3600);
+
+        String accessToken = this.jwtUtils.generateAccessToken(signInDto.getSignId());
+        String refreshToken = this.jwtUtils.generateRefreshToken(signInDto.getSignId());
+        AuthTokenDto authTokenDto = new AuthTokenDto(accessToken,refreshToken);
         return ResponseEntity.status(200).body(
-                ComResponseDto.make(ResponseCode.SUCCESS, "ok" ,true)
+                ComResponseDto.make(ResponseCode.SUCCESS, "ok" ,authTokenDto)
         );
     }
 

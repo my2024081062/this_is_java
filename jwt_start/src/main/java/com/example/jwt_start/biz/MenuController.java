@@ -1,6 +1,6 @@
 package com.example.jwt_start.biz;
 
-import com.example.session.model.member.IMember;
+import com.example.jwt_start.model.member.IMember;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

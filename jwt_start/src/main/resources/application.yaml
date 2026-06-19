@@ -36,3 +36,9 @@ logging:
     root: info
     com.example.session: debug
     org.springframework.web: debug
+
+jwt:
+  secrete:
+    key: 8922dd9b66160ad81c3141c6051767b42cc912e03a62c3c5e8fd77c72eb906d9vv
+    access-token-time: 1800000
+    refresh-token-time: 2592000000
