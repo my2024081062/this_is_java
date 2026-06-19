@@ -33,8 +33,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### setting ###
-gradlew
-gradlew.bat
-.gitattributes
