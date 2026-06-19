@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: jwt_start
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jwt_test_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: jwt_test_user
+    password: qwer1234!
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  web:
+    resources:
+      add-mappings: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+    com.example.session: debug
+    org.springframework.web: debug
