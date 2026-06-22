@@ -68,17 +68,3 @@ public class LSHAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-
-class Solution {
-    public int solution(int storage, int usage, int[] change) {
-        int total_usage = 0;
-        for(int i=0; i<change.length; i++){
-            usage = (change[i] == 0) ? (usage) : ((i == 0) ? (usage * change[i] / 100) : (total_usage * change[i] / 100));
-            total_usage += usage;
-            if(total_usage > storage){
-                return i;
-            }
-        }
-        return -1;
-    }
-}
