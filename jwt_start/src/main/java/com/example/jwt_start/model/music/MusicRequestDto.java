@@ -18,9 +18,9 @@ public class MusicRequestDto implements IMusic {
     private Long id;
     @Size(min = 1, max = 100)
     private String title;
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     private String artist;
-    @Pattern(regexp = "^[0-9]{2}:[0-9]{2}", message = "xx:xx")
+    @Pattern(regexp = "^[0-9]{2}:[0-9]{2}|^[0-9]{2}:[0-9]{2}:[0-9]{2}", message = "xx:xx")
     private String playtime;
     @JsonIgnore
     private String createId;
