@@ -37,7 +37,7 @@ public class LSHAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
             String authorizationHeader = request.getHeader("Authorization");
-
+            //헤더에 아무것도 없으니 비인가 사용
             if(authorizationHeader == null) {
                 filterChain.doFilter(request, response);
                 return;
