@@ -4,17 +4,16 @@ import com.example.jwt_start.model.auth.SignInDto;
 import com.example.jwt_start.model.member.MemberEntity;
 import com.example.jwt_start.model.member.MemberJpaRepository;
 import com.example.jwt_start.model.member.Role;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-	@Autowired
-	private MemberJpaRepository memberJpaRepository;
+	private final MemberJpaRepository memberJpaRepository;
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	public Boolean signMember(SignInDto signInDto) {
 		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();

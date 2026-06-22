@@ -4,9 +4,9 @@ import com.example.jwt_start.common.Mjc813Exception;
 import com.example.jwt_start.common.ResponseCode;
 import com.example.jwt_start.common.Util;
 import com.example.jwt_start.conf.LSHPasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,12 +21,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
-    @Autowired
-    private MemberJpaRepository memberJpaRepository;
 
-    @Autowired
-    private LSHPasswordEncoder passwordEncoder;
+    private final MemberJpaRepository memberJpaRepository;
+
+    private final LSHPasswordEncoder passwordEncoder;
 
     public MemberDto insertMember(MemberDto memberDto, boolean isAdmin) {
         MemberEntity insertBefore = (MemberEntity) new MemberEntity().mapper(memberDto,true);

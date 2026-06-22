@@ -5,7 +5,7 @@ import com.example.jwt_start.common.LoginException;
 import com.example.jwt_start.common.Mjc813Exception;
 import com.example.jwt_start.common.ResponseCode;
 import com.example.jwt_start.model.member.MemberDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,9 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/music")
+@RequiredArgsConstructor
 public class MusicRestController {
-	@Autowired
-	private MusicService musicService;
+	private final MusicService musicService;
 
 	@PostMapping("")
 	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")

@@ -4,9 +4,9 @@ import com.example.jwt_start.common.LoginException;
 import com.example.jwt_start.common.Mjc813Exception;
 import com.example.jwt_start.common.ResponseCode;
 import com.example.jwt_start.model.member.IMember;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +18,10 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MusicService {
-	@Autowired
-	private MusicJpaRepository musicJpaRepository;
+
+	private final MusicJpaRepository musicJpaRepository;
 
 	public MusicDto insert(MusicDto insertDto) throws LoginException, Mjc813Exception {
 		IMember signedMember = this.authenticateAndGetSignedMember();

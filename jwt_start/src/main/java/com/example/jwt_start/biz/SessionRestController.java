@@ -11,8 +11,8 @@ import com.example.jwt_start.model.member.IMember;
 import com.example.jwt_start.model.member.MemberDto;
 import com.example.jwt_start.model.member.MemberService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,15 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("api/v1/auth")
+@RequiredArgsConstructor
 public class SessionRestController {
 
-    @Autowired
-    private MemberService memberService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final MemberService memberService;
 
-    @Autowired
-    private JwtUtils  jwtUtils;
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtUtils  jwtUtils;
 
     @PostMapping("/sign_up")
     public ResponseEntity<ComResponseDto<IMember>> signUp(@RequestBody SignUpDto singUpDto) {

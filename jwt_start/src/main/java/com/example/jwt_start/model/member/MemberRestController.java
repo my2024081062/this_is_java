@@ -3,7 +3,7 @@ package com.example.jwt_start.model.member;
 import com.example.jwt_start.common.ComResponseDto;
 import com.example.jwt_start.common.Mjc813Exception;
 import com.example.jwt_start.common.ResponseCode;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,9 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/member")
+@RequiredArgsConstructor
 public class MemberRestController {
-    @Autowired
-    private MemberService memberService;
+
+    private final MemberService memberService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
