@@ -721,6 +721,96 @@ ex) www.domain.com/context에 쿠키를 클라이언트에 주면
 웹세션은 웹서버에 정보를 저장하는 방법이다.
 웹세션은 웹서버가 세션을 만들고, 클라이언트에게 응답할때 세션ID를 응답한다.
 웹클라이언트는 요청마다, 응답받은 세션을 요청의 헤더에 저장하여 요청한다.
-웹세션은 자바스크립트로 탈취당할 수 있다.(게시판 혹은 url에 js를 쓰고, 받은 쿠키의 값을 공격자의 서버로 보냄) 그래서 자바스크립트 코드를 못 쓰게(실행 못하게) 만들어야한다.
+CSRF 공격 : 웹세션은 자바스크립트로 탈취당할 수 있다.(게시판 혹은 url에 js를 쓰고, 받은 쿠키의 값을 공격자의 서버로 보냄) 그래서 자바스크립트 코드를 못 쓰게(실행 못하게) 만들어야한다.
 웹세션은 유효기간을 짧게 준다.
- 
+Backend 서버와 FrontEnd 서버가 분리되어서 별도의 포트로 실행되면 쿠키값 세션값이 호환이 안된다.
+이런 경우에 여러개의 서버에 인증, 인가를 처리하려면 JWT 로그인 방식 사용
+----------------------------------------------------------------------------------------
+06-17
+Spring Boot Security 사용
+사용시 로그인 정보가 담길 테이블에 사용되는 dto, entity는 UserDetails를 상속받아야하고, username, password, role 3개가 필요하다.
+UserDetails의 3가지 메소드(getUsername, getPassword,getAuthorities)를 상속 받아서 구현, 특히 getAuthorities는 인가에 쓰일 role 정보(user,admin..)를 미리 저장한다.
+또한 jpaRepository를 다룰 service는 UserDetailsService를 상속받아서 loadUserByUsername를 구현해야한다.
+
+보안 설정을 만들 수 있다.
+보안 설정을 위해 PasswordEncoder를 설정하는 클래스, 커스텀 필터 클래스를 만들 수 있다.
+
+@Configuration
+@EnableWebSecurity
+CustomWebSecurityConfig 클래스에서 전체적인 보안 설정을 관리 할 수있다.
+이 클래스에서 다양한 @Been 메소드
+
+PasswordEncoder 
+	사용자의 비밀번호를 데이터베이스에 안전하게 해시화하여 저장
+AuthenticationManager 
+	인증 관리자, 커스텀 로그인을 구현할 때 아이디와 비밀번호를 검증하는 핵심 컨트롤러 역할
+	(예: JWT 필터 내부에서 수동 로그인 처리)
+UserDetailsService 
+	사용자 정보 조회 소스 DB 연결 없이 테스트 계정을 만들 때
+WebSecurityCustomizer
+	보안 검사가 아예 필요 없는 URL 패턴을 SecurityFilterChain 전체에서 제외
+CorsConfigurationSource  
+	서로 다른 도메인(포트)에서 통신할 때 발생하는 cors 문제를 스프링 시큐리티 레벨에서 해결,
+	밑의 SecurityFilterChain에서 연결한다.
+SecurityFilterChain
+	Spring Security에서 들어오는 HTTP 요청을 가로채서
+	인증, 인가 및 다양한 보안 검사를 수행하는 핵심 필터들의 집합
+
+들을 등록하여 사용한다.
+특히 
+HttpSecurity를 변수로 받아서 SecurityFilterChain을 리턴하는
+
+@Been
+SecurityFilterChain securityWebFilterChain(HttpSecurity http)에서 
+csrf
+	사용자가 자신의 의지와 무관하게 공격자가 의도한 행위를 특정 웹사이트에 요청하게 만드는 공격 방식
+	REST API 서버이거나 JWT 사용한다면 disable
+	JWT(JSON Web Token)를 HTTP Authorization 헤더에 담아 보내므로 csrf에 대해 안전하다. 
+	(쿠키를 사용 안하기 때문에)
+cors
+	다른 도메인에서 백엔드로 요청을 보낼 때 브라우저가 보안 목적으로 차단
+	(예: 프론트엔드 localhost:3000, 백엔드 localhost:8080) 
+	이를 cors 정책(CorsConfigurationSource) 설정하여 등록하여 허용하게 한다.
+headers
+	보안 관련 HTTP response 헤더를 자동으로 설정하여 웹 브라우저 취약점 공격을 방어
+	frameOptions, contentSecurityPolicy, hsts, xssProtection, cacheControl 등등
+authorizeHttpRequests
+	HTTP 요청(url 패턴)들에 대한 인가를 설정
+	permitAll, authenticated, hasRole, hasAuthority 등등
+authenticationProvider
+	아이디/비밀번호 기반의 인증 요청 설정
+	내가 안해도 스프링 부트에서 알아서 만들어 설정, 내가 직접 만든 인증 로직을 추가할 때 사용 
+addFilterBefore 
+	특정 필터 지점 이전에 커스텀 필터 추가
+위 같은 보안 설정들을 관리 할 수 있다.
+
+로그인 인증 인가를 AuthenticationManager로 관리
+한번 인증 인가되면 SecurityContextHolder라는 전역 변수에 인증, 인가 된 로그인 사용자의 정보가 담겨있게 된다.
+
+----------------------------------------------------------------------------------------
+06-18
+컨트롤러의 특정 메소드를 특정 인가 사용자만 사용하게 할 수 있다.
+위의 CustomWebSecurityConfig에 추가로 @EnableMethodSecurity를 추가한다.
+원하는 메소드에 @PreAuthorize 어노테이션을 추가한다.
+@PreAuthorize("hasAnyAuthority('특정 인가 사용자 role')")를 적어서 사용한다.
+
+이외에 특정 인가에 대해 더 추가적인 로직을 검사하게 하고 싶으면 서비스에 커스텀 빈 메소드를 만들어 사용 할 수 있다. 
+추가적인 로직메소드를 서비스에 만들고 @PreAuthorize에 사용한다.
+예: 게시글이 로그인 사용자의 것인지 검사하는 boolean checkCreatedId(String 게시글생성아이디)
+@PreAuthorize("@myService.checkCreatedId(#로그인정보.로그인아이디)")
+
+----------------------------------------------------------------------------------------
+06-19
+
+jwt 사용
+세션을 거의 활용하지 않고 토큰을 만들어서 관리한다. 특히 서버 여러개를 사용한다.
+토큰은 키와 유효기간이 있다. 원하는 정보를 담아서 사용한다.
+
+키는  256비트(32자) 이상의 복잡한 문자열을 사용한다.
+유효기간은 accessToken은 30분, refreshToken은 7~30일을 준다.
+토큰을 만들때 io.jsonwebtoken.Jwts 클래스를 써서 만드는데 여기서 원하는 정보들을 담을 수 있다.
+
+
+
+
+
