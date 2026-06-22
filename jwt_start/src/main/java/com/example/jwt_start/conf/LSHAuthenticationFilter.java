@@ -1,5 +1,6 @@
 package com.example.jwt_start.conf;
 
+import com.example.jwt_start.jwt.JwtUtils;
 import com.example.jwt_start.model.member.IMember;
 import com.example.jwt_start.model.member.MemberDto;
 import com.example.jwt_start.model.member.MemberService;
@@ -7,9 +8,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -20,10 +20,12 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class LSHAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    MemberService memberService;
+    private final MemberService memberService;
+
+    private final JwtUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request
@@ -34,18 +36,25 @@ public class LSHAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            HttpSession session = request.getSession();
-            Object mjcLogin = session.getAttribute("MJC_LOGIN");
-            if(mjcLogin instanceof IMember signedMember){
-                MemberDto find = memberService.findBySignId(signedMember.getSignId());
-                UsernamePasswordAuthenticationToken auth = new  UsernamePasswordAuthenticationToken(
-                        find
-                        , find
-                        , find.getAuthorities()
-                );
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+            String authorizationHeader = request.getHeader("Authorization");
+
+            if(authorizationHeader == null) {
+                filterChain.doFilter(request, response);
+                return;
             }
+            String jwtToken = this.jwtUtils.resolveTokenFromBearerToken(authorizationHeader);
+
+            String signId = this.jwtUtils.geValue("sub",jwtToken);
+            MemberDto find = this.memberService.findBySignId(signId);
+
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    find
+                    , find
+                    , find.getAuthorities()
+            );
+            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
         } catch (Exception e) {
             log.error("user auth error" + e.getMessage());
         }
