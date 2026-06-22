@@ -36,6 +36,19 @@ public class MusicService {
 		MusicDto musicDto = (MusicDto)new MusicDto().copyMembers(saved, true);
 		return musicDto;
 	}
+	public MusicDto insert(MusicRequestDto insertDto) throws LoginException, Mjc813Exception {
+		IMember signedMember = this.authenticateAndGetSignedMember();
+		if (signedMember == null) {
+			throw new LoginException("is not valid member");
+		}
+		MusicEntity musicEntity = (MusicEntity)new MusicEntity().copyMembers(insertDto, true);
+		musicEntity.setId(null);
+		musicEntity.setCreateId(signedMember.getSignId());
+		musicEntity.setCreateDt(LocalDateTime.now());
+		MusicEntity saved = this.musicJpaRepository.save(musicEntity);
+		MusicDto musicDto = (MusicDto)new MusicDto().copyMembers(saved, true);
+		return musicDto;
+	}
 
 	public MusicDto findById(Long id) throws Mjc813Exception {
 //		MusicEntity musicEntity = this.musicJpaRepository.findById(id).orElseThrow();

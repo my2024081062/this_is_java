@@ -5,6 +5,7 @@ import com.example.jwt_start.common.LoginException;
 import com.example.jwt_start.common.Mjc813Exception;
 import com.example.jwt_start.common.ResponseCode;
 import com.example.jwt_start.model.member.MemberDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +22,7 @@ public class MusicRestController {
 
 	@PostMapping("")
 	@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
-	public ResponseEntity<ComResponseDto<MusicDto>> insert(@RequestBody MusicDto insertDto) throws LoginException, Mjc813Exception {
+	public ResponseEntity<ComResponseDto<MusicDto>> insert(@Valid @RequestBody MusicRequestDto insertDto) throws LoginException, Mjc813Exception {
 //		IMember signedMember = (IMember)model.getAttribute("signedMember");
 		// Model 클래스에 "signedMember" 키에 해당하는 MemberDto 가 존재하는지 찾는다.
 
