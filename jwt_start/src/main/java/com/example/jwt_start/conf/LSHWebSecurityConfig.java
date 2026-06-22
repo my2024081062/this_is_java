@@ -2,7 +2,6 @@ package com.example.jwt_start.conf;
 
 import com.example.jwt_start.model.member.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -91,7 +91,10 @@ public class LSHWebSecurityConfig{
                                 .requestMatchers("/signup").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated()
-                        )
+                )
+                .sessionManagement(sessionManagement -> //jwt 로그인 설정
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER) //세션 사용 안함
+                )
                 .authenticationProvider(this.daoAuthenticationProvider())
                 .addFilterBefore(lshAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
