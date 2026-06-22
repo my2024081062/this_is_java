@@ -3,8 +3,10 @@ package com.example.jwt_start.biz;
 import com.example.jwt_start.common.ComResponseDto;
 import com.example.jwt_start.common.LoginException;
 import com.example.jwt_start.common.ResponseCode;
+import com.example.jwt_start.jwt.JwtExpireException;
 import com.example.jwt_start.jwt.JwtUtils;
 import com.example.jwt_start.model.auth.AuthTokenDto;
+import com.example.jwt_start.model.auth.RefreshAuthTokenDto;
 import com.example.jwt_start.model.auth.SignInDto;
 import com.example.jwt_start.model.auth.SignUpDto;
 import com.example.jwt_start.model.member.IMember;
@@ -13,6 +15,8 @@ import com.example.jwt_start.model.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -82,6 +86,32 @@ public class SessionRestController {
         httpSession.invalidate();
         return ResponseEntity.status(200).body(
                 ComResponseDto.make(ResponseCode.SUCCESS, true)
+        );
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ComResponseDto<AuthTokenDto>> refreshToken(@RequestBody RefreshAuthTokenDto refreshAuthTokenDto) {
+        String signId = refreshAuthTokenDto.getSignId();
+        if(this.memberService.findBySignId(signId) == null) {
+            return ResponseEntity.status(500).body(
+                    ComResponseDto.make(ResponseCode.DATA_NOT_FOUND_ERROR,"error",null)
+            );
+        }
+        String accessToken = refreshAuthTokenDto.getAccessToken();
+        try {
+            this.jwtUtils.validateToken(accessToken);
+        }
+        catch (Exception e){
+            String newAccessToken = this.jwtUtils.generateAccessToken(signId);
+            String newRefreshToken = this.jwtUtils.generateRefreshToken(signId);
+            //RTR 방식
+            AuthTokenDto newAuthTokenDto = new AuthTokenDto(newAccessToken, newRefreshToken);
+            return ResponseEntity.status(200).body(
+                    ComResponseDto.make(ResponseCode.SUCCESS, "ok" ,newAuthTokenDto)
+            );
+        }
+        return ResponseEntity.status(500).body(
+                ComResponseDto.make(ResponseCode.TOKEN_NOT_EXPIRED,"error",null)
         );
     }
 }
