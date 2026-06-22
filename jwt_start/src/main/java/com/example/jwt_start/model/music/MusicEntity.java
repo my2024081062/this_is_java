@@ -19,10 +19,10 @@ public class MusicEntity implements IMusic {
 	@Column(nullable = false, length = 100)
 	private String title;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 50)
 	private String artist;
 
-	@Column(name = "playtime", nullable = false, length = 5)
+	@Column(name = "playtime", nullable = false, length = 8)
 	private String playtime;
 
 	@Column(name = "create_id", nullable = false, length = 20)
