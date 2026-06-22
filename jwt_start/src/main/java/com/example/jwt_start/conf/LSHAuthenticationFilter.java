@@ -1,5 +1,6 @@
 package com.example.jwt_start.conf;
 
+import com.example.jwt_start.jwt.JwtExpireException;
 import com.example.jwt_start.jwt.JwtUtils;
 import com.example.jwt_start.model.member.IMember;
 import com.example.jwt_start.model.member.MemberDto;
@@ -55,6 +56,10 @@ public class LSHAuthenticationFilter extends OncePerRequestFilter {
             auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(auth);
 
+        } catch (JwtExpireException e){
+            log.error("user auth error" + e.getMessage());
+            response.setStatus(401);
+            return;
         } catch (Exception e) {
             log.error("user auth error" + e.getMessage());
         }
