@@ -1,0 +1,7 @@
+#postgre
+postgresql/
+postgresql_data/
+
+#sonarqube
+sonarqube_data/
+sonarqube_temp/
